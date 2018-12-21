@@ -1,0 +1,28 @@
+{
+  "name": "exe-tools",
+  "version": "1.0.0",
+  "description": "职行力前端开发小工具服务",
+  "main": "index.js",
+  "scripts": {
+    "dev": "egg-bin dev",
+    "start": "egg-scripts start --daemon",
+    "stop": "egg-scripts stop"
+  },
+  "keywords": [
+    "职行力"
+  ],
+  "author": "余乾",
+  "license": "ISC",
+  "dependencies": {
+    "await-stream-ready": "^1.0.1",
+    "egg": "^2.12.0",
+    "egg-mongoose": "^3.1.1",
+    "egg-scripts": "^2.10.0",
+    "egg-validate": "^2.0.2",
+    "egg-view-nunjucks": "^2.2.0",
+    "moment": "^2.22.2"
+  },
+  "devDependencies": {
+    "egg-bin": "^4.9.0"
+  }
+}

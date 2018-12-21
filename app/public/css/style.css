@@ -1,0 +1,29 @@
+.image-upload {
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    text-align: center;
+    line-height: 200px;
+    border: solid 1px gray;
+}
+#resultImagePrev, .resultImagePrev {
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    text-align: center;
+    line-height: 200px;
+}
+#resultImagePrev {
+    display: none;
+}
+.image-upload i {
+    font-size: 40px;
+    color: gray;
+}
+
+#imagePicker {
+    height: 500px;
+}
+#imagePickerModal .content {
+    padding: 0;
+}
