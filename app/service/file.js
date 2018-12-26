@@ -18,6 +18,21 @@ class FileService extends Service {
             });
         })
     }
+
+
+    async findFile() {
+
+        return new Promise((resolve, reject) => {
+            this.ctx.model.File.find({}).lean().exec((err, docs) => {
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                } else {
+                    resolve(docs);
+                }
+            });
+        })
+    }
 }
 
 module.exports = FileService;

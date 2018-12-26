@@ -10,4 +10,5 @@
     <script src="/public/lib/cropper/dist/cropper.min.js"></script>
     <script src="/public/js/tenant.js"></script>
     <script src="/public/js/pack.js"></script>
+    <script src="/public/js/file.js"></script>
 {% endblock %}

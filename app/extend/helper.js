@@ -2,7 +2,11 @@ const moment = require('moment');
 // const qiniu = require('qiniu');
 
 exports.relativeTime = time => moment(new Date(time * 1000)).fromNow();
-exports.formatTime = date => moment(date).format('YYYY-MM-DD');
+exports.formatTime = date => moment(date).format('YYYY-MM-DD HH:mm:ss');
+exports.formatDate = date => moment(date).format('YYYY-MM-DD');
+
+const packType = ['App', '微信版', '企业微信', '钉钉版', '内嵌版', 'PC版'];
+exports.getPackType = type => packType[type - 1];
 
 
 //

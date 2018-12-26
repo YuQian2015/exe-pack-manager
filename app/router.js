@@ -12,10 +12,17 @@ module.exports = app => {
     router.post('/tenant/create', controller.tenant.createTenant);
 
     router.post('/upload', controller.upload.uploadImage);
+
+    // 打包
+    router.get('/pack', controller.pack.findTenant);
+    router.get('/pack/list', controller.pack.findPack);
+
+    // 文件
+    router.get('/file', controller.file.findFile);
     
     // RESTful api
     router.resources('tenants', '/api/v1/tenants', controller.tenants); // 租户接口
     router.resources('files', '/api/v1/files', controller.files); // 文件接口
+    router.resources('packs', '/api/v1/packs', controller.packs); // 打包接口
 
-    router.get('/pack/setting', controller.pack.findTenant);
 };
