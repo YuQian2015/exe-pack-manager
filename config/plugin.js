@@ -10,3 +10,7 @@ exports.validate = {
   enable: true,
   package: 'egg-validate',
 };
+exports.fullQiniu = {
+  enable: true,
+  package: 'egg-full-qiniu',
+};

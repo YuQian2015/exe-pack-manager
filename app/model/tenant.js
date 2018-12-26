@@ -25,6 +25,10 @@ module.exports = app => {
         inlay: Boolean, // 内嵌版
         pc: Boolean, // PC版
         description: String, // 描述
+        valid: { // 有效
+            type: Boolean,
+            default: true
+        },
         isLocked: { // 锁定
             type: Boolean,
             default: false

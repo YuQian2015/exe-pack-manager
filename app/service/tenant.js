@@ -1,5 +1,4 @@
 const Service = require('egg').Service;
-const moment = require('moment');
 
 class TenantService extends Service {
     async createTenant(data) {
@@ -50,7 +49,7 @@ class TenantService extends Service {
                     console.log(err);
                     reject(err);
                 } else {
-                    docs.createDate = moment(docs.createDate).format('YYYY-MM-DD')
+                    docs.createDate = docs.createDate;
                     resolve(docs);
                 }
             });

@@ -1,7 +1,7 @@
 function addTenant() {
     var tenant = {};
     $.each($('form').serializeArray(), function (index, data) {
-        if (data.value == 'on') {
+        if (data.value === 'on') {
             tenantForm[data.name].value = true;
         }
     });
@@ -9,15 +9,15 @@ function addTenant() {
 }
 
 function updateTenant(id) {
-    var result = {}
+    var result = {};
     $.each($('form').serializeArray(), function (index, data) {
-        if (data.value == 'on') {
+        if (data.value === 'on') {
             result[data.name] = true;
         } else {
             result[data.name] = data.value
         }
     });
-    console.log(result)
+    console.log(result);
     $.ajax({
         type: 'PUT',
         url: "/api/v1/tenants/" + id,
@@ -25,7 +25,7 @@ function updateTenant(id) {
         data: JSON.stringify(result),
         success: function (res) {
             if (res && res.success) {
-                alert('修改成功')
+                alert('修改成功');
                 window.history.back(-1);
             }
         },
@@ -43,10 +43,10 @@ function deleteTenant(dom) {
     $('.mini.modal').modal('show');
     cancelDom.click(function () {
         $('.mini.modal').modal('hide');
-    })
+    });
     deleteDom.click(function () {
         deleteTenantFunc($(dom).data('id'))
-    })
+    });
 
 
 
@@ -68,6 +68,38 @@ function deleteTenant(dom) {
     }
 }
 
+function abateTenant(dom) {
+    var cancelDom = $('<div class="ui button">取消</div>');
+    var deleteDom = $('<div class="ui red button">确认</div>');
+    $('#abateTenant .actions').html("").append(cancelDom, deleteDom);
+    $('.mini.modal').modal('show');
+    cancelDom.click(function () {
+        $('.mini.modal').modal('hide');
+    });
+    deleteDom.click(function () {
+        abateTenantFunc($(dom).data('id'))
+    });
+
+    function abateTenantFunc(id) {
+        $.ajax({
+            type: 'PUT',
+            url: "/api/v1/tenants/" + id,
+            contentType: 'application/json',
+            data: JSON.stringify({
+                valid: false
+            }),
+            success: function (res) {
+                if (res && res.success) {
+                    window.location.reload();
+                }
+            },
+            error: function (error) {
+                alert(error.msg);
+            }
+        });
+    }
+}
+
 function viewTenant(id) {
     window.location.href = '/tenant/' + id;
 }
@@ -78,7 +110,7 @@ function editTenant(id) {
 
 function lockTenant(id, dom) {
     var isLocked = $(dom).hasClass('unlock');
-    console.log(isLocked)
+    console.log(isLocked);
     $.ajax({
         type: 'PUT',
         url: "/api/v1/tenants/" + id,
@@ -109,7 +141,7 @@ function lockTenant(id, dom) {
 
 function uploadImage(blob) {
     const formData = new FormData();
-    console.log(blob)
+    console.log(blob);
 
     formData.append('image', blob, new Date().getTime() + '.png');
 
@@ -171,7 +203,7 @@ $(document).ready(function () {
     $('#imageUploader').on('change', function () {
         var reader = new FileReader();
         reader.addEventListener('load', function () {
-            $('#imagePicker').attr('src', reader.result)
+            $('#imagePicker').attr('src', reader.result);
             var $resultImage = $('#resultImage');
             var $image = $('#imagePicker');
             var cropperInstance;

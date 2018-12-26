@@ -19,21 +19,38 @@ class UploadController extends Controller {
 
         const name = stream.filename;
 
-        const writeStream = fs.createWriteStream('app/public/uploads/'+stream.filename);
+        // const writeStream = fs.createWriteStream('app/public/uploads/'+stream.filename);
         try {
             //异步把文件流 写入
-            await awaitWriteStream(stream.pipe(writeStream));
-            const newFile = await this.ctx.service.file.createFile({
-                fileName: stream.filename, // 文件名
-                type: stream.mimeType, // 文件类型
-                url:  '/public/uploads/' + name, // 文件url地址
-            });
-            ctx.body = {
-                code: 200,
-                data: newFile,
-                success: true,
-                msg: `上传成功`
+            // await awaitWriteStream(stream.pipe(writeStream));
+            // const newFile = await this.ctx.service.file.createFile({
+            //     fileName: stream.filename, // 文件名
+            //     type: stream.mimeType, // 文件类型
+            //     url:  '/public/uploads/' + name, // 文件url地址
+            // });
+            // ctx.body = {
+            //     code: 200,
+            //     data: newFile,
+            //     success: true,
+            //     msg: `上传成功`
+            // }
+
+            // 图片上传七牛
+            result = await ctx.app.fullQiniu.uploadStream(name, stream);
+            if(result.ok) {
+                const newFile = await this.ctx.service.file.createFile({
+                    fileName: stream.filename, // 文件名
+                    type: stream.mimeType, // 文件类型
+                    url:  result.url, // 文件url地址
+                });
+                ctx.body = {
+                    code: 200,
+                    data: newFile,
+                    success: true,
+                    msg: `上传成功`
+                }
             }
+            console.log(result);
         } catch (err) {
             //如果出现错误，关闭管道
             // await sendToWormhole(stream);

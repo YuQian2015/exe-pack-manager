@@ -23,10 +23,12 @@
       </div>
     </div>
 
-    <div class="ui violet message">通过点击表头可以排序，灰色的是通用包租户，绿色租户是有定制的租户。</div>
+    <div class="ui violet message">通过点击表头可以排序，深色的是通用包租户，灰色的是失效租户，绿色租户是有定制的租户。</div>
     <table class="ui celled small compact sortable table">
       <thead>
-        <tr><th class="sorted descending">租户ID</th>
+        <tr>
+        <th></th>
+        <th class="sorted descending">租户ID</th>
         <th>应用名</th>
         <th>租户名</th>
         <th class="center aligned">通用包</th>
@@ -42,22 +44,23 @@
       </tr></thead>
       <tbody>
         {% for item in list %}
-          <tr class="{% if item.isCommon %}active{% endif %} ">
+          <tr class="{% if item.valid == false %}disabled{% elif item.isCommon%}active{% endif %}">
+            <td data-label="icon"> <img src="{{ item.icon }}?imageView2/5/w/20/h/20" /></td>
             <td data-label="tenantId" class="{% if item.isCustomized %}positive{% endif %} ">{{ item.tenantId }}</td>
             <td data-label="appName" class="{% if item.isCustomized %}positive{% endif %} ">{{ item.appName }}</td>
             <td data-label="tenantName" class="{% if item.isCustomized %}positive{% endif %} ">{{ item.tenantName }}</td>
-            <td class="center aligned" data-label="isCommon"> {% if item.isCommon %} <i class="green checkmark icon"></i> {% endif %} </td>
-            <td class="center aligned" data-label="isCustomized"> {% if item.isCustomized %} <i class="green checkmark icon"></i> {% endif %} </td>
-            <td class="center aligned" data-label="app"> {% if item.app %} <i class="green checkmark icon"></i> {% endif %} </td>
-            <td class="center aligned" data-label="wx"> {% if item.wx %} <i class="green checkmark icon"></i> {% endif %} </td>
-            <td class="center aligned" data-label="workWx"> {% if item.workWx %} <i class="green checkmark icon"></i> {% endif %} </td>
-            <td class="center aligned" data-label="dd">{% if item.dd %} <i class="green checkmark icon"></i> {% endif %} </td>
-            <td class="center aligned" data-label="inlay">{% if item.inlay %} <i class="green checkmark icon"></i> {% endif %} </td>
-            <td class="center aligned" data-label="pc">{% if item.pc %} <i class="green checkmark icon"></i> {% endif %} </td>
+            <td class="center aligned" data-label="isCommon"> {% if item.isCommon %} <i class="checkmark icon"></i> {% endif %} </td>
+            <td class="center aligned" data-label="isCustomized"> {% if item.isCustomized %} <i class="checkmark icon"></i> {% endif %} </td>
+            <td class="center aligned" data-label="app"> {% if item.app %} <i class="checkmark icon"></i> {% endif %} </td>
+            <td class="center aligned" data-label="wx"> {% if item.wx %} <i class="checkmark icon"></i> {% endif %} </td>
+            <td class="center aligned" data-label="workWx"> {% if item.workWx %} <i class="checkmark icon"></i> {% endif %} </td>
+            <td class="center aligned" data-label="dd">{% if item.dd %} <i class="checkmark icon"></i> {% endif %} </td>
+            <td class="center aligned" data-label="inlay">{% if item.inlay %} <i class="checkmark icon"></i> {% endif %} </td>
+            <td class="center aligned" data-label="pc">{% if item.pc %} <i class="checkmark icon"></i> {% endif %} </td>
             <td class="center aligned" data-label="lock">
               {% if item.isLocked %} <i class="lock icon" onClick="lockTenant('{{ item._id }}', this)" data-content="已锁定，不能修改"></i>{% else %} <i onClick="lockTenant('{{ item._id }}', this)" class="unlock icon" data-content="锁定租户"></i> {% endif %}
             </td>
-            <td data-label="province"><div class="ui mini button blue" onClick="viewTenant('{{ item._id }}')">查看</div></td>
+            <td data-label="province"><div class="ui mini button blue {% if item.valid == false %}disabled{% endif %}"onClick="viewTenant('{{ item._id }}')">查看</div></td>
           </tr>
         {% endfor %}
       </tbody>

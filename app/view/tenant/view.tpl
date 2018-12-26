@@ -24,18 +24,24 @@
                     <div class="content">
                         <a class="header">{{ tenant.appName }}（{{ tenant.tenantId }}）</a>
                         <div class="meta">
-                        <span class="date">创建于: {{ tenant.createDate }}</span>
+                        <span class="date">创建于: {{ helper.formatTime(tenant.createDate) }}</span>
                         </div>
                         <div class="description">
                         {{ tenant.tenantName }}
                         </div>
                     </div>
                     <div class="extra content"><i class="map marker alternate icon"></i>{{ tenant.address }}</div>
-                    <div class="ui buttons bottom attached large">
+                    {% if tenant.isLocked %}
+                    <div class="ui button bottom attached disabled">
+                        已锁定
+                    </div>
+                    {% else %}
+                    <div class="ui buttons bottom attached">
                         <button class="ui button blue" onClick="editTenant('{{ tenant._id }}')">修改</button>
-                        <div class="or"></div>
+                        <button class="ui button" onClick="abateTenant(this)" data-id="{{ tenant._id }}">作废</button>
                         <button class="ui button red" onClick="deleteTenant(this)" data-id="{{ tenant._id }}">删除</button>
                     </div>
+                    {% endif %}
                 </div>
             </div>
             <div class="twelve wide column">
@@ -58,6 +64,14 @@
             <div class="header">警告</div>
             <div class="content">
                 <p>删除后不可恢复，是否要删除该租户？</p>
+            </div>
+            <div class="actions">
+            </div>
+        </div>
+        <div class="ui mini modal" id="abateTenant">
+            <div class="header">警告</div>
+            <div class="content">
+                <p>是否作废该租户？</p>
             </div>
             <div class="actions">
             </div>

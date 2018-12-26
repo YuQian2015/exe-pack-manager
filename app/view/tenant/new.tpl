@@ -33,6 +33,17 @@
                         </div>
                     </div>
                     <div class="extra content"><i class="map marker alternate icon"></i>{{ tenant.address }}</div>
+                    {% if tenant.isLocked %}
+                    <div class="ui button bottom attached disabled">
+                        已锁定
+                    </div>
+                    {% else %}
+                    <div class="ui buttons bottom attached">
+                        <button class="ui button blue" onClick="editTenant('{{ tenant._id }}')">修改</button>
+                        <button class="ui button" onClick="abateTenant(this)" data-id="{{ tenant._id }}">作废</button>
+                        <button class="ui button red" onClick="deleteTenant(this)" data-id="{{ tenant._id }}">删除</button>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
             <div class="twelve wide column">
