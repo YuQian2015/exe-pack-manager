@@ -12,7 +12,7 @@ class PacksController extends Controller {
         const ctx = this.ctx;
         ctx.validate(createRule, ctx.request.body);
         try {
-            const newPack = await ctx.service.pack.createPack(ctx.request.body);
+            const newPack = await ctx.service.pack.updatePack(ctx.request.body);
             ctx.body = {
                 code: 200,
                 data: newPack,

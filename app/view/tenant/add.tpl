@@ -31,7 +31,7 @@
                     </div>
                 </div>
             </div>
-
+            <div class="ui error message"></div>
             <div class="ui segment">
                 <div class="field">
                 <div class="ui toggle checkbox">
@@ -161,7 +161,6 @@
             </div>
             
             <div class="ui button" onclick="addTenant()">提交</div>
-            <div class="ui error message"></div>
         </form>
     </div>
   </body>

@@ -1,23 +1,24 @@
 function addTenant() {
-    var tenant = {};
-    $.each($('form').serializeArray(), function (index, data) {
+    var $form = $('form');
+    $.each($form.serializeArray(), function (index, data) {
         if (data.value === 'on') {
             tenantForm[data.name].value = true;
         }
+        console.log(data.name);
+        console.log(data.value);
     });
-    $('form').submit();
+    $form.submit();
 }
 
 function updateTenant(id) {
     var result = {};
-    $.each($('form').serializeArray(), function (index, data) {
-        if (data.value === 'on') {
-            result[data.name] = true;
+    $.each(tenantForm, function (index, data) {
+        if(data.type === 'checkbox') {
+            result[data.name] = data.checked;
         } else {
             result[data.name] = data.value
-        }
+        };
     });
-    console.log(result);
     $.ajax({
         type: 'PUT',
         url: "/api/v1/tenants/" + id,
@@ -25,7 +26,6 @@ function updateTenant(id) {
         data: JSON.stringify(result),
         success: function (res) {
             if (res && res.success) {
-                alert('修改成功');
                 window.history.back(-1);
             }
         },
@@ -40,9 +40,9 @@ function deleteTenant(dom) {
     var cancelDom = $('<div class="ui button">取消</div>');
     var deleteDom = $('<div class="ui red button">删除</div>');
     $('#deleteTenant .actions').html("").append(cancelDom, deleteDom);
-    $('.mini.modal').modal('show');
+    $('.mini.modal#deleteTenant').modal('show');
     cancelDom.click(function () {
-        $('.mini.modal').modal('hide');
+        $('.mini.modal#deleteTenant').modal('hide');
     });
     deleteDom.click(function () {
         deleteTenantFunc($(dom).data('id'))
@@ -72,9 +72,9 @@ function abateTenant(dom) {
     var cancelDom = $('<div class="ui button">取消</div>');
     var deleteDom = $('<div class="ui red button">确认</div>');
     $('#abateTenant .actions').html("").append(cancelDom, deleteDom);
-    $('.mini.modal').modal('show');
+    $('.mini.modal#abateTenant').modal('show');
     cancelDom.click(function () {
-        $('.mini.modal').modal('hide');
+        $('.mini.modal#abateTenant').modal('hide');
     });
     deleteDom.click(function () {
         abateTenantFunc($(dom).data('id'))
@@ -183,6 +183,13 @@ $(document).ready(function () {
                     prompt: '请输入租户ID'
                 }]
             },
+            appName: {
+                identifier: 'appName',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入应用名'
+                }]
+            },
             tenantName: {
                 identifier: 'tenantName',
                 rules: [{
@@ -190,16 +197,9 @@ $(document).ready(function () {
                     prompt: '请输入租户名'
                 }]
             },
-            province: {
-                identifier: 'province',
-                rules: [{
-                    type: 'empty',
-                    prompt: '请选择省份地区'
-                }]
-            },
         }
     });
-    $('table').tablesort();
+    $('table.sortable').tablesort();
     $('#imageUploader').on('change', function () {
         var reader = new FileReader();
         reader.addEventListener('load', function () {

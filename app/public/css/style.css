@@ -27,3 +27,6 @@
 #imagePickerModal .content {
     padding: 0;
 }
+.select-bg {
+    background: lightgray;
+}

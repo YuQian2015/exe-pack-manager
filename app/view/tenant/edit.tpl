@@ -14,7 +14,7 @@
             <div class="active section">编辑</div>
         </div>
         <div class="ui divider"></div>
-        <form class="ui form" id="tenantForm" action="/tenant/create" method="post">
+        <form class="ui form" id="tenantForm">
             <div class="field">
                 <label>租户基础信息</label>
                 <div class="fields">
@@ -148,7 +148,7 @@
                 <label>租户ICON</label>
                 <div class="fields">
                     <div class="field">
-                        <img class="resultImagePrev" src="{{ tenant.icon }}">
+                        <img class="resultImagePrev" src="{% if tenant.icon %}{{tenant.icon}}{% else %}http://exe.moyufed.com/1545874424004.png{% endif %}">
                     </div>
                     <div class="field">
                         {% include "../component/image-picker.tpl" %}

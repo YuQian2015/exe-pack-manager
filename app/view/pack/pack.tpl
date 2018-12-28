@@ -55,27 +55,40 @@
                 <i class="plus icon"></i> 加入打包
             </div>
         </div>
-        <div class="thirteen wide column">
-            <div class="ui three cards">
+        <div class="thirteen wide column pack-table">
+            <table class="ui celled small compact table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>租户ID</th>
+                        <th>应用名</th>
+                        <th>租户名</th>
+                        <th class="center aligned">
+                            <div class="ui checkbox add-all-pack" data-tenant-name="{{item.tenantName}}" data-tenant-id="{{item.tenantId}}">
+                                <input  class="add-pack" type="checkbox">
+                            </div>
+                        </th>
+                      </tr>
+                  </thead>
+                <tbody>
                 {% for item in list %}
-                    <div class="card">
-                        <div class="content">
-                            {% if item.icon %} <img class="right floated mini ui image" src="{{ item.icon }}"> {% else %} <img class="right floated mini ui image" src="/public/image/logo@2x.png"> {% endif %}
-                            <div class="header">{{ item.appName }}</div>
-                            <div class="meta">
-                                <span class="date">{{ item.tenantId }}</span>
+                    <tr>
+                        <td class="center aligned" data-label="icon">
+                            <img src="{% if item.icon %}{{item.icon}}{% else %}http://exe.moyufed.com/1545874424004.png{% endif %}?imageView2/5/w/20/h/20" />
+                        </td>
+                        <td data-label="tenantId">{{ item.tenantId }}</td>
+                        <td data-label="appName">{{ item.appName }}</td>
+                        <td data-label="tenantName">{{ item.tenantName }}</td>
+                        <td class="center aligned" data-label="check">
+                            <div class="ui checkbox add-pack" data-tenant-name="{{item.tenantName}}" data-tenant-id="{{item.tenantId}}">
+                                <input  class="add-pack" type="checkbox">
                             </div>
-                            <div class="description">
-                                {% if item.isCommon %}<div class="ui basic mini blue label">通用包</div>{% endif %}
-                                {% if item.isCustomized %}<div class="ui basic mini pink label">定制</div>{% endif %}
-                            </div>
-                        </div>
-                        <div class="ui bottom attached basic button add-pack" data-tenant-name="{{item.tenantName}}" data-tenant-id="{{item.tenantId}}">
-                            <i class="plus icon"></i> 加入打包
-                        </div>
-                    </div>
+                        </td>
+
+                    </tr>
                 {% endfor %}
-            </div>
+                </tbody>
+            </table>
         </div>
     </div>
 

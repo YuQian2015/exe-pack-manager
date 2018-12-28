@@ -13,7 +13,7 @@ $(document).ready(function () {
                         '<div class="image">' +
                         '<img src="'+item.url+'?imageView2/5/w/200/h/200" />' +
                         '</div>' +
-                        '</a>'
+                        '</a>';
                 });
                 $("#fileContainer").html(fileHtml);
                 console.log(res);

@@ -1,15 +1,27 @@
 $(document).ready(function () {
     $(".add-pack").click(function() {
-        $(this).toggleClass('blue').toggleClass('basic');
-        if($(this).hasClass('blue')) {
-            $(this).html('<i class="minus icon"></i> 移除打包');
-            $('#pack-'+$(this).data('tenant-id')).slideDown(200);
-            
+        var tenantId = $(this).data('tenant-id');
+        var $listItem = $(this).parents('tr');
+        $listItem.toggleClass('active');
+        if($listItem.hasClass('active')) {
+            $('#pack-'+tenantId).slideDown(200);
         } else {
-            $(this).html('<i class="plus icon"></i> 加入打包');
-            $('#pack-'+$(this).data('tenant-id')).slideUp(200);
+            $('#pack-'+tenantId).slideUp(200);
+            $(".add-all-pack").find('[type="checkbox"]').attr('checked', null);
         }
-    })
+    });
+
+    $(".add-all-pack").click(
+        function () {
+            if($(this).find('[type="checkbox"]')[0].checked){
+                $('[id^="pack-"]').slideDown(200);
+                $(".pack-table tr").addClass('active checked').find('[type="checkbox"]').attr('checked',true);
+            } else {
+                $('[id^="pack-"]').slideUp(200);
+                $(".pack-table tr").removeClass('active').find('[type="checkbox"]').attr('checked', null);
+            }
+        }
+    );
 
     $("#submitPack").click(function () {
         var tenants = [];
@@ -27,7 +39,7 @@ $(document).ready(function () {
             }),
             success: function (res) {
                 if (res && res.success) {
-                    window.location.href = "list";
+                    window.location.href = "pack/list";
                 }
             },
             error: function (error) {
@@ -35,5 +47,5 @@ $(document).ready(function () {
             }
         });
 
-    })
+    });
 });

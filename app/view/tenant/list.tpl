@@ -19,7 +19,7 @@
       </div>
       <div class="right menu">
         <a class="item" href="/tenant/add"><i class="plus circle icon"></i>添加</a>
-        <a class="item" href="/pack/setting"><i class="boxes icon"></i>打包</a>
+        <a class="item" href="/pack"><i class="boxes icon"></i>打包</a>
       </div>
     </div>
 
@@ -45,7 +45,7 @@
       <tbody>
         {% for item in list %}
           <tr class="{% if item.valid == false %}disabled{% elif item.isCommon%}active{% endif %}">
-            <td data-label="icon"> <img src="{{ item.icon }}?imageView2/5/w/20/h/20" /></td>
+            <td data-label="icon"> <img src="{% if item.icon %}{{item.icon}}{% else %}http://exe.moyufed.com/1545874424004.png{% endif %}?imageView2/5/w/20/h/20" /></td>
             <td data-label="tenantId" class="{% if item.isCustomized %}positive{% endif %} ">{{ item.tenantId }}</td>
             <td data-label="appName" class="{% if item.isCustomized %}positive{% endif %} ">{{ item.appName }}</td>
             <td data-label="tenantName" class="{% if item.isCustomized %}positive{% endif %} ">{{ item.tenantName }}</td>
