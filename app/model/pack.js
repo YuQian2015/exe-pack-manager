@@ -4,6 +4,8 @@ module.exports = app => {
     const PackSchema = new Schema({
         tenants: [{ type: Schema.Types.ObjectId, ref: 'Tenant' }], // 打包租户
         type: Number, // 打包类型
+        note: String, // 备注
+        title: String, // 标题
         createDate: Date, // 创建时间
         updateDate: Date, // 修改时间
     });

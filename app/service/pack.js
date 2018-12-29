@@ -27,7 +27,7 @@ class PackService extends Service {
 
     async findPack(params = {}) {
         return new Promise((resolve, reject) => {
-            this.ctx.model.Pack.find(params).lean().exec((err, docs) => {
+            this.ctx.model.Pack.find(params).sort('-createDate').lean().exec((err, docs) => {
                 if (err) {
                     console.log(err);
                     reject(err);
@@ -89,6 +89,21 @@ class PackService extends Service {
                     resolve(doc);
                 }
             })
+        })
+    }
+
+    async deletePack(id) {
+        return new Promise((resolve, reject) => {
+            this.ctx.model.Pack.remove({
+                _id: id
+            }).lean().exec((err, docs) => {
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                } else {
+                    resolve(docs);
+                }
+            });
         })
     }
 }

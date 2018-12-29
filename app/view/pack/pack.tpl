@@ -50,7 +50,15 @@
             </select>
             <div class="ui divider"></div>
             <p>3.打包</p>
-            <div id="submitPack" class="ui attached bottom button">
+            <form class="ui form">
+              <div class="field">
+                <input type="text" id="packTitle" placeholder="标题(可选)">
+              </div>
+              <div class="field">
+                <input type="text" id="packNote" placeholder="备注(可选)">
+              </div>
+            </form>
+            <div id="submitPack" class="ui attached button">
                 <i class="plus icon"></i> 加入打包
             </div>
         </div>
