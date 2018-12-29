@@ -32,9 +32,8 @@
             <div class="ui mini middle aligned selection celled list">
                 {% for item in list %}
                     <div class="item" id="pack-{{item.tenantId}}" data-id="{{item._id}}" style="display:none" >
-                        {% if item.icon %} <img class="ui avatar image" src="{{ item.icon }}"> {% else %} <img class="ui avatar image" src="/public/image/logo@2x.png"> {% endif %}
                         <div class="content">
-                            <div class="header">{{ item.appName }} {{ item.tenantId }}</div>
+                            <div class="header">{{ item.appName }} ({{ item.tenantId }})</div>
                         </div>
                     </div>
                 {% endfor %}
@@ -81,7 +80,7 @@
                         <td data-label="tenantName">{{ item.tenantName }}</td>
                         <td class="center aligned" data-label="check">
                             <div class="ui checkbox add-pack" data-tenant-name="{{item.tenantName}}" data-tenant-id="{{item.tenantId}}">
-                                <input  class="add-pack" type="checkbox">
+                                <input type="checkbox">
                             </div>
                         </td>
 

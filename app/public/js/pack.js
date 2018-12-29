@@ -1,13 +1,14 @@
 $(document).ready(function () {
-    $(".add-pack").click(function() {
+    $(".add-pack").click(function(e) {
         var tenantId = $(this).data('tenant-id');
         var $listItem = $(this).parents('tr');
         $listItem.toggleClass('active');
+        // e.preventDefault();
         if($listItem.hasClass('active')) {
             $('#pack-'+tenantId).slideDown(200);
         } else {
             $('#pack-'+tenantId).slideUp(200);
-            $(".add-all-pack").find('[type="checkbox"]').attr('checked', null);
+            $(".add-all-pack").find('[type="checkbox"]').prop('checked', false);
         }
     });
 
@@ -15,10 +16,10 @@ $(document).ready(function () {
         function () {
             if($(this).find('[type="checkbox"]')[0].checked){
                 $('[id^="pack-"]').slideDown(200);
-                $(".pack-table tr").addClass('active checked').find('[type="checkbox"]').attr('checked',true);
+                $(".pack-table tr").addClass('active checked').find('[type="checkbox"]').prop('checked',true);
             } else {
                 $('[id^="pack-"]').slideUp(200);
-                $(".pack-table tr").removeClass('active').find('[type="checkbox"]').attr('checked', null);
+                $(".pack-table tr").removeClass('active').find('[type="checkbox"]').prop('checked', false);
             }
         }
     );

@@ -41,7 +41,7 @@ class PackService extends Service {
     async findTenant() {
 
         return new Promise((resolve, reject) => {
-            this.ctx.model.Tenant.find( ).nor([{isCommon: true},{valid: false}]).sort('tenantId').lean().exec((err, docs) => {
+            this.ctx.model.Tenant.find( ).nor([{isCommon: true},{valid: false}]).and([{app: true}]).sort('tenantId').lean().exec((err, docs) => {
                 if (err) {
                     console.log(err);
                     reject(err);
