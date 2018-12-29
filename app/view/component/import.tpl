@@ -6,6 +6,7 @@
     <!--CDN-->
     <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/cropper/4.0.0/cropper.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/highlight.js/9.13.1/styles/tomorrow-night-eighties.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/public/css/style.css">
 
     <!--<script src="/public/lib/jquery/jquery-3.3.1.min.js"></script>-->
@@ -22,6 +23,8 @@
     <script src="/public/lib/semantic/plugins/tablesort.js"></script>
     <script src="https://cdn.bootcss.com/cropper/4.0.0/cropper.min.js"></script>
     <script src="https://cdn.bootcss.com/lodash.js/4.17.11/lodash.min.js"></script>
+    <script src="https://cdn.bootcss.com/highlight.js/9.13.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <script src="/public/js/tenant.js"></script>
     <script src="/public/js/pack.js"></script>
     <script src="/public/js/file.js"></script>

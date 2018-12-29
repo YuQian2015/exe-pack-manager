@@ -74,7 +74,11 @@ class PackService extends Service {
             this.ctx.model.Pack.findOneAndUpdate({
                 type: body.type // 打包类型
             }, {
-                $set: {tenants: body.tenants}
+                $set: {
+                    createDate: new Date(), // 创建时间
+                    updateDate: new Date(), // 修改时间
+                    tenants: body.tenants
+                }
             }, {
                 new: true, // if true, return the modified document rather than the original. defaults to false (changed in 4.0)
                 upsert: true // bool - creates the object if it doesn't exist. defaults to false.
