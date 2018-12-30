@@ -27,6 +27,21 @@
 #imagePickerModal .content {
     padding: 0;
 }
-.select-bg {
-    background: lightgray;
+
+.color-picker-container {
+    width: 40px;
+    height: 40px;
+    border: solid 4px #FFF;
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 0 4px 2px #ccc;
+    display: inline-block;
+    margin: 4px;
+}
+.color-picker-container input.color-picker {
+    width: 40px;
+    height: 40px;
+    pointer-events: none;
+    border: none;
+    opacity: 0;
 }

@@ -17,7 +17,7 @@ function updateTenant(id) {
             result[data.name] = data.checked;
         } else {
             result[data.name] = data.value
-        };
+        }
     });
     $.ajax({
         type: 'PUT',
@@ -165,6 +165,69 @@ function uploadImage(blob) {
     });
 }
 
+function setColor(dom) {
+    var $themeSetting = $("#themeSetting");
+    var brand = $themeSetting.find('input[name="brand"]').val();
+    var primary = $themeSetting.find('input[name="primary"]').val();
+    var secondary = $themeSetting.find('input[name="secondary"]').val();
+    var tenantId = $themeSetting.find('input[name="tenantId"]').val();
+    if($(dom).data('theme-id')) {
+        $.ajax({
+            type: 'PUT',
+            url: "/api/v1/themes/" + $(dom).data('theme-id'),
+            contentType: 'application/json',
+            data: JSON.stringify({
+                brand: brand, // 品牌颜色
+                primary: primary, // 主要颜色 使用于header
+                secondary: secondary, // 次要颜色 使用于footer
+            }),
+            success: function (res) {
+                if (res && res.success) {
+                    window.location.reload();
+                }
+            },
+            error: function (error) {
+                alert(error.msg);
+            }
+        });
+        return;
+    }
+    $.ajax({
+        type: 'POST',
+        url: "/api/v1/themes/",
+        contentType: 'application/json',
+        data: JSON.stringify({
+            brand: brand, // 品牌颜色
+            primary: primary, // 主要颜色 使用于header
+            secondary: secondary, // 次要颜色 使用于footer
+        }),
+        success: function (res) {
+            if (res && res.success) {
+                console.log(res);
+                $.ajax({
+                    type: 'PUT',
+                    url: "/api/v1/tenants/" + tenantId,
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        theme: [res.data._id]
+                    }),
+                    success: function (res) {
+                        if (res && res.success) {
+                            window.location.reload();
+                        }
+                    },
+                    error: function (error) {
+                        alert(error.msg);
+                    }
+                });
+            }
+        },
+        error: function (error) {
+            alert(error.msg);
+        }
+    });
+}
+
 $(document).ready(function () {
     // show dropdown on hover
     $('.menu  .ui.dropdown').dropdown({
@@ -227,4 +290,24 @@ $(document).ready(function () {
         });
         reader.readAsDataURL($(this)[0].files[0]);
     })
+    $('.color-picker').ColorPicker({
+        color: '#00ccff',
+        onShow: function (colpkr) {
+            window.imagePickerClickedEl = this;
+            $(colpkr).fadeIn(500);
+            return false;
+        },
+        onHide: function (colpkr) {
+            $(colpkr).fadeOut(500);
+            return false;
+        },
+        onBeforeShow: function () {
+            $(this).ColorPickerSetColor(this.value);
+        },
+        onChange: function (hsb, hex, rgb) {
+            window.imagePickerClickedEl.value = '#' + hex;
+            $(window.imagePickerClickedEl).parents(".color-picker-container").css('backgroundColor', '#' + hex);
+        },
+        livePreview: true
+    });
 });

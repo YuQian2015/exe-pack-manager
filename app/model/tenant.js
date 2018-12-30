@@ -53,12 +53,16 @@ module.exports = app => {
             type: Boolean,
             default: true
         },
+        theme: { type: Schema.Types.ObjectId, ref: 'Theme' }, // 主题
         isLocked: { // 锁定
             type: Boolean,
             default: false
-        }, 
+        },
         createDate: Date, // 创建时间
         updateDate: Date // 修改时间
+    });
+    TenantSchema.pre('findOne', function () {
+        this.populate('theme', 'brand primary secondary');
     });
     return mongoose.model('Tenant', TenantSchema);
 }

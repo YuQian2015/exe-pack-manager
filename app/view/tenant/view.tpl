@@ -43,6 +43,24 @@
                     </div>
                     {% endif %}
                 </div>
+
+
+                <h3>主题设置</h3>
+                <div id="themeSetting">
+                    <input type="hidden" name="tenantId" value="{{ tenant._id }}" />
+                    品牌颜色
+                    {% import "../component/color-picker.tpl" as color %}
+                    {{ color.field('brand', value=tenant.theme.brand, type='text') }}<br />
+                    主要颜色
+                    {% import "../component/color-picker.tpl" as color %}
+                    {{ color.field('primary', value=tenant.theme.primary, type='text') }}<br />
+                    次级颜色
+                    {% import "../component/color-picker.tpl" as color %}
+                    {{ color.field('secondary', value=tenant.theme.secondary, type='text') }}<br /><br />
+                    <div class="ui button blue attached" onClick="setColor(this)" data-theme-id="{{tenant.theme._id}}">
+                        确定
+                    </div>
+                </div>
             </div>
             <div class="twelve wide column">
                 <div class="ui segment">

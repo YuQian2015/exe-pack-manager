@@ -1,24 +1,16 @@
 const Service = require('egg').Service;
 
-class TenantService extends Service {
-    async createTenant(data) {
 
+class ThemeService extends Service {
+    async createTheme(data) {
         return new Promise(async (resolve, reject) => {
-            const tenant = await this.findTenant({tenantId: data.tenantId});
-            if(tenant.length) {
-                reject('该租户已经存在');
-                return
-            }
-            this.ctx.model.Tenant({
-                tenantName: '职行力',
-                appName: '职行力',
-                tenantId: 'exe',
+            this.ctx.model.Theme({
                 createDate: new Date(), // 创建时间
                 updateDate: new Date(), // 修改时间
                 ...data
             }).save((err, data) => {
                 if (err) {
-                    console.log(err)
+                    console.log(err);
                     reject(err);
                     return
                 }
@@ -27,10 +19,9 @@ class TenantService extends Service {
         })
     }
 
-    async findTenant(params = {}) {
-
+    async findTheme(params = {}) {
         return new Promise((resolve, reject) => {
-            this.ctx.model.Tenant.find(params).lean().exec((err, docs) => {
+            this.ctx.model.Theme.find(params).sort('-createDate').lean().exec((err, docs) => {
                 if (err) {
                     console.log(err);
                     reject(err);
@@ -41,24 +32,10 @@ class TenantService extends Service {
         })
     }
 
-    async findOneTenant(params = {}) {
-
-        return new Promise((resolve, reject) => {
-            this.ctx.model.Tenant.findOne(params).lean().exec((err, docs) => {
-                if (err) {
-                    console.log(err);
-                    reject(err);
-                } else {
-                    resolve(docs);
-                }
-            });
-        })
-    }
-    
-    async updateOneTenant(condition = {}, doc) {
+    async updateOneTheme(condition = {}, doc) {
         return new Promise((resolve, reject) => {
             // .update(condition,doc,[options],[callback]);
-            this.ctx.model.Tenant.updateOne(condition, doc).lean().exec((err, docs) => {
+            this.ctx.model.Theme.updateOne(condition, doc).lean().exec((err, docs) => {
                 if (err) {
                     console.log(err);
                     reject(err);
@@ -69,12 +46,9 @@ class TenantService extends Service {
         })
     }
 
-    
-
-    async deleteTenant(id) {
-
+    async deleteTheme(id) {
         return new Promise((resolve, reject) => {
-            this.ctx.model.Tenant.remove({
+            this.ctx.model.Theme.remove({
                 _id: id
             }).lean().exec((err, docs) => {
                 if (err) {
@@ -88,4 +62,4 @@ class TenantService extends Service {
     }
 }
 
-module.exports = TenantService;
+module.exports = ThemeService;

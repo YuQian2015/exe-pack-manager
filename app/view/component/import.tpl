@@ -2,6 +2,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <!--<link rel="stylesheet" type="text/css" href="/public/lib/semantic/semantic.min.css">-->
     <!--<link rel="stylesheet" type="text/css" href="/public/lib/cropper/dist/cropper.min.css">-->
+    <link rel="stylesheet" type="text/css" href="/public/lib/colorpicker/css/colorpicker.css">
 
     <!--CDN-->
     <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
@@ -21,6 +22,7 @@
     <script src="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.js"></script>
     <script src="https://cdn.bootcss.com/moment.js/2.22.2/moment.min.js"></script>
     <script src="/public/lib/semantic/plugins/tablesort.js"></script>
+    <script src="/public/lib/colorpicker/js/colorpicker.js"></script>
     <script src="https://cdn.bootcss.com/cropper/4.0.0/cropper.min.js"></script>
     <script src="https://cdn.bootcss.com/lodash.js/4.17.11/lodash.min.js"></script>
     <script src="https://cdn.bootcss.com/highlight.js/9.13.1/highlight.min.js"></script>
