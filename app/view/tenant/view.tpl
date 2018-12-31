@@ -64,7 +64,7 @@
             </div>
             <div class="twelve wide column">
                 <div class="ui segment">
-                    <h1 class="ui header">{{ tenant.tenantName }}</h1>
+                    <h1 class="ui header" style="color:{{tenant.theme.brand}}">{{ tenant.tenantName }}</h1>
                 </div>
                 {% if tenant.isCommon %} <a class="ui blue label">通用包</a> {% endif %}
                 {% if tenant.isCustomized %} <a class="ui blue label">定制包</a> {% endif %}
@@ -75,7 +75,17 @@
                 {% if tenant.inlay %} <a class="ui red tag label">内嵌版</a> {% endif %}
                 {% if tenant.pc %} <a class="ui brown tag label">PC版</a> {% endif %}
                 <div class="ui divider"></div>
-                <p>{{ tenant.description }}</p>
+                <div class="ui grid">
+                    <div class="nine wide column">
+                        <p>{{ tenant.description }}</p>
+                        {% import "../component/timeline.tpl" as editor %}
+                        {{ editor.field(id='editor', tenantId=tenant._id) }}
+                    </div>
+                    <div class="seven wide column">
+                        {% import "../component/preview.tpl" as iphone %}
+                        {{ iphone.field(brand=tenant.theme.brand, primary=tenant.theme.primary, secondary=tenant.theme.secondary) }}
+                    </div>
+                </div>
             </div>
         </div>
         <div class="ui mini modal" id="deleteTenant">

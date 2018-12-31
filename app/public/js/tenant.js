@@ -228,6 +228,53 @@ function setColor(dom) {
     });
 }
 
+function saveTimeline(html, id, callback) {
+
+    $.ajax({
+        type: 'POST',
+        url: "/api/v1/timelines/",
+        contentType: 'application/json',
+        data: JSON.stringify({
+            content: html,
+            tenantKey: id
+        }),
+        success: function (res) {
+            if (res && res.success) {
+                console.log(res);
+                if(callback && typeof callback == 'function') {
+                    callback(res.data);
+                }
+            }
+        },
+        error: function (error) {
+            alert(error.msg);
+        }
+    });
+}
+
+function loadTimeline(id) {
+    $.ajax({
+        type: 'GET',
+        url: "/api/v1/timelines?tenantKey="+id,
+        contentType: 'application/json',
+        data: '',
+        success: function (res) {
+            if (res && res.success) {
+                if(res && res.success && res.data.length) {
+                    var html = '';
+                    $.each(res.data, function (i, item) {
+                        html += '<div class="create-date">'+moment(item.createDate).format('YYYY-MM-DD HH:mm:ss')+'</div>' +
+                            '<div class="timeline-content">'+item.content+'</div>';
+                    })
+                }
+                $("#timeline").prepend(html)
+            }
+        },
+        error: function (error) {
+            alert(error.msg);
+        }
+    });
+}
 $(document).ready(function () {
     // show dropdown on hover
     $('.menu  .ui.dropdown').dropdown({

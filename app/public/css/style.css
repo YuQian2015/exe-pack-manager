@@ -45,3 +45,72 @@
     border: none;
     opacity: 0;
 }
+
+.preview-mode {
+    width: 320px;
+    position: relative;
+    padding: 2px;
+}
+.preview-mode .iphone {
+    width: 320px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+.preview-mode .preview-page {
+    position: absolute;
+    width: 276px;
+    top: 19px;
+    left: 22px;
+}
+.preview-mode .preview-header {
+    height: 66px;
+    background: #CCC;
+}
+.preview-mode .preview-content {
+    height: 465px;
+    background: #FFFFFF;
+}
+.preview-mode .preview-footer {
+    height: 66px;
+    background: #FFFFFF;
+    border-top: 1px #CCCCCC solid;
+}
+
+.tabs {
+    display: flex;
+}
+.tabs .tab {
+    flex: 1;
+    height: 40px;
+    text-align: center;
+    padding-top: 8px;
+}
+.tabs .tab .iconfont {
+    font-size: 20px;
+}
+.tabs .tab .iconfont + p {
+    font-size: 10px;
+    margin-top: 2px;
+}
+
+.record-editor {
+    height: 100px;
+}
+
+.timeline-container {
+    padding-left: 10px;
+    margin-left: 10px;
+    border-left: #CCCCCC solid 2px;
+}
+.timeline-container .create-date {
+    color: gray;
+    margin-top: 10px;
+}
+.timeline-container .timeline-content {
+    padding: 10px;
+    border: solid 1px #CCCCCC;
+    border-radius: 5px;
+}

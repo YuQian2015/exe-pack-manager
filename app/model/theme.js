@@ -10,7 +10,7 @@ module.exports = app => {
         createDate: Date, // 创建时间
         updateDate: Date, // 修改时间
     });
-    ThemeSchema.pre('save',  next => {
+    ThemeSchema.pre('save',  function (next) {
         console.log(this.updateDate);
         next();
     });

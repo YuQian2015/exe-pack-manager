@@ -25,5 +25,6 @@ module.exports = app => {
     router.resources('files', '/api/v1/files', controller.files); // 文件接口
     router.resources('packs', '/api/v1/packs', controller.packs); // 打包接口
     router.resources('themes', '/api/v1/themes', controller.themes); // 主题接口
+    router.resources('timelines', '/api/v1/timelines', controller.timelines); // 时间轴接口
 
 };
