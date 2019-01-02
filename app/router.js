@@ -17,6 +17,9 @@ module.exports = app => {
     router.get('/pack', controller.pack.findTenant);
     router.get('/pack/list', controller.pack.findPack);
 
+    // ui
+    router.get('/ui', controller.ui.findUi);
+
     // 文件
     router.get('/file', controller.file.findFile);
     
@@ -26,5 +29,6 @@ module.exports = app => {
     router.resources('packs', '/api/v1/packs', controller.packs); // 打包接口
     router.resources('themes', '/api/v1/themes', controller.themes); // 主题接口
     router.resources('timelines', '/api/v1/timelines', controller.timelines); // 时间轴接口
+    router.resources('colors', '/api/v1/colors', controller.colors); // 颜色
 
 };

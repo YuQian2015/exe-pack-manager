@@ -36,4 +36,5 @@
     <script src="/public/js/tenant.js"></script>
     <script src="/public/js/pack.js"></script>
     <script src="/public/js/file.js"></script>
+    <script src="/public/js/ui.js"></script>
 {% endblock %}

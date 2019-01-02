@@ -3,6 +3,7 @@
       <div class="header item"><img class="logo" src="/public/image/logo@2x.png">&nbsp;&nbsp;职行力租户信息管理系统</div>
       <a href="/pack/list" class="item">打包列表</a>
       <a href="/file" class="item">文件浏览</a>
+      <a href="/ui" class="item">UI</a>
       <!--
       <a href="/tenant" class="item">列表</a>
       <a href="/tenant/add" class="item">添加</a>

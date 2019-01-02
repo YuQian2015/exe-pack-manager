@@ -114,3 +114,14 @@
     border: solid 1px #CCCCCC;
     border-radius: 5px;
 }
+
+.colors .tenant-id {
+    width: 100px;
+    display: inline-block;
+}
+.colors .color-block {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    border: solid 1px #CCC;
+}
