@@ -30,5 +30,6 @@ module.exports = app => {
     router.resources('themes', '/api/v1/themes', controller.themes); // 主题接口
     router.resources('timelines', '/api/v1/timelines', controller.timelines); // 时间轴接口
     router.resources('colors', '/api/v1/colors', controller.colors); // 颜色
+    router.resources('autopacks', '/api/v1/autopacks', controller.autopacks); // 自动打包
 
 };

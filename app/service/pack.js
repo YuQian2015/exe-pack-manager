@@ -38,6 +38,19 @@ class PackService extends Service {
         })
     }
 
+    async findAutoPack(params = {}) {
+        return new Promise((resolve, reject) => {
+            this.ctx.model.Pack.findOne(params).where({ active: true }).sort('-createDate').lean().exec((err, docs) => {
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                } else {
+                    resolve(docs);
+                }
+            });
+        })
+    }
+
     async findTenant() {
 
         return new Promise((resolve, reject) => {
@@ -89,6 +102,21 @@ class PackService extends Service {
                     resolve(doc);
                 }
             })
+        })
+    }
+
+
+    async updateOnePack(condition = {}, doc) {
+        return new Promise((resolve, reject) => {
+            // .update(condition,doc,[options],[callback]);
+            this.ctx.model.Pack.updateOne(condition, doc).lean().exec((err, docs) => {
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                } else {
+                    resolve(docs);
+                }
+            });
         })
     }
 

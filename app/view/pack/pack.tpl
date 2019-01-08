@@ -5,12 +5,15 @@
   </head>
   <body>
 
-  {% include "../component/menu.tpl" %}
+  {% import "../component/menu.tpl" as menu %}
+  {{ menu.field('/pack/list') }}
 
   <div class="ui container">
 
     <div class="ui breadcrumb">
         <a href="/home" class="section">首页</a>
+        <div class="divider"> / </div>
+        <a href="/pack/list" class="section">打包列表</a>
         <div class="divider"> / </div>
         <div class="active section">打包</div>
     </div>

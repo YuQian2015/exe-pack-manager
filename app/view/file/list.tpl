@@ -5,7 +5,8 @@
   </head>
   <body>
 
-  {% include "../component/menu.tpl" %}
+  {% import "../component/menu.tpl" as menu %}
+  {{ menu.field('/file') }}
 
     <div class="ui container">
 

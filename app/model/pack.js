@@ -6,10 +6,17 @@ module.exports = app => {
         type: Number, // 打包类型
         note: String, // 备注
         title: String, // 标题
+        active: {
+            type: Boolean,
+            default: false
+        }, // 是否被激活打包
         createDate: Date, // 创建时间
         updateDate: Date, // 修改时间
     });
     PackSchema.pre('find', function() {
+        this.populate('tenants', 'tenantId appName');
+    });
+    PackSchema.pre('findOne', function() {
         this.populate('tenants', 'tenantId appName');
     });
     return mongoose.model('Pack', PackSchema);

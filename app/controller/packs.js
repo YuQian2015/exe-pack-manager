@@ -32,6 +32,20 @@ class PacksController extends Controller {
 
     };
 
+    async update() {
+        const ctx = this.ctx;
+        ctx.validate(deleteRule, ctx.params);
+        const result = await this.ctx.service.pack.updateOnePack({_id: ctx.params.id}, ctx.request.body);
+        if(result.ok) {
+            ctx.body = {
+                code: 200,
+                data: {},
+                success: true,
+                msg: `修改成功`
+            }
+        }
+    }
+
 
     // 删除租户的方法
     async destroy() {
