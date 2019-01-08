@@ -13,6 +13,23 @@ const deleteRule = {
 
 class PacksController extends Controller {
 
+    async index() {
+        const ctx = this.ctx;
+        try {
+            const tenantList = await ctx.service.pack.findTenant(ctx.query);
+            ctx.body = {
+                code: 200,
+                data: tenantList,
+                success: true,
+                msg: ``
+            };
+            console.log(tenantList);
+        }
+        catch (err) {
+            throw err;
+        }
+    }
+
     async create() {
         const ctx = this.ctx;
         ctx.validate(createRule, ctx.request.body);

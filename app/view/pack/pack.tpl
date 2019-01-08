@@ -19,12 +19,12 @@
     </div>
     <div class="ui divider"></div>
     <div class="ui tiny buttons">
-        <button class="ui red basic button active" disabled>App</button>
-        <button class="ui green basic button" disabled>微信版</button>
-        <button class="ui teal basic button" disabled>企业微信</button>
-        <button class="ui blue basic button" disabled>钉钉版</button>
-        <button class="ui yellow basic button" disabled>内嵌版</button>
-        <button class="ui brown basic button" disabled>PC版</button>
+        <button class="ui blue button" onclick="getPackList(this)" data-type='app'>App</button>
+        <button class="ui blue basic button" onclick="getPackList(this)" data-type='wx'>微信版</button>
+        <button class="ui blue basic button" onclick="getPackList(this)" data-type='workWx'>企业微信</button>
+        <button class="ui blue basic button" onclick="getPackList(this)" data-type='dd'>钉钉版</button>
+        <button class="ui blue basic button" onclick="getPackList(this)" data-type='inlay'>内嵌版</button>
+        <button class="ui blue basic button" onclick="getPackList(this)" data-type='pc'>PC版</button>
     </div>
     <div class="ui divider"></div>
 
@@ -32,7 +32,7 @@
     <div class="ui grid">
         <div class="three wide column">
             <p>1.选择租户</p>
-            <div class="ui mini middle aligned selection celled list">
+            <div id="selectedList" class="ui mini middle aligned selection celled list">
                 {% for item in list %}
                     <div class="item" id="pack-{{item.tenantId}}" data-id="{{item._id}}" style="display:none" >
                         <div class="content">
@@ -80,7 +80,7 @@
                         </th>
                       </tr>
                   </thead>
-                <tbody>
+                <tbody id="packList">
                 {% for item in list %}
                     <tr>
                         <td class="center aligned" data-label="icon">

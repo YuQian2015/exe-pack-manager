@@ -86,8 +86,53 @@ function cancelPack(dom) {
     });
 }
 
+
+function getPackList(dom) {
+    $.ajax({
+        type: 'GET',
+        url: "/api/v1/packs?"+$(dom).data('type')+"=true",
+        contentType: 'application/json',
+        data: '',
+        success: function (res) {
+            if (res && res.success) {
+                console.log(res)
+                var html = '';
+                var selectedHtml = '';
+                $.each(res.data, function (i, item) {
+                    var icon = item.icon?item.icon:"http://exe.moyufed.com/1545874424004.png";
+                    html += '<tr>' +
+                        '<td class="center aligned" data-label="icon">' +
+                        '   <img src="'+icon+'?imageView2/5/w/20/h/20" />' +
+                        '</td>' +
+                        '<td data-label="tenantId">'+ item.tenantId +'</td>' +
+                        '<td data-label="appName">'+ item.appName +'</td>' +
+                        '<td data-label="tenantName">'+ item.tenantName +'</td>' +
+                        '<td class="center aligned" data-label="check">' +
+                        '   <div class="ui checkbox add-pack" data-tenant-name="'+ item.tenantName +'" data-tenant-id="'+item.tenantId+'">' +
+                        '       <input type="checkbox">' +
+                        '   </div>' +
+                        '</td>' +
+                    '</tr>';
+                    selectedHtml +=
+                        '<div class="item" id="pack-'+item.tenantId+'" data-id="'+item._id+'" style="display:none" >' +
+                        '   <div class="content">' +
+                        '       <div class="header">'+ item.appName +' ('+ item.tenantId +')</div>' +
+                        '   </div>' +
+                        '</div>';
+                });
+                $("#packList").html(html).find('.ui.checkbox').checkbox();
+                $("#selectedList").html(selectedHtml);
+                $(dom).removeClass('basic').siblings().addClass('basic');
+            }
+        },
+        error: function (error) {
+            alert(error.msg);
+        }
+    });
+}
+
 $(document).ready(function () {
-    $(".add-pack").click(function(e) {
+    $('body').delegate('.add-pack', 'click', function (e) {
         var tenantId = $(this).data('tenant-id');
         var $listItem = $(this).parents('tr');
         $listItem.toggleClass('active');
@@ -98,19 +143,15 @@ $(document).ready(function () {
             $('#pack-'+tenantId).slideUp(200);
             $(".add-all-pack").find('[type="checkbox"]').prop('checked', false);
         }
-    });
-
-    $(".add-all-pack").click(
-        function () {
-            if($(this).find('[type="checkbox"]')[0].checked){
-                $('[id^="pack-"]').slideDown(200);
-                $(".pack-table tr").addClass('active checked').find('[type="checkbox"]').prop('checked',true);
-            } else {
-                $('[id^="pack-"]').slideUp(200);
-                $(".pack-table tr").removeClass('active').find('[type="checkbox"]').prop('checked', false);
-            }
+    }).delegate('.add-all-pack', 'click', function (e) {
+        if($(this).find('[type="checkbox"]')[0].checked){
+            $('[id^="pack-"]').slideDown(200);
+            $(".pack-table tr").addClass('active checked').find('[type="checkbox"]').prop('checked',true);
+        } else {
+            $('[id^="pack-"]').slideUp(200);
+            $(".pack-table tr").removeClass('active').find('[type="checkbox"]').prop('checked', false);
         }
-    );
+    });
 
     $("#submitPack").click(function () {
         var tenants = [];
