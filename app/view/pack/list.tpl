@@ -18,14 +18,11 @@
 
     <div class="ui right floated button mini"><a href="/pack"><i class="boxes icon"></i>打包</a></div>
     <div class="ui divider"></div>
-    {% for item in list %}
+    {% for item in list.list %}
     <div class="pack-box">
         <div class="ui middle aligned divided list">
           <div class="item">
             <div class="right floated content">
-                <!--<div class="ui right floated primary button">
-                  查看历史打包<i class="right chevron icon"></i>
-                </div>-->
                 {% if item.active %}
                     <div class="ui right floated button disabled" onClick="activePack(this)"  data-id="{{ item._id }}">
                         <i class="coffee icon"></i>打包中
@@ -40,6 +37,11 @@
                     <div class="ui right floated red button" onClick="deletePack(this)"  data-id="{{ item._id }}">
                         <i class="trash alternate outline icon"></i>删除
                     </div>
+                    {% if item.complete != true %}
+                        <div class="ui right floated button" onClick="completePack(this)"  data-id="{{ item._id }}">
+                            <i class="coffee icon"></i>加入历史
+                        </div>
+                    {% endif %}
                 {% endif %}
             </div>
             <div class="content">
@@ -58,6 +60,12 @@
     </div>
     {% endfor %}
 
+        {% if list.count > 0 %}
+            <div class="ui right floated primary button disabled">
+              历史打包&nbsp;&nbsp;&nbsp;&nbsp;{{list.count}}条<i class="right chevron icon"></i>
+            </div>
+        {% endif %}
+        <br />
 
         <div class="ui mini modal" id="deletePack">
             <div class="header">警告</div>

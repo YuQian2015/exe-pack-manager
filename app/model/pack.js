@@ -10,6 +10,10 @@ module.exports = app => {
             type: Boolean,
             default: false
         }, // 是否被激活打包
+        complete: {
+            type: Boolean,
+            default: false
+        },
         createDate: Date, // 创建时间
         updateDate: Date, // 修改时间
     });

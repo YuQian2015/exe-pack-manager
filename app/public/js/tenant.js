@@ -336,7 +336,7 @@ $(document).ready(function () {
             })
         });
         reader.readAsDataURL($(this)[0].files[0]);
-    })
+    });
     $('.color-picker').ColorPicker({
         color: '#00ccff',
         onShow: function (colpkr) {

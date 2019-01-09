@@ -76,7 +76,10 @@ function cancelPack(dom) {
                     '                    </div>' +
                     '                    <div class="ui right floated red button" onClick="deletePack(this)"  data-id="'+id+'">' +
                     '                        <i class="trash alternate outline icon"></i>删除' +
-                    '                    </div>';
+                    '                    </div>' +
+                    '       <div class="ui right floated button" onClick="completePack(this)"  data-id="'+ id +'">' +
+                    '           <i class="coffee icon"></i>加入历史' +
+                    '       </div>';
                 $(dom).parent(".right.floated.content").html(html);
             }
         },
@@ -86,6 +89,25 @@ function cancelPack(dom) {
     });
 }
 
+function completePack(dom) {
+    var id = $(dom).data('id');
+    $.ajax({
+        type: 'PUT',
+        url: "/api/v1/packs/" + id,
+        contentType: 'application/json',
+        data: JSON.stringify({
+            complete: true
+        }),
+        success: function (res) {
+            if (res && res.success) {
+                $(dom).parents(".pack-box").remove();
+            }
+        },
+        error: function (error) {
+            alert(error.msg);
+        }
+    });
+}
 
 function getPackList(dom) {
     $.ajax({

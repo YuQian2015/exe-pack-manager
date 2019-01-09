@@ -27,12 +27,19 @@ class PackService extends Service {
 
     async findPack(params = {}) {
         return new Promise((resolve, reject) => {
-            this.ctx.model.Pack.find(params).sort('-createDate').lean().exec((err, docs) => {
+            this.ctx.model.Pack.find(params).nor([{complete: true}]).sort('-createDate').lean().exec((err, docs) => {
                 if (err) {
                     console.log(err);
                     reject(err);
                 } else {
-                    resolve(docs);
+                    this.ctx.model.Pack.find().where('complete', true).count().exec((err, count) => {
+                        if (err) {
+                            resolve({list: docs});
+                        } else {
+                            resolve({list: docs, count: count});
+                        }
+                    });
+
                 }
             });
         })
