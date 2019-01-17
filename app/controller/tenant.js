@@ -30,8 +30,8 @@ class TenantController extends Controller {
 
 
   async findTenant() {
+    console.log(this.ctx.state.user);
     const tenantList = await this.ctx.service.tenant.findTenant();
-    console.log(tenantList)
     await this.ctx.render('tenant/list.tpl', { list: tenantList });
   }
 }

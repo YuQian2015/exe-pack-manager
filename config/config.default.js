@@ -31,10 +31,13 @@ exports.cluster = {
 }
 
 // 加载 errorHandler 中间件
-exports.middleware = ['errorHandler'];
+exports.middleware = ['errorHandler', 'auth'];
 // 只对 /api 前缀的 url 路径生效
 exports.errorHandler = {
     match: '/api',
+};
+exports.auth = {
+    public: '/login',
 };
 // module.exports = {
 //     // 加载 errorHandler 中间件
@@ -83,4 +86,21 @@ exports.fullQiniu = {
     //     baseUrl: null, // 用于拼接已上传文件的完整地址
     //     },
     // },
+};
+
+// jwt配置
+exports.jwt = {
+    secret: 'exe-tools',
+    expiresIn: "8h",
+    getToken: function fromHeaderOrQuerystring(ctx) {
+        if (ctx.headers.authorization && ctx.headers.authorization.split(" ")[0] === "Bearer") {
+            return ctx.headers.authorization.split(" ")[1];
+        } else if (ctx.query && ctx.query.token) {
+            return ctx.query.token;
+        } else if (ctx.cookies.get('token')) {
+            return ctx.cookies.get('token');
+        } else {
+            return null;
+        }
+    }
 };

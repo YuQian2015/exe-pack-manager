@@ -72,3 +72,80 @@ async uploadImage() {
         }
     }
 ```
+
+#### 使用jwt插件
+
+安装
+```shell
+npm i egg-jwt --save
+```
+
+使用
+```js
+// {app_root}/config/plugin.js
+exports.jwt = {
+  enable: true,
+  package: "egg-jwt"
+};
+```
+
+配置
+```js
+// {app_root}/config/config.default.js
+exports.jwt = {
+  secret: "123456"
+};
+```
+
+示例
+```js
+// app/router.js
+"use strict";
+
+module.exports = app => {
+  app.get("/", app.jwt, "render.index"); // use old api app.jwt
+  app.get("/login", "login.index");
+  app.get("/success", "success.index"); // is setting in config.jwt.match
+};
+
+// app/controller/render.js
+("use strict");
+
+module.exports = app => {
+  class RenderController extends app.Controller {
+    *index() {
+      this.ctx.body = "hello World";
+    }
+  }
+  return RenderController;
+};
+
+// app/controller/login.js
+("use strict");
+
+module.exports = app => {
+  class LoginController extends app.Controller {
+    *index() {
+      this.ctx.body = "hello admin";
+    }
+  }
+  return LoginController;
+};
+
+// app/controller/success.js
+("use strict");
+
+module.exports = app => {
+  class SuccessController extends app.Controller {
+    *index() {
+      this.ctx.body = this.ctx.state.user;
+    }
+  }
+  return SuccessController;
+};
+```
+
+如何创建token
+```js
+const token = app.jwt.sign({ foo: 'bar' }, app.config.jwt.secret);
+```

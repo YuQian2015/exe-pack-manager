@@ -3,27 +3,31 @@ module.exports = app => {
         router,
         controller
     } = app;
-    router.get('/', controller.tenant.findTenant);
-    router.get('/home', controller.tenant.findTenant);
-    router.get('/tenant', controller.tenant.findTenant);
-    router.get('/tenant/add', controller.tenant.addTenant);
-    router.get('/tenant/:id', controller.tenant.viewTenant);
-    router.get('/tenant/:id/edit', controller.tenant.editTenant);
-    router.post('/tenant/create', controller.tenant.createTenant);
 
-    router.post('/upload', controller.upload.uploadImage);
+    router.get('/', app.jwt, controller.tenant.findTenant);
+    router.get('/login', controller.home.login);
+    router.get('/home', app.jwt, controller.tenant.findTenant);
+    router.get('/tenant', app.jwt, controller.tenant.findTenant);
+    router.get('/tenant/add', app.jwt, controller.tenant.addTenant);
+    router.get('/tenant/:id', app.jwt, controller.tenant.viewTenant);
+    router.get('/tenant/:id/edit', app.jwt, controller.tenant.editTenant);
+    router.post('/tenant/create', app.jwt, controller.tenant.createTenant);
+
+    router.post('/upload', app.jwt, controller.upload.uploadImage);
 
     // 打包
-    router.get('/pack', controller.pack.findTenant);
-    router.get('/pack/list', controller.pack.findPack);
+    router.get('/pack', app.jwt, controller.pack.findTenant);
+    router.get('/pack/list', app.jwt, controller.pack.findPack);
 
     // ui
-    router.get('/ui', controller.ui.findUi);
+    router.get('/ui', app.jwt, controller.ui.findUi);
 
     // 文件
-    router.get('/file', controller.file.findFile);
+    router.get('/file', app.jwt, controller.file.findFile);
     
     // RESTful api
+    router.resources('users', '/api/v1/users', controller.users); // 用户接口
+    router.resources('login', '/api/v1/login', controller.login); // 登录接口
     router.resources('tenants', '/api/v1/tenants', controller.tenants); // 租户接口
     router.resources('files', '/api/v1/files', controller.files); // 文件接口
     router.resources('packs', '/api/v1/packs', controller.packs); // 打包接口

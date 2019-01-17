@@ -17,6 +17,7 @@
     "await-stream-ready": "^1.0.1",
     "egg": "^2.12.0",
     "egg-full-qiniu": "^1.0.5",
+    "egg-jwt": "^3.1.4",
     "egg-mongoose": "^3.1.1",
     "egg-scripts": "^2.10.0",
     "egg-validate": "^2.0.2",
