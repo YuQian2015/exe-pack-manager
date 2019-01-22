@@ -125,3 +125,25 @@
     display: inline-block;
     border: solid 1px #CCC;
 }
+
+#qrCodeLogin {
+
+}
+#qrCodeLogin img {
+    width: 100%;
+}
+#qrCodeLogin img.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+#qrCodeLogin .use-account {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 15px 20px 0 20px;
+    font-weight: bold;
+    cursor: pointer;
+    color: deepskyblue;
+}

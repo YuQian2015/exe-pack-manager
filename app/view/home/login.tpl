@@ -17,12 +17,12 @@
   <body>
     <div class="ui middle aligned center aligned grid">
       <div class="column">
-        <form id="loginForm" class="ui large form login-form">
+        <form id="loginForm" class="ui large form login-form" style="display: none">
           <div class="ui stacked segment">
             <div class="field">
               <div class="ui left icon input">
                 <i class="user icon"></i>
-                <input type="tel" name="tel" placeholder="邮箱地址">
+                <input type="userId" name="userId" placeholder="用户ID">
               </div>
             </div>
             <div class="field">
@@ -34,8 +34,13 @@
             <div class="ui fluid large teal submit button">登录</div>
           </div>
           <div class="ui error message"></div>
+          <div class="ui message" onclick="showQrCode()">使用二维码登录</div>
         </form>
-        <div class="ui message">新用户，请<a href="#">注册</a>。</div>
+        <div class="ui message">
+          {% import "../component/qr-login.tpl" as login %}
+          {{ login.field('') }}
+        </div>
+
       </div>
     </div>
   </body>

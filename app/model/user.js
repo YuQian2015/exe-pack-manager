@@ -8,7 +8,8 @@ module.exports = app => {
             default: 1
         }, // 性别 1男 2女
         tel: String, // 用户电话号码
-        userCode: String, // 用户编号
+        userId: String, // 用户Id
+        tenantId: String, // 租户ID
         password: String, // 用户密码
         createDate: Date, // 创建时间
         updateDate: Date, // 修改时间
