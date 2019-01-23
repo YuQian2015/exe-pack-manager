@@ -61,7 +61,7 @@ class LoginController extends Controller {
                                 createDate: new Date(), // 创建时间
                                 updateDate: new Date(), // 修改时间
                             });
-                            const token = ctx.app.jwt.sign({ id: user._id }, ctx.app.config.jwt.secret, {
+                            const token = ctx.app.jwt.sign({ id: newUser._id }, ctx.app.config.jwt.secret, {
                                 expiresIn: ctx.app.config.jwt.expiresIn
                             });
                             ctx.cookies.set('token', token);
