@@ -29,6 +29,9 @@ class LoginController extends Controller {
             });
 
             if(result.data.code === 200) {
+                console.log(result.data.ticket)
+                console.log(ctx.query.ticket)
+                console.log('-------------');
                 if(result.data.ticket && result.data.ticket.replace("%2f","/").replace("%3f","?").replace("%2b","+").replace("%3d","=").replace
                 ("%26","&") === ctx.query.ticket) {
                     console.log('1111')
@@ -54,7 +57,7 @@ class LoginController extends Controller {
                                 name: result.data.name, // 姓名
                                 userId: result.data.userId, // 用户Id
                                 tenantId: result.data.tenantId, // 租户ID
-                                password: '123456', // 用户密码
+                                password: 'e10adc3949ba59abbe56e057f20f883e', // 用户密码
                                 createDate: new Date(), // 创建时间
                                 updateDate: new Date(), // 修改时间
                             });
@@ -75,6 +78,8 @@ class LoginController extends Controller {
                             throw err;
                         }
                     }
+                } else {
+                    throw new Error('扫码验证失败');
                 }
             } else {
                 throw new Error('扫码验证失败');

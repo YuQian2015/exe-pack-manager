@@ -2,7 +2,7 @@
 function login() {
     var result = {};
     result.userId = $("#loginForm input[name='userId']").val();
-    result.password = $("#loginForm input[name='password']").val();
+    result.password = CryptoJS.MD5($("#loginForm input[name='password']").val()).toString();
     $.ajax({
         type: 'POST',
         url: "/api/v1/login",

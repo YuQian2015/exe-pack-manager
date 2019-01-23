@@ -27,6 +27,8 @@
     <script src="https://cdn.bootcss.com/lodash.js/4.17.11/lodash.min.js"></script>
     <script src="https://cdn.bootcss.com/highlight.js/9.13.1/highlight.min.js"></script>
     <script src="https://cdn.bootcss.com/quill/1.3.6/quill.min.js"></script>
+    <script src="https://cdn.bootcss.com/crypto-js/3.1.2/components/core-min.js"></script>
+    <script src="https://cdn.bootcss.com/crypto-js/3.1.9-1/md5.min.js"></script>
     <!-- https://github.com/patleeman/quill-markdown-shortcuts -->
     <script src="https://cdn.jsdelivr.net/npm/quill-markdown-shortcuts@latest/dist/markdownShortcuts.js"></script>
     <script src="/public/lib/semantic/plugins/tablesort.js"></script>
