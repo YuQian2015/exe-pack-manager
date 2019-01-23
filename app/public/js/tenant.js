@@ -35,7 +35,6 @@ function updateTenant(id) {
     });
 }
 
-
 function deleteTenant(dom) {
     var cancelDom = $('<div class="ui button">取消</div>');
     var deleteDom = $('<div class="ui red button">删除</div>');
@@ -136,32 +135,6 @@ function lockTenant(id, dom) {
         error: function (error) {
             alert(error.msg);
         }
-    });
-}
-
-function uploadImage(blob) {
-    const formData = new FormData();
-    console.log(blob);
-
-    formData.append('image', blob, new Date().getTime() + '.png');
-
-    // Use `jQuery.ajax` method
-    $.ajax('/upload', {
-        method: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success(result) {
-            if (result && result.success) {
-                $('#resultImagePrev').attr('src', result.data.url).show();
-                $('[for="imageUploader"] i').hide();
-                $('#iconFiled').val(result.data.url);
-            }
-            console.log(result);
-        },
-        error() {
-            console.log('Upload error');
-        },
     });
 }
 
@@ -310,33 +283,6 @@ $(document).ready(function () {
         }
     });
     $('table.sortable').tablesort();
-    $('#imageUploader').on('change', function () {
-        var reader = new FileReader();
-        reader.addEventListener('load', function () {
-            $('#imagePicker').attr('src', reader.result);
-            var $resultImage = $('#resultImage');
-            var $image = $('#imagePicker');
-            var cropperInstance;
-            $('.large.modal').modal('show');
-            $image.cropper({
-                aspectRatio: 1 / 1,
-                crop: function (event) {
-                    var resultImage = cropperInstance.getCroppedCanvas().toDataURL();
-                    $resultImage.attr('src', resultImage);
-                }
-            });
-            cropperInstance = $image.data('cropper');
-            $('#imagePickerModal .actions').html('<div class="ui button" id="confirmImagePick">确定</div>');
-            $('#confirmImagePick').bind('click', function () {
-                cropperInstance.getCroppedCanvas().toBlob(function (blob) {
-                    uploadImage(blob);
-                });
-                $('.large.modal').modal('hide');
-                $('#confirmImagePick').unbind('click');
-            })
-        });
-        reader.readAsDataURL($(this)[0].files[0]);
-    });
     $('.color-picker').ColorPicker({
         color: '#00ccff',
         onShow: function (colpkr) {

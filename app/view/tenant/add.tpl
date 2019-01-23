@@ -151,7 +151,8 @@
                 <label>租户ICON</label>
                 <div class="fields">
                     <div class="field">
-                        {% include "../component/image-picker.tpl" %}
+                        {% import "../component/image-picker.tpl" as imagePacker %}
+                        {{ imagePacker.field() }}
                     </div>
                 </div>
             </div>

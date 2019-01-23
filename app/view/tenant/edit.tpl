@@ -152,7 +152,8 @@
                         <img class="resultImagePrev" src="{% if tenant.icon %}{{tenant.icon}}{% else %}http://exe.moyufed.com/1545874424004.png{% endif %}">
                     </div>
                     <div class="field">
-                        {% include "../component/image-picker.tpl" %}
+                        {% import "../component/image-picker.tpl" as imagePacker %}
+                        {{ imagePacker.field() }}
                     </div>
                 </div>
             </div>
