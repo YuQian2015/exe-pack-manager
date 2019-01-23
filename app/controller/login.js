@@ -34,10 +34,10 @@ class LoginController extends Controller {
                 console.log('-------------');
                 if(result.data.ticket && result.data.ticket.replace("%2f","/").replace("%3f","?").replace("%2b","+").replace("%3d","=").replace
                 ("%26","&") === ctx.query.ticket) {
-                    console.log('1111')
+                    console.log('1111');
                     const user = await ctx.service.user.findOneUser({userId: result.data.userId});
                     if(user) {
-                        console.log('2222')
+                        console.log('2222');
                         const token = ctx.app.jwt.sign({ id: user._id }, ctx.app.config.jwt.secret, {
                             expiresIn: ctx.app.config.jwt.expiresIn
                         });
@@ -51,11 +51,11 @@ class LoginController extends Controller {
                             msg: ``
                         };
                     } else {
-                        console.log('33333')
+                        console.log('33333');
                         try {
                             const newUser = await ctx.service.user.createUser({
                                 name: result.data.name, // 姓名
-                                userId: result.data.userId, // 用户Id
+                                userId: result.data.userCode, // 用户Id
                                 tenantId: result.data.tenantId, // 租户ID
                                 password: 'e10adc3949ba59abbe56e057f20f883e', // 用户密码
                                 createDate: new Date(), // 创建时间
