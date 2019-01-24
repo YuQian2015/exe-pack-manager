@@ -32,8 +32,8 @@ class LoginController extends Controller {
                 console.log(result.data.ticket)
                 console.log(ctx.query.ticket)
                 console.log('-------------');
-                if(result.data.ticket && result.data.ticket.replace("%2f","/").replace("%3f","?").replace("%2b","+").replace("%3d","=").replace
-                ("%26","&") === ctx.query.ticket) {
+                if(result.data.ticket && result.data.ticket.replace(/%2f/g,"/").replace(/%3f/g,"?").replace(/%2b/g,"+").replace(/%3d/g,"=").replace
+                (/%26/g,"&") === ctx.query.ticket) {
                     console.log('1111');
                     const user = await ctx.service.user.findOneUser({userId: result.data.userId});
                     if(user) {
