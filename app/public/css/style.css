@@ -166,3 +166,60 @@
     cursor: pointer;
     color: deepskyblue;
 }
+.pack-tenant-name {
+    display: inline-block;
+    width: 70px;
+    text-align: center;
+}
+.pack-tenant-name p {
+    margin-top: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    width: 70px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #595959;
+}
+.pack-tenant-name img {
+    height: 40px;
+    width: 40px;
+    border-radius: 30%;
+    box-shadow: 0 2px 4px 1px #91c4ff;
+}
+
+.pack-note .note-header {
+    padding: 6px 10px;
+    background: #ffd86e;
+}
+.pack-box {
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px #bbbbbb;
+}
+.pack-tenant-code {
+    margin: 0;
+}
+.pack-note {
+    position: absolute;
+    right: -6px;
+    transform: translate3d(100%, 0, 0);
+    top: 0;
+    width: 200px;
+}
+.pack-note .note-content {
+    background: #ffe49b;
+    padding: 10px;
+    box-shadow: 0 1px 1px #8d8d8d;
+}
+.pack-tenants {
+    background: #f5f5f5;
+    position: relative;
+}
+.pack-count {
+    position: absolute;
+    padding: 6px 2px 6px 10px;
+    right: -6px;
+    top: 0;
+    border-radius: 20px 0 0 20px;
+    background: rgb(255, 216, 110);
+    color: #000;
+}

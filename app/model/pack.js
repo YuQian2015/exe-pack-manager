@@ -18,7 +18,7 @@ module.exports = app => {
         updateDate: Date, // 修改时间
     });
     PackSchema.pre('find', function() {
-        this.populate('tenants', 'tenantId appName');
+        this.populate('tenants', 'tenantId appName icon');
     });
     PackSchema.pre('findOne', function() {
         this.populate('tenants', 'tenantId appName');

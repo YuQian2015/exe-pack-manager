@@ -49,14 +49,23 @@
             </div>
           </div>
         </div>
-        <div class="ui divider"></div>
-        {{item.note}} 共打包 {{ item.tenants.length }} 个租户, 分别为
-        <br />
-        {% for t in item.tenants %}
-            <div class="ui basic pink label" style="margin-top: 10px;">{{ t.appName }}</div>
-        {% endfor %}
-        <br />
-        <pre><code class="plaintext">[{% for t in item.tenants %}"{{ t.tenantId }}",{% endfor %}]</code></pre>
+        <div class="pack-tenants">
+            <div class="ui divider"></div>
+            {% if item.note %}
+                <div class="pack-note">
+                    <div class="note-header">备注</div>
+                    <div class="note-content">{{item.note}}</div>
+                </div>
+            {% endif %}
+            <div class="pack-count">{{ item.tenants.length }}个租户</div>
+            {% for t in item.tenants %}
+                <div class="pack-tenant-name">
+                    <img src="{% if t.icon %}{{t.icon}}{% else %}http://exe.moyufed.com/1545874424004.png{% endif %}?imageView2/5/w/40/h/40" />
+                    <p>{{ t.appName }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <pre class="pack-tenant-code"><code class="plaintext">[{% for t in item.tenants %}"{{ t.tenantId }}",{% endfor %}]</code></pre>
     </div>
     {% endfor %}
 
