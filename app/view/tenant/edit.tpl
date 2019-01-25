@@ -149,11 +149,8 @@
                 <label>租户ICON</label>
                 <div class="fields">
                     <div class="field">
-                        <img class="resultImagePrev" src="{% if tenant.icon %}{{tenant.icon}}{% else %}http://exe.moyufed.com/1545874424004.png{% endif %}">
-                    </div>
-                    <div class="field">
                         {% import "../component/image-picker.tpl" as imagePacker %}
-                        {{ imagePacker.field() }}
+                        {{ imagePacker.field(tenant.icon) }}
                     </div>
                 </div>
             </div>

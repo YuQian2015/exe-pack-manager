@@ -4,11 +4,11 @@ $(document).ready(function () {
             type: 'GET',
             url: "/api/v1/files",
             contentType: 'application/json',
-            data: JSON.stringify({}),
+            data: "pageSize=1000&page=1",
             success: function (res) {
                 if (res && res.success) {
                     var fileHtml = "";
-                    $.each(res.data, function (i, item) {
+                    $.each(res.data.list, function (i, item) {
 
                         fileHtml += '<a class="red card">' +
                             '<div class="image">' +

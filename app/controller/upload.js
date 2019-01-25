@@ -38,7 +38,7 @@ class UploadController extends Controller {
             // 图片上传七牛
             result = await ctx.app.fullQiniu.uploadStream(name, stream);
             if(result.ok) {
-                const newFile = await this.ctx.service.file.createFile({
+                const newFile = await ctx.service.file.createFile({
                     fileName: stream.filename, // 文件名
                     type: stream.mimeType, // 文件类型
                     url:  result.url, // 文件url地址
@@ -57,5 +57,34 @@ class UploadController extends Controller {
             throw err;
         }
     }
+
+    async deleteImage() {
+        const ctx = this.ctx;
+        console.log(ctx.params.id)
+        try {
+
+
+            const file = await ctx.service.file.findOneFile({_id: ctx.params.id});
+            // delete(key)
+            // const result = await ctx.app.fullQiniu.batchFileInfo([file.fileName]);
+            const result = await ctx.app.fullQiniu.delete(file.fileName);
+            if(result.ok) {
+                const delResult = await ctx.service.file.deleteFile(ctx.params.id);
+                if(delResult.ok === 1) {
+                    ctx.body = {
+                        code: 200,
+                        data: {},
+                        success: true,
+                        msg: `删除成功`
+                    }
+                }
+            } else {
+                throw new Error('查找CDN上的文件失败');
+            }
+        } catch (err) {
+            throw err;
+        }
+    }
+
 }
 module.exports = UploadController;

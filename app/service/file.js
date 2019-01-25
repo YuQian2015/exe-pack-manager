@@ -20,10 +20,49 @@ class FileService extends Service {
     }
 
 
-    async findFile() {
+    async findFile(params) {
+
+        const pageSize = params && parseInt(params.pageSize) || 10; // 使用分页
+        const page = params && parseInt(params.page) || 1;
 
         return new Promise((resolve, reject) => {
-            this.ctx.model.File.find({}).lean().exec((err, docs) => {
+            this.ctx.model.File.find({}).limit(pageSize).skip(pageSize * (page - 1)).lean().exec((err, docs) => {
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                } else {
+                    this.ctx.model.File.find({}).count().exec((error, count) => {
+                        if (error) {
+                            resolve({list: docs});
+                        } else {
+                            resolve({list: docs, count: count});
+                        }
+                    });
+                }
+            });
+        })
+    }
+
+    async findOneFile(params = {}) {
+        return new Promise((resolve, reject) => {
+            this.ctx.model.File.findOne(params).lean().exec((err, docs) => {
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                } else {
+                    resolve(docs);
+                }
+            });
+        })
+    }
+
+
+    async deleteFile(id) {
+
+        return new Promise((resolve, reject) => {
+            this.ctx.model.File.remove({
+                _id: id
+            }).lean().exec((err, docs) => {
                 if (err) {
                     console.log(err);
                     reject(err);

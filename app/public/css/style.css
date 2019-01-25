@@ -4,16 +4,13 @@
     display: inline-block;
     text-align: center;
     line-height: 200px;
+    box-sizing: content-box;
     border: solid 1px gray;
 }
 .image-upload {
     text-align: center;
     line-height: 100%;
     padding: 70px 0;
-}
-.image-selector-content {
-    height: 500px;
-    overflow: auto;
 }
 .image-name {
     position: absolute;
@@ -33,11 +30,21 @@
 }
 
 .imageCropper {
-    width: 300px;
-    height: 300px;
+    max-height: 500px;
 }
 .imageCropperModal .content {
     padding: 0;
+}
+
+.image-action-container {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translate3d(0, -50%, 0);
+    text-align: center;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    padding-top: 60px;
 }
 
 .color-picker-container {

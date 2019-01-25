@@ -13,7 +13,8 @@ module.exports = app => {
     router.get('/tenant/:id/edit', app.jwt, controller.tenant.editTenant);
     router.post('/tenant/create', app.jwt, controller.tenant.createTenant);
 
-    router.post('/upload', app.jwt, controller.upload.uploadImage);
+    router.post('/image/upload', app.jwt, controller.upload.uploadImage);
+    router.del('/image/delete/:id', app.jwt, controller.upload.deleteImage);
 
     // 打包
     router.get('/pack', app.jwt, controller.pack.findTenant);
