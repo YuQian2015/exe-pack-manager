@@ -44,10 +44,10 @@ function activePack(dom) {
         }),
         success: function (res) {
             if (res && res.success) {
-                var html = '<div class="ui right floated button disabled" onClick="activePack(this)"  data-id="'+id+'">' +
+                var html = '<div class="ui right floated button disabled basic mini green" onClick="activePack(this)"  data-id="'+id+'">' +
                     '                        <i class="coffee icon"></i>打包中' +
                     '                    </div>' +
-                    '                    <div class="ui right floated blue button" onClick="cancelPack(this)"  data-id="'+id+'">' +
+                    '                    <div class="ui right floated blue button basic mini" onClick="cancelPack(this)"  data-id="'+id+'">' +
                     '                        <i class="reply icon"></i>取消' +
                     '                    </div>';
                 $(dom).parent(".right.floated.content").html(html);
@@ -71,14 +71,14 @@ function cancelPack(dom) {
         }),
         success: function (res) {
             if (res && res.success) {
-                var html = '<div class="ui right floated green button" onClick="activePack(this)"  data-id="'+id+'">' +
+                var html = '<div class="ui right floated green button basic mini" onClick="activePack(this)"  data-id="'+id+'">' +
                     '                        激活打包' +
                     '                    </div>' +
-                    '                    <div class="ui right floated red button" onClick="deletePack(this)"  data-id="'+id+'">' +
+                    '                    <div class="ui right floated red button basic mini" onClick="deletePack(this)"  data-id="'+id+'">' +
                     '                        <i class="trash alternate outline icon"></i>删除' +
                     '                    </div>' +
-                    '       <div class="ui right floated button" onClick="completePack(this)"  data-id="'+ id +'">' +
-                    '           <i class="coffee icon"></i>加入历史' +
+                    '       <div class="ui right floated button basic mini" onClick="completePack(this)"  data-id="'+ id +'">' +
+                    '           <i class="arrow down icon"></i>加入历史' +
                     '       </div>';
                 $(dom).parent(".right.floated.content").html(html);
             }

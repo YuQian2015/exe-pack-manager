@@ -1,7 +1,7 @@
 var imageSelectorObj = {
 };
 
-imageSelectorObj.pageSize = 20;
+imageSelectorObj.pageSize = 18;
 
 function selectImage(dom) {
     var url = $(dom).data('url');
@@ -51,18 +51,17 @@ function loadImage(page, successCallback) {
 
 function getImageHtml(list) {
     var fileHtml = "";
-    var addImage = '<a class="red card">' +
-        '<label class="image-upload" for="'+imageSelectorObj.id+'Holder"><i class="plus icon"></i></label>' +
-        '</div>' +
-        '</a>';
     $.each(list, function (i, item) {
         fileHtml += '<a class="red card">' +
-            '<div onclick="selectImage(this)" data-url="'+item.url+'"  data-id="'+item._id+'" class="image">' +
+            '<div data-url="'+item.url+'"  data-id="'+item._id+'" class="image">' +
             '<img src="'+item.url+'?imageView2/5/w/200/h/200" />' +
             '</div><p class="image-name">'+item.fileName+'</p>' +
             '</a>';
     });
-    $("#" + imageSelectorObj.id + "Content").html(addImage+fileHtml);
+    $("#" + imageSelectorObj.id + "Content").html(fileHtml);
+    $(".red.card .image").hover(function () {
+        selectImage(this)
+    })
 }
 
 function bindImageSelector(id) {

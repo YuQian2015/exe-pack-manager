@@ -31,7 +31,7 @@
 
     <div class="ui large modal" id="{{id}}Modal">
         <i class="close icon"></i>
-        <div class="header">图片选择</div>
+        <div class="header">图片选择<label class="ui approve blue button right floated" for="{{id}}Holder">添加图片</label></div>
             <div class="scrolling content">
                 <div id="{{id}}Content" class="ui six cards"></div>
             </div>

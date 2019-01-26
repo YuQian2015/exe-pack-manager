@@ -24,28 +24,28 @@
           <div class="item">
             <div class="right floated content">
                 {% if item.active %}
-                    <div class="ui right floated button disabled" onClick="activePack(this)"  data-id="{{ item._id }}">
+                    <div class="ui right floated button disabled basic green  mini" onClick="activePack(this)"  data-id="{{ item._id }}">
                         <i class="coffee icon"></i>打包中
                     </div>
-                    <div class="ui right floated blue button" onClick="cancelPack(this)"  data-id="{{ item._id }}">
+                    <div class="ui right floated blue button basic  mini" onClick="cancelPack(this)"  data-id="{{ item._id }}">
                         <i class="reply icon"></i>取消
                     </div>
                 {% else %}
-                    <div class="ui right floated green button" onClick="activePack(this)"  data-id="{{ item._id }}">
+                    <div class="ui right floated green button basic  mini" onClick="activePack(this)"  data-id="{{ item._id }}">
                         激活打包
                     </div>
-                    <div class="ui right floated red button" onClick="deletePack(this)"  data-id="{{ item._id }}">
+                    <div class="ui right floated red button basic  mini" onClick="deletePack(this)"  data-id="{{ item._id }}">
                         <i class="trash alternate outline icon"></i>删除
                     </div>
                     {% if item.complete != true %}
-                        <div class="ui right floated button" onClick="completePack(this)"  data-id="{{ item._id }}">
-                            <i class="coffee icon"></i>加入历史
+                        <div class="ui right floated button basic  mini" onClick="completePack(this)"  data-id="{{ item._id }}">
+                            <i class="arrow down icon"></i>加入历史
                         </div>
                     {% endif %}
                 {% endif %}
             </div>
             <div class="content">
-                <h2 class="ui header">【{{ helper.getPackType(item.type) }}】{{item.title}}&nbsp;&nbsp;&nbsp;&nbsp;{{helper.formatTime(item.createDate)}} </h2>
+                <h3 class="ui header">【{{ helper.getPackType(item.type) }}】{{item.title}}&nbsp;&nbsp;&nbsp;&nbsp;{{helper.formatTime(item.createDate)}} </h3>
             </div>
           </div>
         </div>
