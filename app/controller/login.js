@@ -38,7 +38,7 @@ class LoginController extends Controller {
                     const user = await ctx.service.user.findOneUser({userId: result.data.userId});
                     if(user) {
                         console.log('2222');
-                        const token = ctx.app.jwt.sign({ id: user._id }, ctx.app.config.jwt.secret, {
+                        const token = ctx.app.jwt.sign({ id: user._id, role: 'admin' }, ctx.app.config.jwt.secret, {
                             expiresIn: ctx.app.config.jwt.expiresIn
                         });
                         ctx.cookies.set('token', token);
@@ -61,7 +61,7 @@ class LoginController extends Controller {
                                 createDate: new Date(), // 创建时间
                                 updateDate: new Date(), // 修改时间
                             });
-                            const token = ctx.app.jwt.sign({ id: newUser._id }, ctx.app.config.jwt.secret, {
+                            const token = ctx.app.jwt.sign({ id: newUser._id, role: 'admin' }, ctx.app.config.jwt.secret, {
                                 expiresIn: ctx.app.config.jwt.expiresIn
                             });
                             ctx.cookies.set('token', token);
@@ -97,7 +97,7 @@ class LoginController extends Controller {
         try {
             const user = await ctx.service.user.findOneUser({password, userId});
             if(user) {
-                const token = ctx.app.jwt.sign({ userId: user._id }, ctx.app.config.jwt.secret, {
+                const token = ctx.app.jwt.sign({ id: user._id, role: 'admin' }, ctx.app.config.jwt.secret, {
                     expiresIn: ctx.app.config.jwt.expiresIn
                 });
                 ctx.cookies.set('token', token);

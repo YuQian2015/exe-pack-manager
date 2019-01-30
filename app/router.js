@@ -4,27 +4,27 @@ module.exports = app => {
         controller
     } = app;
 
-    router.get('/', app.jwt, controller.tenant.findTenant);
+    router.get('/', controller.tenant.findTenant);
     router.get('/login', controller.home.login);
-    router.get('/home', app.jwt, controller.tenant.findTenant);
-    router.get('/tenant', app.jwt, controller.tenant.findTenant);
-    router.get('/tenant/add', app.jwt, controller.tenant.addTenant);
-    router.get('/tenant/:id', app.jwt, controller.tenant.viewTenant);
-    router.get('/tenant/:id/edit', app.jwt, controller.tenant.editTenant);
-    router.post('/tenant/create', app.jwt, controller.tenant.createTenant);
+    router.get('/home', controller.tenant.findTenant);
+    router.get('/tenant', controller.tenant.findTenant);
+    router.get('/tenant/add', controller.tenant.addTenant);
+    router.get('/tenant/:id', controller.tenant.viewTenant);
+    router.get('/tenant/:id/edit', controller.tenant.editTenant);
+    router.post('/tenant/create', controller.tenant.createTenant);
 
-    router.post('/image/upload', app.jwt, controller.upload.uploadImage);
-    router.del('/image/delete/:id', app.jwt, controller.upload.deleteImage);
+    router.post('/image/upload', controller.upload.uploadImage);
+    router.del('/image/delete/:id', controller.upload.deleteImage);
 
     // 打包
-    router.get('/pack', app.jwt, controller.pack.findTenant);
-    router.get('/pack/list', app.jwt, controller.pack.findPack);
+    router.get('/pack', controller.pack.findTenant);
+    router.get('/pack/list', controller.pack.findPack);
 
     // ui
-    router.get('/ui', app.jwt, controller.ui.findUi);
+    router.get('/ui', controller.ui.findUi);
 
     // 文件
-    router.get('/file', app.jwt, controller.file.findFile);
+    router.get('/file', controller.file.findFile);
     
     // RESTful api
     router.resources('users', '/api/v1/users', controller.users); // 用户接口

@@ -15,7 +15,3 @@ exports.fullQiniu = {
   enable: true,
   package: 'egg-full-qiniu',
 };
-exports.jwt = {
-  enable: true,
-  package: "egg-jwt"
-};

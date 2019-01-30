@@ -31,13 +31,77 @@ exports.cluster = {
 }
 
 // 加载 errorHandler 中间件
-exports.middleware = ['errorHandler', 'auth'];
+exports.middleware = ['errorHandler', 'jwtHandler', 'jwt', 'role', 'authz', 'authzHandler'];
 // 只对 /api 前缀的 url 路径生效
 exports.errorHandler = {
-    match: '/api',
+    // match: '/api',
 };
-exports.auth = {
+// jwt配置
+exports.jwt = {
+    secret: 'exe-tools',
+    expiresIn: "8h",
+    ignore(ctx) {
+        // todo 目前先排除正在自动化使用到的接口
+        const reg = /\/api\/v1\/colors/g;
+        // console.log(ctx.request.url);
+        // console.log(reg.test(ctx.request.url));
+        if(ctx.request.url === '/') {
+            return true
+        }
+        if(reg.test(ctx.request.url)) {
+            return true
+        }
+        return reg.test(ctx.request.url);
+    },
+    getToken: function fromHeaderOrQuerystring(ctx) {
+        if (ctx.headers.authorization && ctx.headers.authorization.split(" ")[0] === "Bearer") {
+            return ctx.headers.authorization.split(" ")[1];
+        } else if (ctx.query && ctx.query.token) {
+            return ctx.query.token;
+        } else if (ctx.cookies.get('token')) {
+            return ctx.cookies.get('token');
+        } else {
+            return null;
+        }
+    },
+    unless: { path: ["/login","/api/v1/login"] }
+};
+
+
+exports.jwtHandler = {
     public: '/login',
+};
+
+exports.authzHandler = {
+    enable: true,
+    // ignore(ctx) {
+    //     const reg = /\/login|\/public|\/api\/v1\/colors/g;
+    //     // console.log(ctx.request.url);
+    //     // console.log(reg.test(ctx.request.url));
+    //     if(ctx.request.url === '/') {
+    //         return true
+    //     }
+    //     if(reg.test(ctx.request.url)) {
+    //         return true
+    //     }
+    //     return reg.test(ctx.request.url);
+    // }
+};
+
+exports.authz = {
+    enable: true,
+    ignore(ctx) {
+        const reg = /\/login|\/public|\/api\/v1\/colors/g;
+        // console.log(ctx.request.url);
+        // console.log(reg.test(ctx.request.url));
+        if(ctx.request.url === '/') {
+            return true
+        }
+        if(reg.test(ctx.request.url)) {
+            return true
+        }
+        return reg.test(ctx.request.url);
+    }
 };
 // module.exports = {
 //     // 加载 errorHandler 中间件
@@ -86,21 +150,4 @@ exports.fullQiniu = {
     //     baseUrl: null, // 用于拼接已上传文件的完整地址
     //     },
     // },
-};
-
-// jwt配置
-exports.jwt = {
-    secret: 'exe-tools',
-    expiresIn: "8h",
-    getToken: function fromHeaderOrQuerystring(ctx) {
-        if (ctx.headers.authorization && ctx.headers.authorization.split(" ")[0] === "Bearer") {
-            return ctx.headers.authorization.split(" ")[1];
-        } else if (ctx.query && ctx.query.token) {
-            return ctx.query.token;
-        } else if (ctx.cookies.get('token')) {
-            return ctx.cookies.get('token');
-        } else {
-            return null;
-        }
-    }
 };
