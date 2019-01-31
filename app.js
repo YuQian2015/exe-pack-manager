@@ -1,43 +1,14 @@
 const jwt = require('jsonwebtoken');
-const casbin = require('casbin');
-const path = require('path');
-const MongooseAdapter = require('@elastic.io/casbin-mongoose-adapter');
 
 class AppBootHook {
     constructor(app) {
         this.app = app;
     }
 
-    async configWillLoad() {
+    configWillLoad() {
         // 此时 config 文件已经被读取并合并，但是还并未生效
         // 这是应用层修改配置的最后时机
         // 注意：此函数只支持同步调用
-
-        // load the casbin model and policy from files, database is also supported.
-        const model = path.join(__dirname, 'config/keymatch_model.conf');
-        const policy = path.join(__dirname, 'config/keymatch_policy.csv');
-
-        const adapter = await MongooseAdapter.newAdapter('mongodb://admin:exe123@39.105.62.145:3001/exePack?authSource=exePack',
-            {
-                useNewUrlParser: true
-            });
-
-        this.app.config.authz.newEnforcer = async() => {
-            const enforcer = await casbin.newEnforcer(model, policy);
-            // const enforcer = await new casbin.newEnforcer(model, adapter);
-            // await adapter.addPermissionForUser('admin', '/pack/list', 'GET');
-            // 源码参考 https://github.com/casbin/node-casbin/blob/master/test/enforcer.test.ts
-            // 源码参考 https://github.com/elasticio/casbin-mongoose-adapter/blob/master/src/adapter.js
-            // console.log(await enforcer.addPolicy('admin', '/pack/list', 'GET'));
-            // console.log(await enforcer.addPolicy('admin', '/pack', 'GET'));
-            // console.log(await enforcer.addPolicy('admin', '/file', 'GET'));
-            // console.log(await enforcer.addPolicy('admin', '/ui', 'GET'));
-            // console.log(await enforcer.addPolicy('admin', '/home', 'GET'));
-            // console.log(await enforcer.addPolicy('admin', '/tenant/add', 'GET'));
-            // console.log(await enforcer.addPolicy('admin', '/api/v1/packs?workWx=true', 'GET'));
-            // console.log(enforcer.getPolicy());
-            return enforcer
-        }
 
         // 例如：参数中的密码是加密的，在此处进行解密
         // this.app.config.mysql.password = decrypt(this.app.config.mysql.password);
