@@ -28,6 +28,9 @@ module.exports = app => {
 
     // 管理
     router.get('/management', controller.management.findManagement);
+
+    // 升级数据库所使用
+    router.post('/update/tenant', controller.update.updateTenant);
     
     // RESTful api
     router.resources('users', '/api/v1/users', controller.users); // 用户接口
