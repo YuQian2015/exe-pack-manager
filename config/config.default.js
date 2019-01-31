@@ -1,11 +1,3 @@
-const casbin = require('casbin');
-const path = require('path');
-const MongooseAdapter = require('@elastic.io/casbin-mongoose-adapter');
-
-// load the casbin model and policy from files, database is also supported.
-const model = path.join(__dirname, 'keymatch_model.conf');
-const policy = path.join(__dirname, 'keymatch_policy.csv');
-
 exports.keys = 'exe-tools'; // Cookie 安全字符串>;
 
 // 添加 view 配置
@@ -93,29 +85,6 @@ exports.authz = {
             return true
         }
         return reg.test(ctx.request.url);
-    },
-    newEnforcer: async() => {
-
-
-        // const adapter = await MongooseAdapter.newAdapter('mongodb://admin:exe123@39.105.62.145:3001/exePack?authSource=exePack',
-        //     {
-        //         useNewUrlParser: true
-        //     });
-
-        const enforcer = await casbin.newEnforcer(model, policy);
-        // const enforcer = await Enforcer.newEnforcer(model, adapter);
-        // await adapter.addPermissionForUser('admin', '/pack/list', 'GET');
-        // 源码参考 https://github.com/casbin/node-casbin/blob/master/test/enforcer.test.ts
-        // 源码参考 https://github.com/elasticio/casbin-mongoose-adapter/blob/master/src/adapter.js
-        // console.log(await enforcer.addPolicy('admin', '/pack/list', 'GET'));
-        // console.log(await enforcer.addPolicy('admin', '/pack', 'GET'));
-        // console.log(await enforcer.addPolicy('admin', '/file', 'GET'));
-        // console.log(await enforcer.addPolicy('admin', '/ui', 'GET'));
-        // console.log(await enforcer.addPolicy('admin', '/home', 'GET'));
-        // console.log(await enforcer.addPolicy('admin', '/tenant/add', 'GET'));
-        // console.log(await enforcer.addPolicy('admin', '/api/v1/packs?workWx=true', 'GET'));
-        // console.log(enforcer.getPolicy());
-        return enforcer
     }
 };
 // module.exports = {
