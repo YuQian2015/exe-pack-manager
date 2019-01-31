@@ -7,6 +7,7 @@ module.exports = app => {
             type: Number,
             default: 1
         }, // 性别 1男 2女
+        role: { type: Schema.Types.ObjectId, ref: 'Role' },
         tel: String, // 用户电话号码
         userId: String, // 用户Id
         tenantId: String, // 租户ID

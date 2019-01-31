@@ -17,5 +17,20 @@
         <div id="userList" class="ui middle aligned divided list">
         </div>
     </div>
+
+        <div class="ui modal" id="userEdit">
+            <div class="header">用户管理</div>
+            <div class="content"><div class="field">
+                 <!--<label>省份</label>-->
+                 <select class="ui fluid dropdown" id="roleSelector" name="role">
+                     <option value="0">请选择角色</option>
+                 </select>
+                 </div>
+            </div>
+            <div class="actions">
+                <div class="ui cancel button">取消</div>
+                <div class="ui approve green button">确定</div>
+            </div>
+        </div>
   </body>
 </html>

@@ -2,8 +2,7 @@ const Controller = require('egg').Controller;
 
 // 定义创建接口的请求参数规则
 const createRule = {
-    tel: 'string',
-    password: 'string',
+    name: 'string'
 };
 
 // 定义删除接口的请求参数规则
@@ -11,15 +10,15 @@ const deleteRule = {
     id: 'string',
 };
 
-class UsersController extends Controller {
+class RolesController extends Controller {
 
-    async index () {
+    async index() {
         const ctx = this.ctx;
         try {
-            const user = await ctx.service.user.findUser({tenantKey: ctx.query.tenantKey});
+            const roleList = await ctx.service.role.findRole(ctx.query);
             ctx.body = {
                 code: 200,
-                data: user,
+                data: roleList,
                 success: true,
                 msg: ``
             };
@@ -33,14 +32,14 @@ class UsersController extends Controller {
         const ctx = this.ctx;
         ctx.validate(createRule, ctx.request.body);
         try {
-            const user = await ctx.service.user.findOneUser({tel: ctx.request.body.tel});
-            if(user) {
-                throw new Error('该手机号已经注册过用户');
+            const role = await ctx.service.role.findOneRole(ctx.request.body);
+            if(role) {
+               throw new Error('角色已经存在')
             }
-            const newUser = await ctx.service.user.createUser(ctx.request.body);
+            const newRole = await ctx.service.role.createRole(ctx.request.body);
             ctx.body = {
                 code: 200,
-                data: newUser,
+                data: newRole,
                 success: true,
                 msg: ``
             };
@@ -51,12 +50,10 @@ class UsersController extends Controller {
 
     };
 
-
     async update() {
         const ctx = this.ctx;
-        console.log(132132)
         ctx.validate(deleteRule, ctx.params);
-        const result = await this.ctx.service.user.updateOneUser({_id: ctx.params.id}, ctx.request.body);
+        const result = await this.ctx.service.role.updateOneRole({_id: ctx.params.id}, ctx.request.body);
         if(result.ok) {
             ctx.body = {
                 code: 200,
@@ -66,5 +63,21 @@ class UsersController extends Controller {
             }
         }
     }
+
+
+    // 删除租户的方法
+    async destroy() {
+        const ctx = this.ctx;
+        ctx.validate(deleteRule, ctx.params);
+        const result = await this.ctx.service.role.deleteRole(ctx.params.id);
+        if(result.ok) {
+            ctx.body = {
+                code: 200,
+                data: {},
+                success: true,
+                msg: `删除成功`
+            }
+        }
+    }
 }
-module.exports = UsersController;
+module.exports = RolesController;
