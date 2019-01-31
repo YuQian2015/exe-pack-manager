@@ -50,7 +50,7 @@ exports.jwt = {
     expiresIn: "8h",
     ignore(ctx) {
         // todo 目前先排除正在自动化使用到的接口
-        const reg = /\/api\/v1\/colors/g;
+        const reg = /\/api\/v1\/colors|\/autopack/g;
         // console.log(ctx.request.url);
         // console.log(reg.test(ctx.request.url));
         if(ctx.request.url === '/') {
