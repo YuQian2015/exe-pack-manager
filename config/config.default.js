@@ -39,7 +39,7 @@ exports.cluster = {
 }
 
 // 加载 errorHandler 中间件
-exports.middleware = ['errorHandler', 'jwtHandler', 'jwt', 'role', 'authz', 'authzHandler'];
+exports.middleware = ['errorHandler', 'jwtHandler', 'jwt', 'authz'];
 // 只对 /api 前缀的 url 路径生效
 exports.errorHandler = {
     // match: '/api',
@@ -78,22 +78,6 @@ exports.jwt = {
 
 exports.jwtHandler = {
     public: '/login',
-};
-
-exports.authzHandler = {
-    enable: true,
-    // ignore(ctx) {
-    //     const reg = /\/login|\/public|\/api\/v1\/colors/g;
-    //     // console.log(ctx.request.url);
-    //     // console.log(reg.test(ctx.request.url));
-    //     if(ctx.request.url === '/') {
-    //         return true
-    //     }
-    //     if(reg.test(ctx.request.url)) {
-    //         return true
-    //     }
-    //     return reg.test(ctx.request.url);
-    // }
 };
 
 exports.authz = {
