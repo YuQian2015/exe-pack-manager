@@ -22,7 +22,7 @@ class UserService extends Service {
 
     async findUser(params = {}) {
         return new Promise((resolve, reject) => {
-            this.ctx.model.User.find(params).sort('-createDate').lean().exec((err, docs) => {
+            this.ctx.model.User.find(params, 'name tenantId userId sex').sort('-createDate').lean().exec((err, docs) => {
                 if (err) {
                     console.log(err);
                     reject(err);

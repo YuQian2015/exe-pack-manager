@@ -3,6 +3,9 @@ module.exports = app => {
     const Schema = mongoose.Schema;
     const TenantSchema = new Schema({
         tenantId: String, // 租户ID
+        actualTenantId: { // 租户使用ID
+            type: String
+        },
         appName: { // 省份 默认职行力
             type: String,
             default: '职行力'

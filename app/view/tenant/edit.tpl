@@ -28,6 +28,9 @@
                     <div class="eight wide field">
                         <input type="text" name="tenantName" disabled value="{{tenant.tenantName}}" placeholder="输入租户名">
                     </div>
+                    <div class="four wide field">
+                        <input type="text" name="actualTenantId" value="{{tenant.actualTenantId}}" placeholder="租户共用ID（可选）">
+                    </div>
                 </div>
             </div>
 

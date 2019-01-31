@@ -3,6 +3,7 @@ const Service = require('egg').Service;
 
 class ColorService extends Service {
     async createColor(data) {
+
         return new Promise(async (resolve, reject) => {
             this.ctx.model.Color({
                 createDate: new Date(), // 创建时间
@@ -27,6 +28,19 @@ class ColorService extends Service {
                     reject(err);
                 } else {
                     resolve(docs);
+                }
+            });
+        })
+    }
+
+    async findOneColor(params = {}) {
+        return new Promise((resolve, reject) => {
+            this.ctx.model.Color.findOne(params).lean().exec((err, doc) => {
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                } else {
+                    resolve(doc);
                 }
             });
         })

@@ -27,8 +27,11 @@
                     <div class="four wide field">
                         <input type="text" name="appName" placeholder="输入应用名">
                     </div>
-                    <div class="eight wide field">
+                    <div class="four wide field">
                         <input type="text" name="tenantName" placeholder="输入租户名">
+                    </div>
+                    <div class="four wide field">
+                        <input type="text" name="actualTenantId" placeholder="租户共用ID（可选）">
                     </div>
                 </div>
             </div>

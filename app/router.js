@@ -25,6 +25,9 @@ module.exports = app => {
 
     // 文件
     router.get('/file', controller.file.findFile);
+
+    // 管理
+    router.get('/management', controller.management.findManagement);
     
     // RESTful api
     router.resources('users', '/api/v1/users', controller.users); // 用户接口

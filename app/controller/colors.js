@@ -34,7 +34,16 @@ class ColorsController extends Controller {
         const ctx = this.ctx;
         ctx.validate(createRule, ctx.request.body);
         try {
-            const newColor = await ctx.service.color.createColor(ctx.request.body);
+            let data = ctx.request.body;
+            const color = await ctx.service.color.findOneColor({tenantId: ctx.request.body.tenantId});
+            const tenant = await ctx.service.tenant.findOneTenant({tenantId: ctx.request.body.tenantId});
+            data.tenantInfo = tenant._id;
+            let newColor;
+            if(color) {
+                newColor = await ctx.service.color.updateOneColor({tenantId: ctx.request.body.tenantId}, data);
+            } else {
+                newColor = await ctx.service.color.createColor(ctx.request.body);
+            }
             ctx.body = {
                 code: 200,
                 data: newColor,
