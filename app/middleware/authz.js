@@ -14,8 +14,9 @@ module.exports = options => {
                     code: 403,
                     data: {},
                     success: false,
-                    msg: `没有操作权限`
-                }
+                    msg: `没有权限`
+                };
+                return
             }
             await next()
         } catch (e) {

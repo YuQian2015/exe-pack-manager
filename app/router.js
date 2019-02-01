@@ -43,5 +43,6 @@ module.exports = app => {
     router.resources('colors', '/api/v1/colors', controller.colors); // 颜色
     router.resources('autopacks', '/api/v1/autopacks', controller.autopacks); // 自动打包
     router.resources('roles', '/api/v1/roles', controller.roles); // 角色
+    router.resources('policies', '/api/v1/policies', controller.policies); // 策略
 
 };

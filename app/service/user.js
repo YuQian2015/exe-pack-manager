@@ -22,7 +22,7 @@ class UserService extends Service {
 
     async findUser(params = {}) {
         return new Promise((resolve, reject) => {
-            this.ctx.model.User.find(params, 'name tenantId userId sex').sort('-createDate').lean().exec((err, docs) => {
+            this.ctx.model.User.find(params, 'name userId tenantId role sex').sort('-createDate').lean().exec((err, docs) => {
                 if (err) {
                     console.log(err);
                     reject(err);
@@ -35,7 +35,7 @@ class UserService extends Service {
 
     async findOneUser(params = {}) {
         return new Promise((resolve, reject) => {
-            this.ctx.model.User.findOne(params).lean().exec((err, doc) => {
+            this.ctx.model.User.findOne(params, 'name userId tenantId role sex').lean().exec((err, doc) => {
                 if (err) {
                     console.log(err);
                     reject(err);
@@ -59,7 +59,21 @@ class UserService extends Service {
             });
         })
     }
+    async deleteUser(id) {
 
+        return new Promise((resolve, reject) => {
+            this.ctx.model.User.remove({
+                _id: id
+            }).lean().exec((err, docs) => {
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                } else {
+                    resolve(docs);
+                }
+            });
+        })
+    }
 }
 
 module.exports = UserService;

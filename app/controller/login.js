@@ -97,7 +97,12 @@ class LoginController extends Controller {
         try {
             const user = await ctx.service.user.findOneUser({password, userId});
             if(user) {
-                const token = ctx.app.jwt.sign({ id: user._id, role: 'admin' }, ctx.app.config.jwt.secret, {
+                console.log(user);
+                let role = 'visitor';
+                if(user.role) {
+                    role = user.role.name;
+                }
+                const token = ctx.app.jwt.sign({ id: user._id, role: role }, ctx.app.config.jwt.secret, {
                     expiresIn: ctx.app.config.jwt.expiresIn
                 });
                 ctx.cookies.set('token', token);

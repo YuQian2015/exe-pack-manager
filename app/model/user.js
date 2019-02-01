@@ -15,5 +15,11 @@ module.exports = app => {
         createDate: Date, // 创建时间
         updateDate: Date, // 修改时间
     });
+    UserSchema.pre('find', function () {
+        this.populate('role', 'name');
+    });
+    UserSchema.pre('findOne', function () {
+        this.populate('role', 'name');
+    });
     return mongoose.model('User', UserSchema);
 };

@@ -15,7 +15,8 @@ class RolesController extends Controller {
     async index() {
         const ctx = this.ctx;
         try {
-            const roleList = await ctx.service.role.findRole(ctx.query);
+            // const roleList = await ctx.service.role.findRole(ctx.query);
+            const roleList = await ctx.service.role.findRole();
             ctx.body = {
                 code: 200,
                 data: roleList,
