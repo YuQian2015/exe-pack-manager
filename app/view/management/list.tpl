@@ -25,6 +25,16 @@
                 <a class="item" data-tab="policies">协议列表</a>
               </div>
               <div class="ui bottom attached tab segment active" data-tab="roles">
+                  <div class="ui form">
+                      <div class="fields">
+                        <div class="twelve wide field">
+                          <input type="text" id="roleInput" placeholder="输入角色名">
+                        </div>
+                        <div class="four wide field">
+                          <button class="ui green button" onclick="addRole()">新增</button>
+                        </div>
+                      </div>
+                  </div>
                 <div id="roleList"></div>
               </div>
               <div class="ui bottom attached tab segment" data-tab="policies">

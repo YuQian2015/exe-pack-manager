@@ -129,6 +129,23 @@ function removePolicy(p, dom) {
     });
 }
 
+function addRole() {
+    $.ajax({
+        type: 'POST',
+        url: "/api/v1/roles",
+        contentType: 'application/json',
+        data: JSON.stringify({name: $("#roleInput").val()}),
+        success: function (res) {
+            if (res && res.success) {
+                successCallback && successCallback(res.data);
+            }
+        },
+        error: function (error) {
+            alert(error.msg);
+        }
+    });
+}
+
 $(document).ready(function () {
     $('.menu .item').tab(
         // {
@@ -182,8 +199,8 @@ $(document).ready(function () {
                     $.each(res.data, function (i, item) {
                         html+= '<div class="item">' +
                             '            <div class="right floated content">' +
-                            '              <div class="ui button red mini" onclick="deleteUser(this)" data-id="'+item._id+'">删除</div>' +
-                            '              <div class="ui button mini" onclick="editUser(this)" data-id="'+item._id+'">编辑</div>' +
+                            '              <div class="ui button red mini basic" onclick="deleteUser(this)" data-id="'+item._id+'">删除</div>' +
+                            '              <div class="ui button mini blue basic" onclick="editUser(this)" data-id="'+item._id+'">编辑</div>' +
                             '            </div>' +
                             '            <img class="ui avatar image" src="/images/avatar2/small/lena.png">' +
                             '            <div class="content">' + item.name + '(' +item.userId + ')' + '</div>' +
@@ -210,9 +227,12 @@ $(document).ready(function () {
         getPolicyList(function (list) {
             var policyListHtml = '';
             $.each(list, function (i, item) {
-                policyListHtml += '<div><button onclick="removePolicy(\''+item.join('00000')+'\', this)">删除</button><pre><code>'+JSON.stringify(item)+'</code></pre></div>'
+                policyListHtml += '<div><button class="right floated ui button red small" onclick="removePolicy(\''+item.join('00000').replace(/\//g,'11111').replace(/\*/g,'22222')+'\', this)">删除</button><pre><code>'+JSON.stringify(item)+'</code></pre></div>'
             });
             $("#policyList").after(policyListHtml);
+            document.querySelectorAll('pre code').forEach(function (block) {
+                hljs.highlightBlock(block);
+            });
         })
     }
 });
