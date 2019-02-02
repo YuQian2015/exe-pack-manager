@@ -21,148 +21,86 @@ function editUser(dom) {
                     role: $("#roleSelector").val()
                 };
 
-
-                $.ajax({
-                    type: 'PUT',
-                    url: "/api/v1/users/" + editUserId,
-                    contentType: 'application/json',
-                    data: JSON.stringify(result),
-                    success: function (res) {
-                        if (res && res.success) {
-                            $("#userEdit").modal('hide');
-                        }
-                    },
-                    error: function (error) {
-                        alert(error.msg);
-                    }
-                });
-
-
-
+                requestHandler(
+                    'PUT',
+                    "/api/v1/users/" + editUserId,
+                    result,
+                    function (data) {
+                        $("#userEdit").modal('hide');
+                    });
                 return false; // 返回false 阻止被关闭
             }
         }).modal('show');
 }
 
 function deleteUser(dom) {
-    $.ajax({
-        type: 'DELETE',
-        url: "/api/v1/users/"+$(dom).data("id"),
-        contentType: 'application/json',
-        data: {},
-        success: function (res) {
-            if (res && res.success) {
-                $(dom).parents('.item').remove();
-            }
-        },
-        error: function (error) {
-            alert(error.msg);
-        }
-    });
+    requestHandler(
+        'DELETE',
+        "/api/v1/users/"+$(dom).data("id"),
+        {},
+        function (data) {
+            $(dom).parents('.item').remove();
+        });
 }
 
 function getRoleList(successCallback) {
-    $.ajax({
-        type: 'GET',
-        url: "/api/v1/roles",
-        contentType: 'application/json',
-        data: '',
-        success: function (res) {
-            if (res && res.success) {
-                successCallback && successCallback(res.data);
-            }
-        },
-        error: function (error) {
-            alert(error.msg);
-        }
-    });
+    requestHandler(
+        'GET',
+        "/api/v1/roles",
+        '',
+        function (data) {
+            successCallback && successCallback(data);
+        });
 }
 
 function getPolicyList(successCallback) {
-    $.ajax({
-        type: 'GET',
-        url: "/api/v1/policies",
-        contentType: 'application/json',
-        data: '',
-        success: function (res) {
-            if (res && res.success) {
-                successCallback && successCallback(res.data);
-            }
-        },
-        error: function (error) {
-            alert(error.msg);
-        }
-    });
+    requestHandler(
+        'GET',
+        "/api/v1/policies",
+        '',
+        function (data) {
+            successCallback && successCallback(data);
+        });
 }
 
 function addPolicy(successCallback) {
-    $.ajax({
-        type: 'POST',
-        url: "/api/v1/policies",
-        contentType: 'application/json',
-        data: JSON.stringify({policy: JSON.parse($("#policyInput").val())}),
-        success: function (res) {
-            if (res && res.success) {
-                successCallback && successCallback(res.data);
-            }
-        },
-        error: function (error) {
-            alert(error.msg);
-        }
-    });
+    requestHandler(
+        'POST',
+        "/api/v1/policies",
+        {policy: JSON.parse($("#policyInput").val())},
+        function (data) {
+            successCallback && successCallback(data);
+        });
 }
 
 function removePolicy(p, dom) {
-    $.ajax({
-        type: 'DELETE',
-        url: "/api/v1/policies/"+p,
-        contentType: 'application/json',
-        data: {},
-        success: function (res) {
-            if (res && res.success) {
-                $(dom).parent().remove();
-            }
-        },
-        error: function (error) {
-            alert(error.msg);
-        }
-    });
+    requestHandler(
+        'DELETE',
+        "/api/v1/policies/"+p,
+        {},
+        function (data) {
+            $(dom).parent().remove();
+        });
 }
 
 function addRole() {
-    $.ajax({
-        type: 'POST',
-        url: "/api/v1/roles",
-        contentType: 'application/json',
-        data: JSON.stringify({name: $("#roleInput").val()}),
-        success: function (res) {
-            if (res && res.success) {
-                $("#roleList").prepend('<a class="ui label">' + res.data.name+ ' <i data-id="'+res.data._id+'" onclick="releteRole(this)" class="icon close"></i></a>');
-            }
-        },
-        error: function (error) {
-            if(error && error.responseJSON ) {
-                alert(error.responseJSON.msg);
-            }
-        }
-    });
+    requestHandler(
+        'POST',
+        "/api/v1/roles",
+        {name: $("#roleInput").val()},
+        function (data) {
+            $("#roleList").prepend('<a class="ui label">' + data.name+ ' <i data-id="'+data._id+'" onclick="deleteRole(this)" class="icon close"></i></a>');
+        });
 }
 
-function releteRole(dom) {
-    $.ajax({
-        type: 'DELETE',
-        url: "/api/v1/roles/"+$(dom).data("id"),
-        contentType: 'application/json',
-        data: {},
-        success: function (res) {
-            if (res && res.success) {
-                $(dom).parents('.ui.label').remove();
-            }
-        },
-        error: function (error) {
-            alert(error.msg);
-        }
-    });
+function deleteRole(dom) {
+    requestHandler(
+        'DELETE',
+        "/api/v1/roles/"+$(dom).data("id"),
+        {},
+        function (data) {
+            $(dom).parents('.ui.label').remove();
+        });
 }
 
 $(document).ready(function () {
@@ -207,38 +145,30 @@ $(document).ready(function () {
         // }
     );
     if(window.location.href.indexOf('/management') > -1) {
-        $.ajax({
-            type: 'GET',
-            url: "/api/v1/users",
-            contentType: 'application/json',
-            data: '',
-            success: function (res) {
-                if (res && res.success) {
-                    var html = '';
-                    $.each(res.data, function (i, item) {
-                        html+= '<div class="item">' +
-                            '            <div class="right floated content">' +
-                            '              <div class="ui button red mini basic" onclick="deleteUser(this)" data-id="'+item._id+'">删除</div>' +
-                            '              <div class="ui button mini blue basic" onclick="editUser(this)" data-id="'+item._id+'">编辑</div>' +
-                            '            </div>' +
-                            '            <img class="ui avatar image" src="/images/avatar2/small/lena.png">' +
-                            '            <div class="content">' + item.name + '(' +item.userId + ')' + ' - <a class="ui mini label">' + (item.role?item.role.name:'visitor') + '</a></div>' +
-                            '</div>';
-                    });
-                    $("#userList").html(html)
-                }
-            },
-            error: function (error) {
-                alert(error.msg);
-            }
-        });
-
+        requestHandler(
+            'GET',
+            "/api/v1/users",
+            '',
+            function (data) {
+                var html = '';
+                $.each(data, function (i, item) {
+                    html+= '<div class="item">' +
+                        '            <div class="right floated content">' +
+                        '              <div class="ui button red mini basic" onclick="deleteUser(this)" data-id="'+item._id+'">删除</div>' +
+                        '              <div class="ui button mini blue basic" onclick="editUser(this)" data-id="'+item._id+'">编辑</div>' +
+                        '            </div>' +
+                        '            <img class="ui avatar image" src="/images/avatar2/small/lena.png">' +
+                        '            <div class="content">' + item.name + '(' +item.userId + ')' + ' - <a class="ui mini label">' + (item.role?item.role.name:'visitor') + '</a></div>' +
+                        '</div>';
+                });
+                $("#userList").html(html)
+            });
         getRoleList(function (list) {
             var html = '';
             var roleListHtml = '';
             $.each(list, function (i, item) {
                 html += '<option value="'+item._id+'">'+item.name+'</option>';
-                roleListHtml += '<a class="ui label">' + item.name+ ' <i data-id="'+item._id+'" onclick="releteRole(this)" class="icon close"></i></a>';
+                roleListHtml += '<a class="ui label">' + item.name+ ' <i data-id="'+item._id+'" onclick="deleteRole(this)" class="icon close"></i></a>';
             });
             $("#roleSelector option").after(html);
             $("#roleList").append(roleListHtml);
