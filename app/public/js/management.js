@@ -137,7 +137,26 @@ function addRole() {
         data: JSON.stringify({name: $("#roleInput").val()}),
         success: function (res) {
             if (res && res.success) {
-                successCallback && successCallback(res.data);
+                $("#roleList").prepend('<a class="ui label">' + res.data.name+ ' <i data-id="'+res.data._id+'" onclick="releteRole(this)" class="icon close"></i></a>');
+            }
+        },
+        error: function (error) {
+            if(error && error.responseJSON ) {
+                alert(error.responseJSON.msg);
+            }
+        }
+    });
+}
+
+function releteRole(dom) {
+    $.ajax({
+        type: 'DELETE',
+        url: "/api/v1/roles/"+$(dom).data("id"),
+        contentType: 'application/json',
+        data: {},
+        success: function (res) {
+            if (res && res.success) {
+                $(dom).parents('.ui.label').remove();
             }
         },
         error: function (error) {
@@ -203,7 +222,7 @@ $(document).ready(function () {
                             '              <div class="ui button mini blue basic" onclick="editUser(this)" data-id="'+item._id+'">编辑</div>' +
                             '            </div>' +
                             '            <img class="ui avatar image" src="/images/avatar2/small/lena.png">' +
-                            '            <div class="content">' + item.name + '(' +item.userId + ')' + '</div>' +
+                            '            <div class="content">' + item.name + '(' +item.userId + ')' + ' - <a class="ui mini label">' + (item.role?item.role.name:'visitor') + '</a></div>' +
                             '</div>';
                     });
                     $("#userList").html(html)
@@ -219,15 +238,15 @@ $(document).ready(function () {
             var roleListHtml = '';
             $.each(list, function (i, item) {
                 html += '<option value="'+item._id+'">'+item.name+'</option>';
-                roleListHtml += '<div>'+item.name+'</div>'
+                roleListHtml += '<a class="ui label">' + item.name+ ' <i data-id="'+item._id+'" onclick="releteRole(this)" class="icon close"></i></a>';
             });
             $("#roleSelector option").after(html);
-            $("#roleList").after(roleListHtml);
+            $("#roleList").append(roleListHtml);
         });
         getPolicyList(function (list) {
             var policyListHtml = '';
             $.each(list, function (i, item) {
-                policyListHtml += '<div><button class="right floated ui button red small" onclick="removePolicy(\''+item.join('00000').replace(/\//g,'11111').replace(/\*/g,'22222')+'\', this)">删除</button><pre><code>'+JSON.stringify(item)+'</code></pre></div>'
+                policyListHtml += '<div><button class="right floated ui button red small" onclick="removePolicy(\''+item.join('00000').replace(/\//g,'{1}').replace(/\*/g,'{2}')+'\', this)">删除</button><pre><code>'+JSON.stringify(item)+'</code></pre></div>'
             });
             $("#policyList").after(policyListHtml);
             document.querySelectorAll('pre code').forEach(function (block) {

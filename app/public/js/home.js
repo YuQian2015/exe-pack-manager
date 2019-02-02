@@ -1,3 +1,23 @@
+function requestHandler(method, url, data, successCallback) {
+    $.ajax({
+        type: method,
+        url: url,
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (res) {
+            if (res && res.success) {
+                successCallback && successCallback(res.data);
+            }
+        },
+        error: function (error) {
+            if(error && error.responseJSON) {
+                alert(error.responseJSON.msg);
+            } else {
+                alert('请求失败');
+            }
+        }
+    });
+}
 
 function login() {
     var result = {};

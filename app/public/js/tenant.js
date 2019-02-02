@@ -19,20 +19,13 @@ function updateTenant(id) {
             result[data.name] = data.value
         }
     });
-    $.ajax({
-        type: 'PUT',
-        url: "/api/v1/tenants/" + id,
-        contentType: 'application/json',
-        data: JSON.stringify(result),
-        success: function (res) {
-            if (res && res.success) {
-                window.history.back(-1);
-            }
-        },
-        error: function (error) {
-            alert(error.msg);
-        }
-    });
+    requestHandler(
+        'PUT',
+        "/api/v1/tenants/" + id,
+        result,
+        function (data) {
+            window.history.back(-1);
+        });
 }
 
 function deleteTenant(dom) {
@@ -50,20 +43,13 @@ function deleteTenant(dom) {
 
 
     function deleteTenantFunc(id) {
-        $.ajax({
-            type: 'DELETE',
-            url: "/api/v1/tenants/" + id,
-            contentType: 'application/json',
-            data: {},
-            success: function (res) {
-                if (res && res.success) {
-                    window.history.back(-1);
-                }
-            },
-            error: function (error) {
-                alert(error.msg);
-            }
-        });
+        requestHandler(
+            'DELETE',
+            "/api/v1/tenants/" + id,
+            {},
+            function (data) {
+                window.history.back(-1);
+            });
     }
 }
 
@@ -80,22 +66,15 @@ function abateTenant(dom) {
     });
 
     function abateTenantFunc(id) {
-        $.ajax({
-            type: 'PUT',
-            url: "/api/v1/tenants/" + id,
-            contentType: 'application/json',
-            data: JSON.stringify({
+        requestHandler(
+            'PUT',
+            "/api/v1/tenants/" + id,
+            {
                 valid: false
-            }),
-            success: function (res) {
-                if (res && res.success) {
-                    window.location.reload();
-                }
             },
-            error: function (error) {
-                alert(error.msg);
-            }
-        });
+            function (data) {
+                window.location.reload();
+            });
     }
 }
 
@@ -109,33 +88,25 @@ function editTenant(id) {
 
 function lockTenant(id, dom) {
     var isLocked = $(dom).hasClass('unlock');
-    console.log(isLocked);
-    $.ajax({
-        type: 'PUT',
-        url: "/api/v1/tenants/" + id,
-        contentType: 'application/json',
-        data: JSON.stringify({
+    requestHandler(
+        'PUT',
+        "/api/v1/tenants/" + id,
+        {
             isLocked: isLocked
-        }),
-        success: function (res) {
-            if (res && res.success) {
-                if (isLocked) {
-                    $(dom).attr({
-                        'class': 'lock icon',
-                        'data-content': '已锁定，不能修改'
-                    });
-                } else {
-                    $(dom).attr({
-                            'class': 'unlock icon',
-                            'data-content': '锁定租户'
-                        });
-                }
-            }
         },
-        error: function (error) {
-            alert(error.msg);
-        }
-    });
+        function (data) {
+            if (isLocked) {
+                $(dom).attr({
+                    'class': 'lock icon',
+                    'data-content': '已锁定，不能修改'
+                });
+            } else {
+                $(dom).attr({
+                    'class': 'unlock icon',
+                    'data-content': '锁定租户'
+                });
+            }
+        });
 }
 
 function setColor(dom) {
@@ -145,108 +116,71 @@ function setColor(dom) {
     var secondary = $themeSetting.find('input[name="secondary"]').val();
     var tenantId = $themeSetting.find('input[name="tenantId"]').val();
     if($(dom).data('theme-id')) {
-        $.ajax({
-            type: 'PUT',
-            url: "/api/v1/themes/" + $(dom).data('theme-id'),
-            contentType: 'application/json',
-            data: JSON.stringify({
+        requestHandler(
+            'PUT',
+            "/api/v1/themes/" + $(dom).data('theme-id'),
+            {
                 brand: brand, // 品牌颜色
                 primary: primary, // 主要颜色 使用于header
                 secondary: secondary, // 次要颜色 使用于footer
-            }),
-            success: function (res) {
-                if (res && res.success) {
-                    window.location.reload();
-                }
             },
-            error: function (error) {
-                alert(error.msg);
-            }
-        });
+            function (data) {
+                window.location.reload();
+            });
         return;
     }
-    $.ajax({
-        type: 'POST',
-        url: "/api/v1/themes/",
-        contentType: 'application/json',
-        data: JSON.stringify({
+
+    requestHandler(
+        'POST',
+        "/api/v1/themes/",
+        {
             brand: brand, // 品牌颜色
             primary: primary, // 主要颜色 使用于header
             secondary: secondary, // 次要颜色 使用于footer
-        }),
-        success: function (res) {
-            if (res && res.success) {
-                console.log(res);
-                $.ajax({
-                    type: 'PUT',
-                    url: "/api/v1/tenants/" + tenantId,
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        theme: [res.data._id]
-                    }),
-                    success: function (res) {
-                        if (res && res.success) {
-                            window.location.reload();
-                        }
-                    },
-                    error: function (error) {
-                        alert(error.msg);
-                    }
-                });
-            }
         },
-        error: function (error) {
-            alert(error.msg);
-        }
-    });
+        function (data) {
+            requestHandler(
+                'PUT',
+                "/api/v1/tenants/" + tenantId,
+                {
+                    theme: [data._id]
+                },
+                function (data) {
+                    window.location.reload();
+                });
+        });
 }
 
 function saveTimeline(html, id, callback) {
-
-    $.ajax({
-        type: 'POST',
-        url: "/api/v1/timelines/",
-        contentType: 'application/json',
-        data: JSON.stringify({
+    requestHandler(
+        'POST',
+        "/api/v1/timelines",
+        {
             content: html,
             tenantKey: id
-        }),
-        success: function (res) {
-            if (res && res.success) {
-                console.log(res);
-                if(callback && typeof callback == 'function') {
-                    callback(res.data);
-                }
-            }
         },
-        error: function (error) {
-            alert(error.msg);
-        }
-    });
+        function (data) {
+            if(callback && typeof callback == 'function') {
+                callback(res.data);
+            }
+        });
 }
 
 function loadTimeline(id) {
-    $.ajax({
-        type: 'GET',
-        url: "/api/v1/timelines?tenantKey="+id,
-        contentType: 'application/json',
-        data: '',
-        success: function (res) {
-            if (res && res.success) {
-                if(res && res.success && res.data.length) {
-                    var html = '';
-                    $.each(res.data, function (i, item) {
-                        html += '<div class="create-date">'+moment(item.createDate).format('YYYY-MM-DD HH:mm:ss')+'</div>' +
-                            '<div class="timeline-content">'+item.content+'</div>';
-                    })
-                }
-                $("#timeline").prepend(html)
+    requestHandler(
+        'GET',
+        "/api/v1/timelines?tenantKey="+id,
+        '',
+        function (data) {
+            if(data.length) {
+                var html = '';
+                $.each(data, function (i, item) {
+                    html += '<div class="create-date">'+moment(item.createDate).format('YYYY-MM-DD HH:mm:ss')+'</div>' +
+                        '<div class="timeline-content">'+item.content+'</div>';
+                })
             }
-        },
-        error: function (error) {
-            alert(error.msg);
-        }
-    });
+            $("#timeline").prepend(html)
+        });
 }
 $(document).ready(function () {
     // show dropdown on hover

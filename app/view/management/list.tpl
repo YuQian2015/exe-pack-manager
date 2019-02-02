@@ -35,7 +35,7 @@
                         </div>
                       </div>
                   </div>
-                <div id="roleList"></div>
+                  <div class="ui blue labels" id="roleList"></div>
               </div>
               <div class="ui bottom attached tab segment" data-tab="policies">
                     <div class="ui form">
