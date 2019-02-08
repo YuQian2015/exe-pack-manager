@@ -15,3 +15,8 @@ exports.fullQiniu = {
   enable: true,
   package: 'egg-full-qiniu',
 };
+// 设置开启cors
+exports.cors = {
+  enable: true,
+  package: 'egg-cors',
+};

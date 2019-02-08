@@ -21,6 +21,18 @@ exports.security = {
         enable: false,
     }
 }
+// exports.security = {
+//     csrf: {
+//         enable: false,
+//         ignoreJSON: true
+//     },
+//     domainWhiteList: '*'
+// };
+
+exports.cors = {
+    origin:'*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+};
 
 exports.cluster = {
     listen: {
