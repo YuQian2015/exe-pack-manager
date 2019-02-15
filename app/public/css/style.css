@@ -194,6 +194,7 @@
 .pack-box {
     margin-bottom: 20px;
     box-shadow: 0 2px 4px #bbbbbb;
+    padding-top: 1rem;
 }
 .pack-tenant-code {
     margin: 0;

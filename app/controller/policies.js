@@ -65,7 +65,7 @@ class PoliciesController extends Controller {
     async destroy() {
         const ctx = this.ctx;
         ctx.validate(deleteRule, ctx.params);
-        const policy = ctx.params.id.replace(/\{1\}/g,'/').replace(/\{2\}/g,'*').split('00000');
+        const policy = ctx.params.id.replace(/\{1\}/g,'/').replace(/\{2\}/g,'*').replace(/\{3\}/g,'?').split('00000');
         const result = await ctx.app.enforcer.removePolicy(...policy);
         if(result) {
             ctx.body = {

@@ -176,7 +176,7 @@ $(document).ready(function () {
         getPolicyList(function (list) {
             var policyListHtml = '';
             $.each(list, function (i, item) {
-                policyListHtml += '<div><button class="right floated ui button red small" onclick="removePolicy(\''+item.join('00000').replace(/\//g,'{1}').replace(/\*/g,'{2}')+'\', this)">删除</button><pre><code>'+JSON.stringify(item)+'</code></pre></div>'
+                policyListHtml += '<div><button class="right floated ui button red small" onclick="removePolicy(\''+item.join('00000').replace(/\//g,'{1}').replace(/\*/g,'{2}').replace(/\?/g,'{3}')+'\', this)">删除</button><pre><code>'+JSON.stringify(item)+'</code></pre></div>'
             });
             $("#policyList").after(policyListHtml);
             document.querySelectorAll('pre code').forEach(function (block) {

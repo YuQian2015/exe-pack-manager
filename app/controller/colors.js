@@ -16,14 +16,20 @@ class ColorsController extends Controller {
     async index () {
         const ctx = this.ctx;
         try {
-            const colors = await ctx.service.color.findColor();
+            let colors;
+            if(ctx.query && ctx.query.type) {
+                if(ctx.query.type === '1') {
+                    colors = await ctx.service.color.findTestPackColor({testing: true});
+                }
+            } else {
+                colors = await ctx.service.color.findColor();
+            }
             ctx.body = {
                 code: 200,
                 data: colors,
                 success: true,
                 msg: ``
             };
-            console.log(colors);
         }
         catch (err) {
             throw err;

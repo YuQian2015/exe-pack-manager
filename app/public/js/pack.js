@@ -41,6 +41,47 @@ function activePack(dom) {
         });
 }
 
+function testPack(dom) {
+    var id = $(dom).data('id');
+    requestHandler(
+        'PUT',
+        "/api/v1/packs/" + id,
+        {
+            testing: true
+        },
+        function (data) {
+            var html = '<div class="ui right floated button basic  mini" onClick="removeTestPack(this)"  data-id="'+id+'">' +
+                '移出测试' +
+                '</div>';
+            $(dom).parent(".right.floated.content").html(html);
+        });
+}
+
+function removeTestPack(dom) {
+    var id = $(dom).data('id');
+    requestHandler(
+        'PUT',
+        "/api/v1/packs/" + id,
+        {
+            testing: false
+        },
+        function (data) {
+            var html = '<div class="ui right floated green button basic  mini" onClick="activePack(this)"  data-id="'+id+'">' +
+                '                        激活打包' +
+                '                    </div>' +
+                '                    <div class="ui right floated red button basic  mini" onClick="deletePack(this)"  data-id="'+id+'">' +
+                '                        <i class="trash alternate outline icon"></i>删除' +
+                '                    </div>' +
+                '                    <div class="ui right floated violet button basic  mini" onClick="testPack(this)"  data-id="'+id+'">' +
+                '                        加入测试' +
+                '                    </div>' +
+                '                    <div class="ui right floated button basic  mini" onClick="completePack(this)"  data-id="'+id+'">' +
+                '                            <i class="arrow down icon"></i>加入历史' +
+                '                        </div>';
+            $(dom).parent(".right.floated.content").html(html);
+        });
+}
+
 function cancelPack(dom) {
     var id = $(dom).data('id');
     requestHandler(

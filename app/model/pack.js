@@ -10,6 +10,10 @@ module.exports = app => {
             type: Boolean,
             default: false
         }, // 是否被激活打包
+        testing: {
+            type: Boolean,
+            default: false
+        }, // 是否被激活自动测试
         complete: {
             type: Boolean,
             default: false

@@ -21,7 +21,7 @@
     {% for item in list.list %}
     <div class="pack-box">
         <div class="ui middle aligned divided list">
-          <div class="item">
+          <div class="item" style="padding-right: 10px;">
             <div class="right floated content">
                 {% if item.active %}
                     <div class="ui right floated button disabled basic green  mini" onClick="activePack(this)"  data-id="{{ item._id }}">
@@ -31,15 +31,25 @@
                         <i class="reply icon"></i>取消
                     </div>
                 {% else %}
-                    <div class="ui right floated green button basic  mini" onClick="activePack(this)"  data-id="{{ item._id }}">
-                        激活打包
-                    </div>
-                    <div class="ui right floated red button basic  mini" onClick="deletePack(this)"  data-id="{{ item._id }}">
-                        <i class="trash alternate outline icon"></i>删除
-                    </div>
-                    {% if item.complete != true %}
-                        <div class="ui right floated button basic  mini" onClick="completePack(this)"  data-id="{{ item._id }}">
-                            <i class="arrow down icon"></i>加入历史
+                    {% if item.testing != true %}
+                        <div class="ui right floated green button basic  mini" onClick="activePack(this)"  data-id="{{ item._id }}">
+                            激活打包
+                        </div>
+                        <div class="ui right floated red button basic  mini" onClick="deletePack(this)"  data-id="{{ item._id }}">
+                            <i class="trash alternate outline icon"></i>删除
+                        </div>
+                        <div class="ui right floated violet button basic  mini" onClick="testPack(this)"  data-id="{{ item._id }}">
+                            加入测试
+                        </div>
+                        {% if item.complete != true %}
+                            <div class="ui right floated button basic  mini" onClick="completePack(this)"  data-id="{{ item._id }}">
+                                <i class="arrow down icon"></i>加入历史
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    {% if item.testing == true %}
+                        <div class="ui right floated button basic  mini" onClick="removeTestPack(this)"  data-id="{{ item._id }}">
+                            移出测试
                         </div>
                     {% endif %}
                 {% endif %}
