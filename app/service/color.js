@@ -55,6 +55,8 @@ class ColorService extends Service {
                                 resolve(docs);
                             }
                         });
+                    } else {
+                        resolve([]);
                     }
                 }
             });
