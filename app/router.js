@@ -29,6 +29,9 @@ module.exports = app => {
     // 管理
     router.get('/management', controller.management.findManagement);
 
+    // 原生
+    router.get('/native', controller.native.findNative);
+
     // 升级数据库所使用
     router.post('/update/tenant', controller.update.updateTenant);
     
@@ -44,5 +47,6 @@ module.exports = app => {
     router.resources('autopacks', '/api/v1/autopacks', controller.autopacks); // 自动打包
     router.resources('roles', '/api/v1/roles', controller.roles); // 角色
     router.resources('policies', '/api/v1/policies', controller.policies); // 策略
+    router.resources('keepers', '/api/v1/keepers', controller.keepers); // 保管
 
 };

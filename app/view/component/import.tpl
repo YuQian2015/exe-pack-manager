@@ -45,4 +45,5 @@
     <script src="/public/js/ui.js"></script>
     <script src="/public/js/management.js"></script>
     <script src="/public/js/image.js"></script>
+    <script src="/public/js/native.js"></script>
 {% endblock %}
