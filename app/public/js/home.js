@@ -3,7 +3,7 @@ function requestHandler(method, url, data, successCallback) {
         type: method,
         url: url,
         contentType: 'application/json',
-        data: JSON.stringify(data),
+        data: data?JSON.stringify(data):data,
         success: function (res) {
             if (res && res.success) {
                 successCallback && successCallback(res.data);
