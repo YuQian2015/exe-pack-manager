@@ -34,11 +34,12 @@ class LoginController extends Controller {
                 console.log('-------------');
                 if(result.data.ticket && result.data.ticket.replace(/%2f/g,"/").replace(/%3f/g,"?").replace(/%2b/g,"+").replace(/%3d/g,"=").replace
                 (/%26/g,"&") === ctx.query.ticket) {
-                    console.log('1111');
-                    const user = await ctx.service.user.findOneUser({userId: result.data.userId});
+                    console.log('用户扫码验证成功');
+                    const user = await ctx.service.user.findOneUser({userId: result.data.userCode});
                     if(user) {
-                        console.log('2222');
-                        const token = ctx.app.jwt.sign({ id: user._id, role: 'admin' }, ctx.app.config.jwt.secret, {
+                        console.log('系统存在用户');
+                        console.log(user)
+                        const token = ctx.app.jwt.sign({ id: user._id, role: user.role?user.role.name:'visitor' }, ctx.app.config.jwt.secret, {
                             expiresIn: ctx.app.config.jwt.expiresIn
                         });
                         ctx.cookies.set('token', token);
@@ -51,7 +52,7 @@ class LoginController extends Controller {
                             msg: ``
                         };
                     } else {
-                        console.log('33333');
+                        console.log('系统不存在用户');
                         try {
                             const newUser = await ctx.service.user.createUser({
                                 name: result.data.name, // 姓名
@@ -61,7 +62,7 @@ class LoginController extends Controller {
                                 createDate: new Date(), // 创建时间
                                 updateDate: new Date(), // 修改时间
                             });
-                            const token = ctx.app.jwt.sign({ id: newUser._id, role: 'admin' }, ctx.app.config.jwt.secret, {
+                            const token = ctx.app.jwt.sign({ id: newUser._id, role: 'visitor' }, ctx.app.config.jwt.secret, {
                                 expiresIn: ctx.app.config.jwt.expiresIn
                             });
                             ctx.cookies.set('token', token);
@@ -123,5 +124,18 @@ class LoginController extends Controller {
         }
 
     };
+
+
+    // 其他接口
+    async logout() {
+        const ctx = this.ctx;
+        ctx.cookies.set('token', null);
+        ctx.body = {
+            code: 200,
+            data: {},
+            success: true,
+            msg: `退出登录`
+        }
+    }
 }
 module.exports = LoginController;

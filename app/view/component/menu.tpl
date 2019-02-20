@@ -11,7 +11,7 @@
         <a class="ui right floated dropdown item">用户信息 <i class="dropdown icon"></i>
             <div class="menu">
                 <div class="item">用户信息</div>
-                <div class="item">退出</div>
+                <div class="item" onclick="logout()">退出</div>
             </div>
         </a>
     </div>

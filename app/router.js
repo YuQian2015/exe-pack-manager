@@ -34,6 +34,9 @@ module.exports = app => {
 
     // 升级数据库所使用
     router.post('/update/tenant', controller.update.updateTenant);
+
+    // api
+    router.post('/public/logout', controller.login.logout);
     
     // RESTful api
     router.resources('users', '/api/v1/users', controller.users); // 用户接口

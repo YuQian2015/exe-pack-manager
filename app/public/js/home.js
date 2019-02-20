@@ -40,6 +40,24 @@ function login() {
     });
 }
 
+function logout() {
+    $.ajax({
+        type: 'POST',
+        url: "/public/logout",
+        contentType: 'application/json',
+        data: JSON.stringify({}),
+        success: function (res) {
+            if (res && res.success) {
+                localStorage.removeItem('token');
+                window.location.href = 'login';
+            }
+        },
+        error: function (error) {
+            alert(error.msg);
+        }
+    });
+}
+
 function getAppId () {
     $.ajax({
         type: 'POST',
