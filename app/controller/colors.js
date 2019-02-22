@@ -41,14 +41,17 @@ class ColorsController extends Controller {
         ctx.validate(createRule, ctx.request.body);
         try {
             let data = ctx.request.body;
-            const color = await ctx.service.color.findOneColor({tenantId: ctx.request.body.tenantId});
-            const tenant = await ctx.service.tenant.findOneTenant({tenantId: ctx.request.body.tenantId});
-            data.tenantInfo = tenant._id;
+            let tenantId = data.tenantId;
+            const color = await ctx.service.color.findOneColor({tenantId: tenantId});
+            const tenant = await ctx.service.tenant.findOneTenant({tenantId: tenantId === 'common'?'exe':tenantId});
+            if(tenant) {
+                data.tenantInfo = tenant._id;
+            }
             let newColor;
             if(color) {
-                newColor = await ctx.service.color.updateOneColor({tenantId: ctx.request.body.tenantId}, data);
+                newColor = await ctx.service.color.updateOneColor({tenantId}, data);
             } else {
-                newColor = await ctx.service.color.createColor(ctx.request.body);
+                newColor = await ctx.service.color.createColor(data);
             }
             ctx.body = {
                 code: 200,
