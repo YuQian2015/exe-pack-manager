@@ -67,5 +67,8 @@ module.exports = app => {
     TenantSchema.pre('findOne', function () {
         this.populate('theme', 'brand primary secondary');
     });
+    TenantSchema.pre('find', function () {
+        this.populate('theme', 'brand primary secondary');
+    });
     return mongoose.model('Tenant', TenantSchema);
 }

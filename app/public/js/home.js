@@ -19,6 +19,15 @@ function requestHandler(method, url, data, successCallback) {
     });
 }
 
+function toast(text, timeout) {
+    var time = timeout || 1000;
+    var dom = $('<div class="toast-container"><div class="toast">'+text+'</div></div>');
+    $("body").append(dom);
+    setTimeout(function () {
+        dom.remove();
+    }, time)
+}
+
 function login() {
     var result = {};
     result.userId = $("#loginForm input[name='userId']").val();
