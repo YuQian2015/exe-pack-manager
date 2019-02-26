@@ -16,6 +16,22 @@ class PackController extends Controller {
     async findHistory() {
         await this.ctx.render('pack/history.tpl');
     }
+
+    async findPackTenant() {
+        const ctx = this.ctx;
+        try {
+            const tenantList = await ctx.service.pack.findTenant(ctx.query);
+            ctx.body = {
+                code: 200,
+                data: tenantList,
+                success: true,
+                msg: ``
+            };
+        }
+        catch (err) {
+            throw err;
+        }
+    }
   }
   
   module.exports = PackController;

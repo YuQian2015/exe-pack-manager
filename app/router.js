@@ -39,6 +39,8 @@ module.exports = app => {
 
     // api
     router.post('/public/logout', controller.login.logout);
+    router.get('/pack/tenants', controller.pack.findPackTenant);
+
     
     // RESTful api
     router.resources('users', '/api/v1/users', controller.users); // 用户接口

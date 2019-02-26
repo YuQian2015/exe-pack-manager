@@ -125,7 +125,7 @@ function completePack(dom) {
 function getPackList(dom) {
     requestHandler(
         'GET',
-        "/api/v1/packs?"+$(dom).data('type')+"=true",
+        "/pack/tenants?"+$(dom).data('type')+"=true",
         '',
         function (data) {
             var html = '';
