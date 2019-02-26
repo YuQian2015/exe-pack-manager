@@ -10,7 +10,7 @@ class TenantsController extends Controller {
     async index() {
         const ctx = this.ctx;
         try {
-            const tenants = await ctx.service.tenant.findTenant({});
+            const tenants = await ctx.service.tenant.findTenant(ctx.query);
             ctx.body = {
                 code: 200,
                 data: tenants,

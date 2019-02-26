@@ -279,3 +279,9 @@
     line-height: 48px;
     cursor: pointer;
 }
+
+.tenant-theme {
+    display: inline-block;
+    width: 10%;
+    text-align: center;
+}
