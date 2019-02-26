@@ -73,7 +73,7 @@
                 </button>
             </div>
             <!--<canvas id="packSelector" width="100%" height="100%"></canvas>-->
-            <table class="ui celled small compact table">
+            <table id="packSelectArea" class="ui celled small compact table">
                 <thead>
                     <tr>
                         <th></th>
@@ -111,5 +111,10 @@
 
 
   <div>
+  <script>
+      $(document).ready(function () {
+          initPacks();
+      })
+  </script>
   </body>
 </html>

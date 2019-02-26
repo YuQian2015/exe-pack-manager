@@ -152,6 +152,7 @@ function getPackList(dom) {
             $(dom).removeClass('basic').siblings().addClass('basic');
             new DragSelect({
                 selectables: document.getElementsByClassName('selectable-line'),
+                area: document.getElementById('packSelectArea'),
                 callback: function (el) {
                     $.each(el, function (index, item) {
                         var tenantId = $(item).find('.add-pack').data('tenant-id');
@@ -180,145 +181,144 @@ function selectPackByCode() {
     }
 }
 
-$(document).ready(function () {
-    if(window.location.href.indexOf('/pack') > -1) {
-        // var canvas = document.querySelector('#packSelector'),
-        //     readout = document.querySelector('#readout'),
-        //     context=canvas.getContext('2d'),
-        //     spritesheet=new Image();
-        //
-        // canvas.width = $(window).width();
-        // canvas.height = $(window).height();
-        //
-        // //将相对于窗口的鼠标坐标转换为canvas坐标
-        // function windowToCanvas(canvas,x,y){
-        //     /**
-        //      在canvas对象上调用getBoundingClientRect()方法，
-        //      来获取canvas元素的边界框，
-        //      该边界框的坐标是相对于整个窗口的。
-        //      然后返回一个对象，该对象的x、y属性分别对应于鼠标在canvas之中的坐标
-        //      **/
-        //     var bbox=canvas.getBoundingClientRect();
-        //     return {x:x-bbox.left*(canvas.width/bbox.width),
-        //         y:y-bbox.top*(canvas.height/bbox.height)
-        //     };
-        // }
-        //
-        //
-        // /*清除画布*/
-        // function clear(){
-        //     context.clearRect(0,0,canvas.width,canvas.height);
-        // }
-        //
-        // //监听鼠标移动事件
-        // var startPoint = {x:0,y:0};
-        // var pressed = false;
-        // canvas.onmousemove = function(e){
-        //     endPoint = windowToCanvas(canvas, e.clientX, e.clientY);
-        //     if(pressed) {
-        //         clear();
-        //         context.beginPath();
-        //         context.moveTo(startPoint.x, startPoint.y);//起始位置
-        //         context.lineTo(endPoint.x, endPoint.y);//停止位置
-        //         context.lineWidth=1;
-        //         context.strokeStyle="blue";
-        //         context.stroke();
-        //         context.stroke();
-        //         context.closePath();
-        //     }
-        //     // var loc=windowToCanvas(canvas,e.clientX,e.clientY);
-        //     // console.log('x='+e.clientX+' y='+e.clientY);
-        //     // //绘制背景
-        //     // drawBackground();
-        //     // //绘制图像
-        //     // drawSpritesheet();
-        //     // //绘制横线和竖线
-        //     // drawGuidelines(loc.x, loc.y);
-        //     // //更新坐标label
-        //     // updateReadout(loc.x, loc.y);
-        // };
-        //
-        //
-        // canvas.onmousedown = function(e){
-        //     pressed = true;
-        //     startPoint = windowToCanvas(canvas, e.clientX, e.clientY);
-        //     console.log(startPoint)
-        //     // startPoint = [e.clientX,e.clientY];
-        //     // var loc=windowToCanvas(canvas,e.clientX,e.clientY);
-        //     // console.log('x='+e.clientX+' y='+e.clientY);
-        //     // //绘制背景
-        //     // drawBackground();
-        //     // //绘制图像
-        //     // drawSpritesheet();
-        //     // //绘制横线和竖线
-        //     // drawGuidelines(loc.x, loc.y);
-        //     // //更新坐标label
-        //     // updateReadout(loc.x, loc.y);
-        // };
-        //
-        // canvas.onmouseup = function() {
-        //     clear();
-        //     pressed = false;
-        // };
-        //
+function initPacks() {
+    // var canvas = document.querySelector('#packSelector'),
+    //     readout = document.querySelector('#readout'),
+    //     context=canvas.getContext('2d'),
+    //     spritesheet=new Image();
+    //
+    // canvas.width = $(window).width();
+    // canvas.height = $(window).height();
+    //
+    // //将相对于窗口的鼠标坐标转换为canvas坐标
+    // function windowToCanvas(canvas,x,y){
+    //     /**
+    //      在canvas对象上调用getBoundingClientRect()方法，
+    //      来获取canvas元素的边界框，
+    //      该边界框的坐标是相对于整个窗口的。
+    //      然后返回一个对象，该对象的x、y属性分别对应于鼠标在canvas之中的坐标
+    //      **/
+    //     var bbox=canvas.getBoundingClientRect();
+    //     return {x:x-bbox.left*(canvas.width/bbox.width),
+    //         y:y-bbox.top*(canvas.height/bbox.height)
+    //     };
+    // }
+    //
+    //
+    // /*清除画布*/
+    // function clear(){
+    //     context.clearRect(0,0,canvas.width,canvas.height);
+    // }
+    //
+    // //监听鼠标移动事件
+    // var startPoint = {x:0,y:0};
+    // var pressed = false;
+    // canvas.onmousemove = function(e){
+    //     endPoint = windowToCanvas(canvas, e.clientX, e.clientY);
+    //     if(pressed) {
+    //         clear();
+    //         context.beginPath();
+    //         context.moveTo(startPoint.x, startPoint.y);//起始位置
+    //         context.lineTo(endPoint.x, endPoint.y);//停止位置
+    //         context.lineWidth=1;
+    //         context.strokeStyle="blue";
+    //         context.stroke();
+    //         context.stroke();
+    //         context.closePath();
+    //     }
+    //     // var loc=windowToCanvas(canvas,e.clientX,e.clientY);
+    //     // console.log('x='+e.clientX+' y='+e.clientY);
+    //     // //绘制背景
+    //     // drawBackground();
+    //     // //绘制图像
+    //     // drawSpritesheet();
+    //     // //绘制横线和竖线
+    //     // drawGuidelines(loc.x, loc.y);
+    //     // //更新坐标label
+    //     // updateReadout(loc.x, loc.y);
+    // };
+    //
+    //
+    // canvas.onmousedown = function(e){
+    //     pressed = true;
+    //     startPoint = windowToCanvas(canvas, e.clientX, e.clientY);
+    //     console.log(startPoint)
+    //     // startPoint = [e.clientX,e.clientY];
+    //     // var loc=windowToCanvas(canvas,e.clientX,e.clientY);
+    //     // console.log('x='+e.clientX+' y='+e.clientY);
+    //     // //绘制背景
+    //     // drawBackground();
+    //     // //绘制图像
+    //     // drawSpritesheet();
+    //     // //绘制横线和竖线
+    //     // drawGuidelines(loc.x, loc.y);
+    //     // //更新坐标label
+    //     // updateReadout(loc.x, loc.y);
+    // };
+    //
+    // canvas.onmouseup = function() {
+    //     clear();
+    //     pressed = false;
+    // };
+    //
 
-        $('body')
-            // .delegate('.add-pack', 'click', function (e) {
-            //     e.stopPropagation();
-            //     e.preventDefault();
-            //     var tenantId = $(this).data('tenant-id');
-            //     var $listItem = $(this).parents('tr');
-            //     $listItem.toggleClass('active');
-            //     if ($listItem.hasClass('active')) {
-            //         $('#pack-' + tenantId).slideDown(200);
-            //     } else {
-            //         $('#pack-' + tenantId).slideUp(200);
-            //         $(".add-all-pack").find('[type="checkbox"]').prop('checked', false);
-            //     }
-            // })
-            .delegate('.add-all-pack', 'click', function (e) {
-                if ($(this).find('[type="checkbox"]')[0].checked) {
-                    $('[id^="pack-"]').slideDown(200);
-                    $(".pack-table tr").addClass('active checked').find('[type="checkbox"]').prop('checked', true);
-                } else {
-                    $('[id^="pack-"]').slideUp(200);
-                    $(".pack-table tr").removeClass('active').find('[type="checkbox"]').prop('checked', false);
-                }
-            });
-
-        $("#submitPack").click(function () {
-            var tenants = [];
-            $.each($('[id^="pack-"]:visible'), function (i, item) {
-                tenants.push($(item).data('id'));
-            });
-            var type = parseInt($("#packType").val());
-            var title = $("#packTitle").val();
-            var note = $("#packNote").val();
-            requestHandler(
-                'POST',
-                "/api/v1/packs",
-                {
-                    "type": type,
-                    "tenants": tenants,
-                    "title": title,
-                    "note": note
-                },
-                function (data) {
-                    window.location.href = "pack/list";
-                });
-        });
-
-
-        new DragSelect({
-            selectables: document.getElementsByClassName('selectable-line'),
-            callback: function (el) {
-                $.each(el, function (index, item) {
-                    var tenantId = $(item).find('.add-pack').data('tenant-id');
-                    var isChecked = $(item).find('[type="checkbox"]').prop('checked');
-                    $('#pack-' + tenantId).slideToggle(200);
-                    $(item).find('[type="checkbox"]').prop('checked', !isChecked).parents("tr").toggleClass('active');
-                });
+    $('body')
+    // .delegate('.add-pack', 'click', function (e) {
+    //     e.stopPropagation();
+    //     e.preventDefault();
+    //     var tenantId = $(this).data('tenant-id');
+    //     var $listItem = $(this).parents('tr');
+    //     $listItem.toggleClass('active');
+    //     if ($listItem.hasClass('active')) {
+    //         $('#pack-' + tenantId).slideDown(200);
+    //     } else {
+    //         $('#pack-' + tenantId).slideUp(200);
+    //         $(".add-all-pack").find('[type="checkbox"]').prop('checked', false);
+    //     }
+    // })
+        .delegate('.add-all-pack', 'click', function (e) {
+            if ($(this).find('[type="checkbox"]')[0].checked) {
+                $('[id^="pack-"]').slideDown(200);
+                $(".pack-table tr").addClass('active checked').find('[type="checkbox"]').prop('checked', true);
+            } else {
+                $('[id^="pack-"]').slideUp(200);
+                $(".pack-table tr").removeClass('active').find('[type="checkbox"]').prop('checked', false);
             }
         });
-    }
-});
+
+    $("#submitPack").click(function () {
+        var tenants = [];
+        $.each($('[id^="pack-"]:visible'), function (i, item) {
+            tenants.push($(item).data('id'));
+        });
+        var type = parseInt($("#packType").val());
+        var title = $("#packTitle").val();
+        var note = $("#packNote").val();
+        requestHandler(
+            'POST',
+            "/api/v1/packs",
+            {
+                "type": type,
+                "tenants": tenants,
+                "title": title,
+                "note": note
+            },
+            function (data) {
+                window.location.href = "pack/list";
+            });
+    });
+
+
+    new DragSelect({
+        selectables: document.getElementsByClassName('selectable-line'),
+        area: document.getElementById('packSelectArea'),
+        callback: function (el) {
+            $.each(el, function (index, item) {
+                var tenantId = $(item).find('.add-pack').data('tenant-id');
+                var isChecked = $(item).find('[type="checkbox"]').prop('checked');
+                $('#pack-' + tenantId).slideToggle(200);
+                $(item).find('[type="checkbox"]').prop('checked', !isChecked).parents("tr").toggleClass('active');
+            });
+        }
+    });
+}

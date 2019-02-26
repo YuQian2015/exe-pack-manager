@@ -11,9 +11,9 @@ function requestHandler(method, url, data, successCallback) {
         },
         error: function (error) {
             if(error && error.responseJSON) {
-                alert(error.responseJSON.msg);
+                toast(error.responseJSON.msg);
             } else {
-                alert('请求失败');
+                toast('请求失败');
             }
         }
     });
@@ -40,6 +40,7 @@ function login() {
         success: function (res) {
             if (res && res.success) {
                 localStorage.setItem('token', res.data.token);
+                localStorage.setItem('user', JSON.stringify(res.data.user));
                 window.location.href = 'home';
             }
         },
@@ -189,6 +190,16 @@ function showLoginForm(dom) {
 function showQrCode() {
     $("#qrCodeLogin").parents(".message").show()
     $("#loginForm").hide()
+}
+
+function getMenuUser() {
+    try {
+        var user = JSON.parse(localStorage.getItem('user'));
+    } catch (e) {
+        toast(e);
+        return
+    }
+    $("#userMenu > span").html(user.name + ', 你好！');
 }
 
 $(document).ready(function () {
