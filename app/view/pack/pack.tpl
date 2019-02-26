@@ -28,7 +28,7 @@
     </div>
     <div class="ui divider"></div>
 
-    <div class="ui violet message">从以下租户列表选择要打包的租户，点击加入打包。</div>
+    <div class="ui violet message">从以下租户列表选择要打包的租户，点击/框选可加入打包。</div>
     <div class="ui grid">
         <div class="three wide column">
             <p>1.选择租户</p>
@@ -66,6 +66,13 @@
             </div>
         </div>
         <div class="thirteen wide column pack-table">
+            <div class="ui fluid action input">
+                <input id="selectPackByCode" type="text" placeholder="[ '租户ID' , '租户ID' , ... , '租户ID' ]">
+                <button onclick="selectPackByCode()" class="ui green labeled icon button">
+                    <i class="code icon"></i> 执行
+                </button>
+            </div>
+            <!--<canvas id="packSelector" width="100%" height="100%"></canvas>-->
             <table class="ui celled small compact table">
                 <thead>
                     <tr>
@@ -82,7 +89,7 @@
                   </thead>
                 <tbody id="packList">
                 {% for item in list %}
-                    <tr>
+                    <tr class="selectable-line">
                         <td class="center aligned" data-label="icon">
                             <img src="{% if item.icon %}{{item.icon}}{% else %}http://exe.moyufed.com/1545874424004.png{% endif %}?imageView2/5/w/20/h/20" />
                         </td>

@@ -142,7 +142,7 @@
     width: 20px;
     height: 20px;
     display: inline-block;
-    border: solid 1px #CCC;
+    border: solid 1px #EEE;
 }
 
 #qrCodeLogin {
@@ -250,4 +250,23 @@
     -ms-transform: translate3d(-50%, -50%, 0);
     -o-transform: translate3d(-50%, -50%, 0);
     transform: translate3d(-50%, -50%, 0);
+}
+
+#packSelector {
+    position: absolute;
+    z-index: 100;
+}
+
+.ds-selectable.ds-selected {
+    background: #EEE;
+}
+
+#packList{
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+}
+
+.add-pack {
+    pointer-events: none;
 }

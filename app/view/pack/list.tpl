@@ -16,7 +16,7 @@
         <div class="active section">打包列表</div>
     </div>
 
-    <div class="ui right floated button mini"><a href="/pack"><i class="boxes icon"></i>打包</a></div>
+    <div class="ui right floated button green mini" onclick="goToPack()"><i class="boxes icon"></i>添加打包</a></div>
     <div class="ui divider"></div>
     {% for item in list.list %}
     <div class="pack-box">

@@ -36,6 +36,7 @@
     <script src="/public/lib/semantic/plugins/tablesort.js"></script>
     <script src="/public/lib/colorpicker/js/colorpicker.js"></script>
     <script src="/public/lib/quill/quill.min.js"></script>
+    <script src="/public/lib/dragselect/ds.min.js"></script>
 
     <script>hljs.initHighlightingOnLoad();</script>
 
