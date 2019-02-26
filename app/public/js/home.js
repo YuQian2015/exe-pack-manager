@@ -199,7 +199,9 @@ function getMenuUser() {
         toast(e);
         return
     }
-    $("#userMenu > span").html(user.name + ', 你好！');
+    if(user) {
+        $("#userMenu > span").html(user.name + ', 你好！');
+    }
 }
 
 $(document).ready(function () {
