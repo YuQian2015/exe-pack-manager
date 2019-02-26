@@ -1,4 +1,18 @@
 function requestHandler(method, url, data, successCallback) {
+
+    if(data && method === 'GET') {
+        var queryArray = [];
+        $.each(data, function (key, value) {
+            queryArray.push(key + '=' + value);
+        });
+        if(/\?/g.test(url)) {
+            url += '&' + queryArray.join('&');
+        } else {
+            url += '?' + queryArray.join('&');
+        }
+        data = null;
+    }
+
     $.ajax({
         type: method,
         url: url,
@@ -28,6 +42,14 @@ function toast(text, timeout) {
     }, time)
 }
 
+function formatDate(date) {
+    function getNumber(number) {
+        return number > 9 ? 10 : '0'+number;
+    }
+    var theDay = new Date(date);
+    return theDay.getFullYear() + '-' + getNumber(theDay.getMonth() + 1) + '-' + getNumber(theDay.getDate())
+
+}
 function login() {
     var result = {};
     result.userId = $("#loginForm input[name='userId']").val();

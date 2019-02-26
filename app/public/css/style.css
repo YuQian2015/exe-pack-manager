@@ -270,3 +270,12 @@
 .add-pack {
     pointer-events: none;
 }
+
+.load-more {
+    margin: 10px 0;
+    text-align: center;
+    border-radius: 4px;
+    border: solid #ccc 1px;
+    line-height: 48px;
+    cursor: pointer;
+}

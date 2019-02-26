@@ -80,7 +80,7 @@
     {% endfor %}
 
         {% if list.count > 0 %}
-            <div class="ui right floated primary button disabled">
+            <div class="ui right floated primary button" onclick="showPackHistory()" style="margin-bottom: 20px;">
               历史打包&nbsp;&nbsp;&nbsp;&nbsp;{{list.count}}条<i class="right chevron icon"></i>
             </div>
         {% endif %}

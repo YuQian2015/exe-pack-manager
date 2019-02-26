@@ -16,14 +16,13 @@ class PacksController extends Controller {
     async index() {
         const ctx = this.ctx;
         try {
-            const tenantList = await ctx.service.pack.findTenant(ctx.query);
+            const packList = await ctx.service.pack.findHistoryPack(ctx.query);
             ctx.body = {
                 code: 200,
-                data: tenantList,
+                data: packList,
                 success: true,
                 msg: ``
             };
-            console.log(tenantList);
         }
         catch (err) {
             throw err;
@@ -62,7 +61,6 @@ class PacksController extends Controller {
             }
         }
     }
-
 
     // 删除租户的方法
     async destroy() {

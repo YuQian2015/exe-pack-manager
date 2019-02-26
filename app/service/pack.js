@@ -45,6 +45,23 @@ class PackService extends Service {
         })
     }
 
+    async findHistoryPack(params) {
+        const pageSize = params && parseInt(params.pageSize) || 10; // 使用分页
+        const page = params && parseInt(params.page) || 1;
+        delete params.pageSize;
+        delete params.page;
+        return new Promise((resolve, reject) => {
+            this.ctx.model.Pack.find(params).where('complete', true).limit(pageSize).skip(pageSize * (page - 1)).sort('-createDate').lean().exec((err, docs) => {
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                } else {
+                    resolve(docs);
+                }
+            });
+        })
+    }
+
     async findAutoPack(params = {}) {
         return new Promise((resolve, reject) => {
             this.ctx.model.Pack.findOne(params).where({ active: true }).sort('-createDate').lean().exec((err, docs) => {

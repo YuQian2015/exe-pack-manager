@@ -1,3 +1,8 @@
+var PACK_LIST = {
+    page: 1,
+    pageSize: 10
+};
+
 function deletePack(dom) {
     var cancelDom = $('<div class="ui button">取消</div>');
     var deleteDom = $('<div class="ui red button">删除</div>');
@@ -181,6 +186,10 @@ function selectPackByCode() {
     }
 }
 
+function showPackHistory() {
+    window.location.href = '/pack/history'
+}
+
 function initPacks() {
     // var canvas = document.querySelector('#packSelector'),
     //     readout = document.querySelector('#readout'),
@@ -308,7 +317,7 @@ function initPacks() {
             });
     });
 
-
+    // https://github.com/ThibaultJanBeyer/DragSelect
     new DragSelect({
         selectables: document.getElementsByClassName('selectable-line'),
         area: document.getElementById('packSelectArea'),
@@ -321,4 +330,39 @@ function initPacks() {
             });
         }
     });
+}
+
+function initPackHistory() {
+    loadPacks();
+}
+
+function loadPacks() {
+    function getText(text) {
+        return text?text:'';
+    }
+
+    requestHandler(
+        'GET',
+        "/api/v1/packs",
+        PACK_LIST,
+        function (data) {
+            var html = '';
+            $.each(data, function (index, item) {
+                html += '<div class="ui clearing segment">' + '【' + formatDate(item.createDate) + '】' + ' > ' + getText(item.title)  + ' > ' + getText(item.note) + '<a class="ui teal  circular label" style="float: right">'+item.tenants.length+'</a></div>';
+            });
+            if(data.length < PACK_LIST.pageSize) {
+                $(".load-more").hide();
+            }
+            if(PACK_LIST.page > 1) {
+                $("#packHistory").append(html);
+            } else {
+                $("#packHistory").html(html);
+            }
+        });
+}
+
+
+function loadMorePacks() {
+    PACK_LIST.page ++;
+    loadPacks();
 }

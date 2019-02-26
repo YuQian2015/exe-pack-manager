@@ -12,6 +12,10 @@ class PackController extends Controller {
         const packList = await this.ctx.service.pack.findPack();
         await this.ctx.render('pack/list.tpl', { list: packList });
     }
+
+    async findHistory() {
+        await this.ctx.render('pack/history.tpl');
+    }
   }
   
   module.exports = PackController;

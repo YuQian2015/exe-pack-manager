@@ -19,6 +19,7 @@ module.exports = app => {
     // 打包
     router.get('/pack', controller.pack.findTenant);
     router.get('/pack/list', controller.pack.findPack);
+    router.get('/pack/history', controller.pack.findHistory);
 
     // ui
     router.get('/ui', controller.ui.findUi);
