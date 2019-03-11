@@ -190,6 +190,14 @@ function showPackHistory() {
     window.location.href = '/pack/history'
 }
 
+function changeRemind(dom) {
+    if(dom.checked) {
+        $("#addRemind").show();
+    } else {
+        $("#addRemind").hide();
+    }
+}
+
 function initPacks() {
     // var canvas = document.querySelector('#packSelector'),
     //     readout = document.querySelector('#readout'),

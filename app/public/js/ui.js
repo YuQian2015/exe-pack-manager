@@ -69,7 +69,7 @@ var UI = {
                     }
                 }
                 $.each(data, function (i, item) {
-                    html += '<div class="tenant-theme"><h5 class="ui header">'+item.appName+'</h5><div>' + getThemeHtml(item.theme) + '</div></div>'
+                    html += '<div class="tenant-theme" style="margin-bottom: 40px;"><h5>'+item.appName+'</h5><div>' + getThemeHtml(item.theme) + '</div></div>'
                 });
                 $("#tenantTheme").html(html)
             });

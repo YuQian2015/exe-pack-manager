@@ -61,6 +61,19 @@
                 <input type="text" id="packNote" placeholder="备注(可选)">
               </div>
             </form>
+            <div class="ui segment">
+                <div class="ui toggle checkbox">
+                      <label>短信通知</label>
+                      <input type="checkbox" onchange="changeRemind(this)" tabindex="0" class="hidden">
+                </div>
+            </div>
+            <div id="addRemind" style="display: none;">
+                <div class="ui fluid action input disabled">
+                    <input id="selectPackByCode" type="text" placeholder="用户">
+                    <button onclick="selectPackByCode()" class="ui green button">添加</button>
+                </div>
+            </div>
+            <br />
             <div id="submitPack" class="ui attached button">
                 <i class="plus icon"></i> 加入打包
             </div>
