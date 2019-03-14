@@ -69,7 +69,7 @@
             </div>
             <div id="addRemind" style="display: none;">
                 <div class="ui fluid action input disabled">
-                    <input id="selectPackByCode" type="text" placeholder="用户">
+                    <input type="text" placeholder="用户">
                     <button onclick="selectPackByCode()" class="ui green button">添加</button>
                 </div>
             </div>
