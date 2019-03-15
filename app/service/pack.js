@@ -1,7 +1,14 @@
 const Service = require('egg').Service;
-
+const BaseService = require('./base');
 
 class PackService extends Service {
+    constructor(ctx) {
+        super(ctx); // 如果需要在构造函数做一些处理，一定要有这句话，才能保证后面 `this.ctx`的使用。
+        // 就可以直接通过 this.ctx 获取 ctx 了
+        // 还可以直接通过 this.app 获取 app 了
+        this.Base =  new BaseService(this.ctx.model.Pack);
+    }
+
     async createPack(data) {
         return new Promise(async (resolve, reject) => {
             if(!data.type) {
@@ -46,20 +53,7 @@ class PackService extends Service {
     }
 
     async findHistoryPack(params) {
-        const pageSize = params && parseInt(params.pageSize) || 10; // 使用分页
-        const page = params && parseInt(params.page) || 1;
-        delete params.pageSize;
-        delete params.page;
-        return new Promise((resolve, reject) => {
-            this.ctx.model.Pack.find(params).where('complete', true).limit(pageSize).skip(pageSize * (page - 1)).sort('-createDate').lean().exec((err, docs) => {
-                if (err) {
-                    console.log(err);
-                    reject(err);
-                } else {
-                    resolve(docs);
-                }
-            });
-        })
+        return this.Base.find(params);
     }
 
     async findAutoPack(params = {}) {
