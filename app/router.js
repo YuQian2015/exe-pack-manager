@@ -27,6 +27,9 @@ module.exports = app => {
     // 文件
     router.get('/file', controller.file.findFile);
 
+    // 内嵌版
+    router.get('/inlay', controller.inlay.findInlay);
+
     // 管理
     router.get('/management', controller.management.findManagement);
 
@@ -55,5 +58,6 @@ module.exports = app => {
     router.resources('roles', '/api/v1/roles', controller.roles); // 角色
     router.resources('policies', '/api/v1/policies', controller.policies); // 策略
     router.resources('keepers', '/api/v1/keepers', controller.keepers); // 保管
-
+    router.resources('features', '/api/v1/features', controller.features); // 对接特性
+    router.resources('inlays', '/api/v1/inlays', controller.inlays); // 内嵌版
 };
