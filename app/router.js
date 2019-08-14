@@ -44,7 +44,7 @@ module.exports = app => {
     router.post('/public/logout', controller.login.logout);
     router.get('/pack/tenants', controller.pack.findPackTenant);
 
-    
+
     // RESTful api
     router.resources('users', '/api/v1/users', controller.users); // 用户接口
     router.resources('login', '/api/v1/login', controller.login); // 登录接口
@@ -60,4 +60,5 @@ module.exports = app => {
     router.resources('keepers', '/api/v1/keepers', controller.keepers); // 保管
     router.resources('features', '/api/v1/features', controller.features); // 对接特性
     router.resources('inlays', '/api/v1/inlays', controller.inlays); // 内嵌版
+    router.resources('teams', '/api/v1/teams', controller.teams);
 };
