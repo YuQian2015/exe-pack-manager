@@ -61,4 +61,5 @@ module.exports = app => {
     router.resources('features', '/api/v1/features', controller.features); // 对接特性
     router.resources('inlays', '/api/v1/inlays', controller.inlays); // 内嵌版
     router.resources('teams', '/api/v1/teams', controller.teams);
+    router.resources('rate', '/api/v1/rate', controller.rate);
 };

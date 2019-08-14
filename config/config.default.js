@@ -76,7 +76,7 @@ exports.jwt = {
             return null;
         }
     },
-    unless: { path: ["/login","/api/v1/login", "/api/v1/teams"] }
+    unless: { path: ["/login","/api/v1/login", "/api/v1/teams", "/api/v1/rate"] }
 };
 
 
@@ -87,7 +87,7 @@ exports.jwtHandler = {
 exports.authz = {
     enable: true,
     ignore(ctx) {
-        const reg = /\/login|\/public|\/api\/v1\/colors|\/teams/g;
+        const reg = /\/login|\/public|\/api\/v1\/colors|\/teams|\/rate/g;
         // console.log(ctx.request.url);
         // console.log(reg.test(ctx.request.url));
         if(ctx.request.url === '/') {
