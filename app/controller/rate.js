@@ -1,4 +1,15 @@
 const Controller = require('egg').Controller;
+
+// 定义创建接口的请求参数规则
+const createRule = {
+    team: 'string',
+    name: 'string',
+    framework: 'number',
+    demo: 'number',
+    usability: 'number',
+    performance: 'number'
+};
+
 class RateController extends Controller {
 
     async index() {
@@ -18,6 +29,11 @@ class RateController extends Controller {
 
     async create() {
         const ctx = this.ctx;
+        ctx.validate(createRule, ctx.request.body);
+        const rate = await ctx.service.rate.findRate({name: ctx.request.body.name, team: ctx.request.body.team});
+        if(rate.length) {
+            throw new Error('不能重复提交');
+        }
         try {
             const newRate = await ctx.service.rate.createRate(ctx.request.body);
             ctx.body = {
