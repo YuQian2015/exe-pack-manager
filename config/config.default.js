@@ -11,7 +11,7 @@ exports.view = {
 // recommended
 exports.mongoose = {
     client: {
-        url: 'mongodb://admin:exe123@39.105.62.145:3001/exePack?authSource=exePack',
+        url: 'mongodb://admin:exe123@123.56.190.203:3001/exePack?authSource=exePack',
         options: {},
     },
 };
