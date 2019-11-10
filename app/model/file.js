@@ -6,8 +6,6 @@ module.exports = app => {
         type: String, // 文件类型
         size: Number, // 文件大小
         url:  String, // 文件url地址
-        createDate: Date, // 创建时间
-        updateDate: Date, // 修改时间
-    });
+    }, { timestamps: { createdAt: 'createDate', updatedAt: 'updateDate' } });
     return mongoose.model('File', FileSchema);
 }

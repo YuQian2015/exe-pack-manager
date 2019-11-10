@@ -40,6 +40,7 @@
         <th class="center aligned" style="color: gray;" >钉钉版</th>
         <th class="center aligned" style="color: gray;" >内嵌版</th>
         <th class="center aligned" style="color: gray;" >PC版</th>
+        <th class="center aligned" style="color: gray;" >版本</th>
         <th class="center aligned" style="color: gray;" >操作</th>
         <th class="center aligned" style="color: gray;" >记录</th>
       </tr></thead>
@@ -58,6 +59,7 @@
             <td class="center aligned" data-label="dd">{% if item.dd %} <i class="checkmark icon"></i> {% endif %} </td>
             <td class="center aligned" data-label="inlay">{% if item.inlay %} <i class="checkmark icon"></i> {% endif %} </td>
             <td class="center aligned" data-label="pc">{% if item.pc %} <i class="checkmark icon"></i> {% endif %} </td>
+            <td class="center aligned" data-label="version">{% if item.version %} {{item.version}} {% endif %} </td>
             <td class="center aligned" data-label="lock">
               {% if item.isLocked %} <i class="lock icon" onClick="lockTenant('{{ item._id }}', this)" data-content="已锁定，不能修改"></i>{% else %} <i onClick="lockTenant('{{ item._id }}', this)" class="unlock icon" data-content="锁定租户"></i> {% endif %}
             </td>

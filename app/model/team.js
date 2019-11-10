@@ -12,8 +12,6 @@ module.exports = app => {
         members: [{ type: Schema.Types.ObjectId, ref: 'User' }],
         logo: String,
         activityId: String,
-        createDate: Date, // 创建时间
-        updateDate: Date, // 修改时间
-    });
+    }, { timestamps: { createdAt: 'createDate', updatedAt: 'updateDate' } });
     return mongoose.model('Team', TeamSchema);
 };

@@ -18,9 +18,7 @@ module.exports = app => {
             type: Boolean,
             default: false
         },
-        createDate: Date, // 创建时间
-        updateDate: Date, // 修改时间
-    });
+    }, { timestamps: { createdAt: 'createDate', updatedAt: 'updateDate' } });
     PackSchema.pre('find', function() {
         this.populate('tenants', 'tenantId appName icon');
     });

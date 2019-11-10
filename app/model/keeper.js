@@ -17,8 +17,6 @@ module.exports = app => {
         data: [dataSchema], // 保存的data
         type: Number, // 类型
         note: String, // 描述
-        createDate: Date, // 创建时间
-        updateDate: Date, // 修改时间
-    });
+    }, { timestamps: { createdAt: 'createDate', updatedAt: 'updateDate' } });
     return mongoose.model('Keeper', KeeperSchema);
 };

@@ -51,6 +51,7 @@ module.exports = app => {
             type: Boolean,
             default: false
         }, // PC版
+        version: Number, // 版本 v2:2 v3:3 
         description: String, // 描述
         valid: { // 有效
             type: Boolean,
@@ -60,10 +61,8 @@ module.exports = app => {
         isLocked: { // 锁定
             type: Boolean,
             default: false
-        },
-        createDate: Date, // 创建时间
-        updateDate: Date // 修改时间
-    });
+        }
+    }, { timestamps: { createdAt: 'createDate', updatedAt: 'updateDate' } });
     TenantSchema.pre('findOne', function () {
         this.populate('theme', 'brand primary secondary');
     });

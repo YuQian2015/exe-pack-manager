@@ -51,12 +51,9 @@ var UI = {
             'GET',
             "/api/v1/tenants",
             {
-                isCommon: false,
                 valid: true,
-                wx: false,
-                inlay: false,
-                app: true,
-                pc: false
+                pc: false,
+                version: 3
             },
             function (data) {
                 var html = '';

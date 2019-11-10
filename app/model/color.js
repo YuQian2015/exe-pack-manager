@@ -5,9 +5,7 @@ module.exports = app => {
         tenantId: String, // 租户ID
         tenantInfo: { type: Schema.Types.ObjectId, ref: 'Tenant' }, // 租户ID
         colors: Object, // 颜色
-        createDate: Date, // 创建时间
-        updateDate: Date, // 修改时间
-    });
+    }, { timestamps: { createdAt: 'createDate', updatedAt: 'updateDate' } });
     ColorSchema.pre('find', function () {
         this.populate('tenantInfo', 'valid tenantName actualTenantId');
     });

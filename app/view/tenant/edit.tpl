@@ -94,7 +94,17 @@
                     </div>
                 </div>
             </div>
-            
+            <div class="field">
+                <label>前端版本（必填）</label>
+                <div class="two fields">
+                    <div class="field">
+                        <select class="ui fluid dropdown" name="version">
+                            <option value="3">V3版本</option>
+                            <option value="2">V2版本</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="ui divider"></div>
 
             <div class="field">

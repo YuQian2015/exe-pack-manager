@@ -32,10 +32,10 @@
     <script src="https://cdn.bootcss.com/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
     <script src="https://cdn.bootcss.com/clipboard.js/2.0.4/clipboard.min.js"></script>
     <!-- https://github.com/patleeman/quill-markdown-shortcuts -->
-    <script src="https://cdn.jsdelivr.net/npm/quill-markdown-shortcuts@latest/dist/markdownShortcuts.js"></script>
+    <script src="/public/lib/quill/modules/markdownShortcuts.js"></script>
     <script src="/public/lib/semantic/plugins/tablesort.js"></script>
     <script src="/public/lib/colorpicker/js/colorpicker.js"></script>
-    <script src="/public/lib/quill/quill.min.js"></script>
+    <!-- <script src="/public/lib/quill/quill.min.js"></script> -->
     <script src="/public/lib/dragselect/ds.min.js"></script>
 
     <script>hljs.initHighlightingOnLoad();</script>

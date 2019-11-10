@@ -217,24 +217,28 @@ $(document).ready(function () {
         }
     });
     $('table.sortable').tablesort();
-    $('.color-picker').ColorPicker({
-        color: '#00ccff',
-        onShow: function (colpkr) {
-            window.imagePickerClickedEl = this;
-            $(colpkr).fadeIn(500);
-            return false;
-        },
-        onHide: function (colpkr) {
-            $(colpkr).fadeOut(500);
-            return false;
-        },
-        onBeforeShow: function () {
-            $(this).ColorPickerSetColor(this.value);
-        },
-        onChange: function (hsb, hex, rgb) {
-            window.imagePickerClickedEl.value = '#' + hex;
-            $(window.imagePickerClickedEl).parents(".color-picker-container").css('backgroundColor', '#' + hex);
-        },
-        livePreview: true
-    });
+    // $('.color-picker').ColorPicker({
+    //     color: '#00ccff',
+    //     onShow: function (colpkr) {
+    //         window.imagePickerClickedEl = this;
+    //         $(colpkr).fadeIn(500);
+    //         return false;
+    //     },
+    //     onHide: function (colpkr) {
+    //         $(colpkr).fadeOut(500);
+    //         return false;
+    //     },
+    //     onBeforeShow: function () {
+    //         $(this).ColorPickerSetColor(this.value);
+    //     },
+    //     onChange: function (hsb, hex, rgb) {
+    //         window.imagePickerClickedEl.value = '#' + hex;
+    //         $(window.imagePickerClickedEl).parents(".color-picker-container").css('backgroundColor', '#' + hex);
+    //     },
+    //     livePreview: true
+    // });
+
+    $(".color-picker").change(function() {
+        $(this).parent().prev().css('background', $(this).val());
+    })
 });

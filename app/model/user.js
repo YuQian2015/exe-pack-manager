@@ -12,9 +12,7 @@ module.exports = app => {
         userId: String, // 用户Id
         tenantId: String, // 租户ID
         password: String, // 用户密码
-        createDate: Date, // 创建时间
-        updateDate: Date, // 修改时间
-    });
+    }, { timestamps: { createdAt: 'createDate', updatedAt: 'updateDate' } });
     UserSchema.pre('find', function () {
         this.populate('role', 'name');
     });

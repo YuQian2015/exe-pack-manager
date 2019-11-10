@@ -5,9 +5,7 @@ module.exports = app => {
         content: String, // 内容
         tenantKey: String, // 租户ID
         creator: String, // 创建者
-        createDate: Date, // 创建时间
-        updateDate: Date, // 修改时间
-    });
+    }, { timestamps: { createdAt: 'createDate', updatedAt: 'updateDate' } });
     TimelineSchema.pre('save',  function (next) {
         console.log(this.updateDate);
         next();

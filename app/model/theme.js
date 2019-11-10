@@ -7,9 +7,7 @@ module.exports = app => {
         brand: String, // 品牌颜色
         primary: String, // 主要颜色 使用于header
         secondary: String, // 次要颜色 使用于footer
-        createDate: Date, // 创建时间
-        updateDate: Date, // 修改时间
-    });
+    }, { timestamps: { createdAt: 'createDate', updatedAt: 'updateDate' } });
     ThemeSchema.pre('save',  function (next) {
         console.log(this.updateDate);
         next();

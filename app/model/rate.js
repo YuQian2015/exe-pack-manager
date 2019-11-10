@@ -9,9 +9,7 @@ module.exports = app => {
         usability: Number,
         performance: Number,
         comment: String,
-        createDate: Date, // 创建时间
-        updateDate: Date, // 修改时间
-    });
+    }, { timestamps: { createdAt: 'createDate', updatedAt: 'updateDate' } });
     RateSchema.pre('findOne', function () {
         this.populate('team', 'name');
     });
