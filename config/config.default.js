@@ -76,7 +76,7 @@ exports.jwt = {
             return null;
         }
     },
-    unless: { path: ["/login","/api/v1/login", "/api/v1/teams", "/api/v1/rate"] }
+    unless: { path: ["/login","/api/v1/login", "/api/v1/teams", "/api/v1/rate", "/public/tenants"] }
 };
 
 

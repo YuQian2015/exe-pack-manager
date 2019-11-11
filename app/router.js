@@ -42,6 +42,7 @@ module.exports = app => {
 
     // api
     router.post('/public/logout', controller.login.logout);
+    router.get('/public/tenants', controller.tenants.index);
     router.get('/pack/tenants', controller.pack.findPackTenant);
 
 
