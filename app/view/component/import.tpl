@@ -49,4 +49,5 @@
     <script src="/public/js/image.js"></script>
     <script src="/public/js/native.js"></script>
     <script src="/public/js/inlay.js"></script>
+    <script src="/public/js/cdn.js"></script>
 {% endblock %}

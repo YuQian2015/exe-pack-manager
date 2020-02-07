@@ -24,18 +24,19 @@ class FileService extends Service {
 
         const pageSize = params && parseInt(params.pageSize) || 10; // 使用分页
         const page = params && parseInt(params.page) || 1;
-
+        delete params.pageSize
+        delete params.page
         return new Promise((resolve, reject) => {
-            this.ctx.model.File.find({}).limit(pageSize).skip(pageSize * (page - 1)).lean().exec((err, docs) => {
+            this.ctx.model.File.find(params).limit(pageSize).skip(pageSize * (page - 1)).lean().exec((err, docs) => {
                 if (err) {
                     console.log(err);
                     reject(err);
                 } else {
                     this.ctx.model.File.find({}).count().exec((error, count) => {
                         if (error) {
-                            resolve({list: docs});
+                            resolve({ list: docs });
                         } else {
-                            resolve({list: docs, count: count});
+                            resolve({ list: docs, count: count });
                         }
                     });
                 }

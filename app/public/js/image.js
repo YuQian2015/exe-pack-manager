@@ -16,14 +16,14 @@ function selectImage(dom) {
     $(dom).append(containerDom);
     selectDom.click(function () {
         $("#" + imageSelectorObj.id + "Modal").modal('hide');
-        $("#" + imageSelectorObj.id).html('<img class="resultImagePrev" src="'+url+'">');
+        $("#" + imageSelectorObj.id).html('<img class="resultImagePrev" src="' + url + '">');
         $("#" + imageSelectorObj.id + "Filed").val(url);
     })
     deleteDom.click(function () {
         $("#deleteImageConform")
             .modal({
                 allowMultiple: true,
-                onApprove: function() {
+                onApprove: function () {
                     deleteImage(id, dom);
                 }
             })
@@ -32,20 +32,17 @@ function selectImage(dom) {
 }
 
 function loadImage(page, successCallback) {
-    $.ajax({
-        type: 'GET',
-        url: "/api/v1/files",
-        contentType: 'application/json',
-        data: "pageSize="+imageSelectorObj.pageSize+"&page="+page,
-        success: function (res) {
-            if (res && res.success) {
-                successCallback && successCallback(res.data);
-            }
+    requestHandler(
+        'GET',
+        "/api/v1/files",
+        {
+            pageSize: imageSelectorObj.pageSize,
+            page: page,
+            type: 'image/png'
         },
-        error: function (error) {
-            alert(error.msg);
-        }
-    });
+        function (data) {
+            successCallback && successCallback(data);
+        });
 }
 
 
@@ -53,9 +50,9 @@ function getImageHtml(list) {
     var fileHtml = "";
     $.each(list, function (i, item) {
         fileHtml += '<a class="red card">' +
-            '<div data-url="'+item.url+'"  data-id="'+item._id+'" class="image">' +
-            '<img src="'+item.url+'?imageView2/5/w/200/h/200" />' +
-            '</div><p class="image-name">'+item.fileName+'</p>' +
+            '<div data-url="' + item.url + '"  data-id="' + item._id + '" class="image">' +
+            '<img src="' + item.url + '?imageView2/5/w/200/h/200" />' +
+            '</div><p class="image-name">' + item.fileName + '</p>' +
             '</a>';
     });
     $("#" + imageSelectorObj.id + "Content").html(fileHtml);
@@ -66,7 +63,7 @@ function getImageHtml(list) {
 
 function bindImageSelector(id) {
     imageSelectorObj.id = id;
-    $('#'+id).click(function () {
+    $('#' + id).click(function () {
         $("#" + id + "Modal")
             .modal('setting', 'closable', false)
             .modal('show');
@@ -123,11 +120,11 @@ function imageSelectorChange(dom) {
     var reader = new FileReader();
     reader.addEventListener('load', function () {
 
-        var $cropperContainer = $("#"+imageSelectorObj.id+"CropperContainer");
+        var $cropperContainer = $("#" + imageSelectorObj.id + "CropperContainer");
         var $image = $('<img class="imageCropper" />');
         $image.attr('src', reader.result);
         $cropperContainer.html($image);
-        var $resultImage = $("#"+imageSelectorObj.id+"Result");
+        var $resultImage = $("#" + imageSelectorObj.id + "Result");
         var cropperInstance;
         $("#" + imageSelectorObj.id + "CropperModal")
             .modal({
@@ -139,18 +136,18 @@ function imageSelectorChange(dom) {
                 // onDeny: function(){
                 //     return false;
                 // },
-                onHidden: function() {
-                    $("#"+imageSelectorObj.id+"Holder").val("");
+                onHidden: function () {
+                    $("#" + imageSelectorObj.id + "Holder").val("");
                 },
-                onApprove: function() {
+                onApprove: function () {
                     cropperInstance.getCroppedCanvas().toBlob(function (blob) {
                         var uploadHtml = '<div>上传中</div>';
                         $cropperContainer.html(uploadHtml);
                         uploadImage(blob, function (result) {
                             var fileHtml = '<a class="red card">' +
-                                '<div onclick="selectImage(this)" data-url="'+result.data.url+'" class="image">' +
-                                '<img src="'+result.data.url+'?imageView2/5/w/200/h/200" />' +
-                                '</div><p class="image-name">'+result.data.fileName+'</p>' +
+                                '<div onclick="selectImage(this)" data-url="' + result.data.url + '" class="image">' +
+                                '<img src="' + result.data.url + '?imageView2/5/w/200/h/200" />' +
+                                '</div><p class="image-name">' + result.data.fileName + '</p>' +
                                 '</a>';
                             $("#" + imageSelectorObj.id + "Content").prepend(fileHtml);
                             $("#" + imageSelectorObj.id + "CropperModal").modal('hide');
@@ -183,31 +180,31 @@ function uploadImage(blob, successCallback) {
         data: formData,
         processData: false,
         contentType: false,
-        success: function(result) {
+        success: function (result) {
             if (result && result.success) {
                 successCallback && successCallback(result);
             }
             console.log(result);
         },
-        error: function() {
+        error: function () {
             console.log('Upload error');
         },
     });
 }
 
 function deleteImage(id, dom) {
-    $.ajax('/image/delete/'+id, {
+    $.ajax('/image/delete/' + id, {
         method: "DELETE",
         data: '',
         processData: false,
         contentType: false,
-        success: function(result) {
+        success: function (result) {
             if (result && result.success) {
                 $(dom).parent("a").remove();
             }
             console.log(result);
         },
-        error: function() {
+        error: function () {
             console.log('Upload error');
         },
     });

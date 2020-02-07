@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@elastic.io/casbin-mongoose-adapter": "^1.0.0",
+    "@moyufed/folder-scanner": "0.0.3",
     "await-stream-ready": "^1.0.1",
     "casbin": "^2.0.0",
     "egg": "^2.12.0",
@@ -26,7 +27,8 @@
     "egg-view-nunjucks": "^2.2.0",
     "jsonwebtoken": "^8.4.0",
     "koa-jwt2": "^1.0.3",
-    "moment": "^2.22.2"
+    "moment": "^2.22.2",
+    "unzipper": "^0.10.8"
   },
   "devDependencies": {
     "egg-bin": "^4.9.0"

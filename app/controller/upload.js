@@ -8,6 +8,9 @@ const awaitWriteStream = require('await-stream-ready').write;
 //管道读入一个虫洞。
 const sendToWormhole = require('stream-wormhole');
 
+const unzipper = require('unzipper');
+
+const FolderScanner = require('@moyufed/folder-scanner');
 class UploadController extends Controller {
     async uploadImage() {
         const ctx = this.ctx;
@@ -37,11 +40,11 @@ class UploadController extends Controller {
 
             // 图片上传七牛
             result = await ctx.app.fullQiniu.uploadStream(name, stream);
-            if(result.ok) {
+            if (result.ok) {
                 const newFile = await ctx.service.file.createFile({
                     fileName: stream.filename, // 文件名
                     type: stream.mimeType, // 文件类型
-                    url:  result.url, // 文件url地址
+                    url: result.url, // 文件url地址
                 });
                 ctx.body = {
                     code: 200,
@@ -64,13 +67,13 @@ class UploadController extends Controller {
         try {
 
 
-            const file = await ctx.service.file.findOneFile({_id: ctx.params.id});
+            const file = await ctx.service.file.findOneFile({ _id: ctx.params.id });
             // delete(key)
             // const result = await ctx.app.fullQiniu.batchFileInfo([file.fileName]);
             const result = await ctx.app.fullQiniu.delete(file.fileName);
-            if(result.ok) {
+            if (result.ok) {
                 const delResult = await ctx.service.file.deleteFile(ctx.params.id);
-                if(delResult.ok === 1) {
+                if (delResult.ok === 1) {
                     ctx.body = {
                         code: 200,
                         data: {},
@@ -86,5 +89,112 @@ class UploadController extends Controller {
         }
     }
 
+    /**
+     * [saveFileWithStream description]
+     * @param {String} filePath [文件路径]
+     * @param {Buffer} readData [Buffer 数据]
+     */
+    // static saveFile(filePath, fileData) {
+    //     return new Promise((resolve, reject) => {
+    //         // 块方式写入文件
+    //         const wstream = fs.createWriteStream(filePath);
+
+    //         wstream.on('open', () => {
+    //             const blockSize = 128;
+    //             const nbBlocks = Math.ceil(fileData.length / (blockSize));
+    //             for (let i = 0; i < nbBlocks; i += 1) {
+    //                 const currentBlock = fileData.slice(
+    //                     blockSize * i,
+    //                     Math.min(blockSize * (i + 1), fileData.length),
+    //                 );
+    //                 wstream.write(currentBlock);
+    //             }
+
+    //             wstream.end();
+    //         });
+    //         wstream.on('error', (err) => { reject(err); });
+    //         wstream.on('finish', () => { resolve(true); });
+    //     });
+    // }
+    // try {
+    //     await saveFileWithStream(filePath, fileData); // 这里的fileData是Buffer类型
+    // } catch (err) {
+    //     console.log(err.stack);
+    // }
+    unzipPackage(stream, path) {
+        return new Promise((resolve, reject) => {
+            stream.pipe(unzipper.Extract({ path }))
+                .on('entry', entry => {
+                })
+                .on("close", data => {
+                    console.log("解压成功");
+                    resolve(true);
+                })
+                .on('error', e => {
+                    reject(e);
+                });
+        })
+    }
+    async uploadPackage() {
+        let result;
+        const ctx = this.ctx;
+        const stream = await ctx.getFileStream();
+        const name = stream.filename;
+
+        try {
+            const uploadPath = 'uploadTemp/';
+            if (!fs.existsSync(uploadPath)) {
+                fs.mkdirSync(uploadPath);
+            }
+            const unzipResult = await this.unzipPackage(stream, 'fileTemp');
+            if (unzipResult === true) {
+                console.log("解压成功");
+                const folderScanner = new FolderScanner({
+                    location: 'fileTemp',
+                    rootFolder: name.split('.zip')[0]
+                });
+                const files = JSON.parse(folderScanner.getFiles().replace(',]', ']'))
+                console.log(files.length);
+                const res = await ctx.app.fullQiniu.uploadFile('package' + files[0], path.resolve('fileTemp' + files[0]));
+                console.log(res);
+            }
+            // const writeStream = fs.createWriteStream(uploadPath + name);
+            // writeStream.on('finish', () => {
+            //     console.log(3);
+            // });
+            // console.log(1);
+            // await awaitWriteStream(stream.pipe(writeStream));
+            // console.log(2);
+            // fs.createReadStream(uploadPath + name).pipe(unzipper.Extract({ path: 'fileTemp' }))
+            //     .on('entry', function (entry) {
+            //     })
+            //     .on("close", function (data) {
+            //         console.log("解压成功,查找字体…");
+            //     })
+
+
+            // 图片上传七牛
+            // result = await ctx.app.fullQiniu.uploadStream('package/' + new Date().getTime() + '-' + name, stream);
+
+            // if (result.ok) {
+            //     const newFile = await ctx.service.file.createFile({
+            //         fileName: name, // 文件名
+            //         type: stream.mimeType, // 文件类型
+            //         url: result.url, // 文件url地址
+            //     });
+            //     ctx.body = {
+            //         code: 200,
+            //         data: newFile,
+            //         success: true,
+            //         msg: `上传成功`
+            //     }
+            // }
+            // console.log(result);
+        } catch (err) {
+            //如果出现错误，关闭管道
+            await sendToWormhole(stream);
+            throw err;
+        }
+    }
 }
 module.exports = UploadController;

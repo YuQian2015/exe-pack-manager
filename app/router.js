@@ -14,6 +14,7 @@ module.exports = app => {
     router.post('/tenant/create', controller.tenant.createTenant);
 
     router.post('/image/upload', controller.upload.uploadImage);
+    router.post('/package/upload', controller.upload.uploadPackage);
     router.del('/image/delete/:id', controller.upload.deleteImage);
 
     // 打包
@@ -29,6 +30,9 @@ module.exports = app => {
 
     // 内嵌版
     router.get('/inlay', controller.inlay.findInlay);
+
+    // CDN
+    router.get('/cdn', controller.cdn.findCDN);
 
     // 管理
     router.get('/management', controller.management.findManagement);
@@ -61,6 +65,7 @@ module.exports = app => {
     router.resources('keepers', '/api/v1/keepers', controller.keepers); // 保管
     router.resources('features', '/api/v1/features', controller.features); // 对接特性
     router.resources('inlays', '/api/v1/inlays', controller.inlays); // 内嵌版
+    router.resources('cdn', '/api/v1/cdn', controller.cdn); // cdn
     router.resources('teams', '/api/v1/teams', controller.teams);
     router.resources('rate', '/api/v1/rate', controller.rate);
 };
