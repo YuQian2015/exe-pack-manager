@@ -45,16 +45,7 @@ class FileService extends Service {
     }
 
     async findOneFile(params = {}) {
-        return new Promise((resolve, reject) => {
-            this.ctx.model.File.findOne(params).lean().exec((err, docs) => {
-                if (err) {
-                    console.log(err);
-                    reject(err);
-                } else {
-                    resolve(docs);
-                }
-            });
-        })
+        return this.ctx.model.File.findOne(params).lean();
     }
 
 

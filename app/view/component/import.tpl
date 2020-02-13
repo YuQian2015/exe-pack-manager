@@ -8,7 +8,8 @@
     <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/cropper/4.0.0/cropper.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/highlight.js/9.13.1/styles/tomorrow-night-eighties.min.css" rel="stylesheet">
-    <link href="https://cdn.bootcss.com/quill/1.3.6/quill.snow.min.css" rel="stylesheet">
+    <!--<link href="https://cdn.bootcss.com/quill/1.3.6/quill.snow.min.css" rel="stylesheet">-->
+    <link href="https://eftcdn.exexm.com/js-library/quill/quill.snow.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/public/css/style.css">
     <link rel="stylesheet" type="text/css" href="/public/font/iconfont.css">
 
@@ -21,16 +22,20 @@
 
     <!--CDN-->
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.js"></script>
-    <script src="https://cdn.bootcss.com/moment.js/2.22.2/moment.min.js"></script>
-    <script src="https://cdn.bootcss.com/cropper/4.0.0/cropper.min.js"></script>
+    <!--<script src="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.js"></script>-->
+    <script src="https://eftcdn.exexm.com/js-library/semantic/semantic.min.js"></script>
+    <!--<script src="https://cdn.bootcss.com/moment.js/2.22.2/moment.min.js"></script>-->
+    <script src="https://eftcdn.exexm.com/js-library/moment/moment.min.js"></script>
+    <!--<script src="https://cdn.bootcss.com/cropper/4.0.0/cropper.min.js"></script>-->
+    <script src="https://eftcdn.exexm.com/js-library/cropper/dist/cropper.min.js"></script>
     <script src="https://cdn.bootcss.com/lodash.js/4.17.11/lodash.min.js"></script>
     <script src="https://cdn.bootcss.com/highlight.js/9.13.1/highlight.min.js"></script>
     <script src="https://cdn.bootcss.com/quill/1.3.6/quill.min.js"></script>
     <script src="https://cdn.bootcss.com/crypto-js/3.1.2/components/core-min.js"></script>
     <script src="https://cdn.bootcss.com/crypto-js/3.1.9-1/md5.min.js"></script>
     <script src="https://cdn.bootcss.com/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
-    <script src="https://cdn.bootcss.com/clipboard.js/2.0.4/clipboard.min.js"></script>
+    <!--<script src="https://cdn.bootcss.com/clipboard.js/2.0.4/clipboard.min.js"></script>-->
+    <script src="https://eftcdn.exexm.com/js-library/clipboard/clipboard.min.js"></script>
     <!-- https://github.com/patleeman/quill-markdown-shortcuts -->
     <script src="/public/lib/quill/modules/markdownShortcuts.js"></script>
     <script src="/public/lib/semantic/plugins/tablesort.js"></script>

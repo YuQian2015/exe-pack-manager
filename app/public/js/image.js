@@ -169,7 +169,7 @@ function imageSelectorChange(dom) {
 }
 
 function uploadImage(blob, successCallback) {
-    const formData = new FormData();
+    var formData = new FormData();
     console.log(blob);
 
     formData.append('image', blob, new Date().getTime() + '.png');

@@ -33,6 +33,8 @@ module.exports = app => {
 
     // CDN
     router.get('/cdn', controller.cdn.findCDN);
+    router.get('/api/v1/cdn/:id/version', controller.cdn.getVersion);
+    router.post('/api/v1/cdn/:id/publish', controller.cdn.publishCdn);
 
     // 管理
     router.get('/management', controller.management.findManagement);

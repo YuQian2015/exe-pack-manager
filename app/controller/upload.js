@@ -39,7 +39,7 @@ class UploadController extends Controller {
             // }
 
             // 图片上传七牛
-            result = await ctx.app.fullQiniu.uploadStream(name, stream);
+            result = await ctx.app.fullQiniu.uploadStream('icons/' + name, stream);
             if (result.ok) {
                 const newFile = await ctx.service.file.createFile({
                     fileName: stream.filename, // 文件名
@@ -70,7 +70,8 @@ class UploadController extends Controller {
             const file = await ctx.service.file.findOneFile({ _id: ctx.params.id });
             // delete(key)
             // const result = await ctx.app.fullQiniu.batchFileInfo([file.fileName]);
-            const result = await ctx.app.fullQiniu.delete(file.fileName);
+            const fileAddress = file.url.replace(/https?:\/\/[\s\S]*com\//, '')
+            const result = await ctx.app.fullQiniu.delete(fileAddress);
             if (result.ok) {
                 const delResult = await ctx.service.file.deleteFile(ctx.params.id);
                 if (delResult.ok === 1) {
@@ -139,25 +140,40 @@ class UploadController extends Controller {
         let result;
         const ctx = this.ctx;
         const stream = await ctx.getFileStream();
+        const id = stream.fields.id;
         const name = stream.filename;
-
         try {
-            const uploadPath = 'uploadTemp/';
-            if (!fs.existsSync(uploadPath)) {
-                fs.mkdirSync(uploadPath);
+            if (id) {
+                const cdn = await ctx.model.Cdn.findOne({ _id: id });
+                const folder = ['app', 'app', 'wx', 'qywx', 'dd', 'embed', 'pc'];
+                const type = cdn ? cdn.type : 5;
+                const tenantId = cdn ? cdn.tenantId : 'unknown';
+                const unzipResult = await this.unzipPackage(stream, path.join('fileTemp', folder[type]));
+                if (unzipResult === true) {
+                    console.log("解压成功");
+                    ctx.body = {
+                        code: 200,
+                        data: {},
+                        success: true,
+                        msg: `上传成功`
+                    }
+                    // const folderScanner = new FolderScanner({
+                    //     location: 'fileTemp',
+                    //     rootFolder: name.split('.zip')[0]
+                    // });
+                    // const files = JSON.parse(folderScanner.getFiles().replace(',]', ']'))
+                    // console.log(files.length);
+                    // const res = await ctx.app.fullQiniu.uploadFile('package' + files[0], path.resolve('fileTemp' + files[0]));
+                    // console.log(res);
+                }
+            } else {
+                throw new Error('缺少站点ID');
             }
-            const unzipResult = await this.unzipPackage(stream, 'fileTemp');
-            if (unzipResult === true) {
-                console.log("解压成功");
-                const folderScanner = new FolderScanner({
-                    location: 'fileTemp',
-                    rootFolder: name.split('.zip')[0]
-                });
-                const files = JSON.parse(folderScanner.getFiles().replace(',]', ']'))
-                console.log(files.length);
-                const res = await ctx.app.fullQiniu.uploadFile('package' + files[0], path.resolve('fileTemp' + files[0]));
-                console.log(res);
-            }
+
+            // const uploadPath = 'uploadTemp/';
+            // if (!fs.existsSync(uploadPath)) {
+            //     fs.mkdirSync(uploadPath);
+            // }
             // const writeStream = fs.createWriteStream(uploadPath + name);
             // writeStream.on('finish', () => {
             //     console.log(3);
