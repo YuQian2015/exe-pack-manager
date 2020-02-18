@@ -18,7 +18,7 @@
         <h1>内嵌版对接</h1>
         <div class="inlay-table">
         <div class="slogan">
-            <img src="http://exe.moyufed.com/eft.png?imageView2/5/w/60/h/60" />
+            <img src="https://eftcdn.exexm.com/exe-pack-manager/assets/eft.png?imageView2/5/w/60/h/60" />
             <div class="slogan-text">
                 <div class="title">职行力大前端</div>
                 <div class="description">每个字母都相比前一个字母少一笔，我们团队的目标是所开发的“产品”能化繁为简，简约而不简单。</div>

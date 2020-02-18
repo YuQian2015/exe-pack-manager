@@ -49,6 +49,10 @@ class FileService extends Service {
     }
 
 
+    async updateOneFile(condition = {}, doc) {
+        return this.ctx.model.File.updateOne(condition, doc).lean()
+    }
+
     async deleteFile(id) {
 
         return new Promise((resolve, reject) => {

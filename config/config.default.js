@@ -116,8 +116,8 @@ exports.authz = {
 
 exports.fullQiniu = {
     default: {
-        ak: 'Y3Yp083X9R5vnYca10N8DkpNq4q1zoxrtNip1Ptf', // Access Key
-        sk: '1yVv5hqxplLYoVTwBAJwjV2GWwTSHNDEYu1AE0Iw', // Secret Key
+        ak: 'uD1c_3eaMAsCh8gb7S-MFLgvnhx8FOjW-TeQdUMK', // Access Key
+        sk: '4JO1iw16tKGR7q9IY4wDz76RBUh7KZJ40WmLZaxu', // Secret Key
         useCdnDomain: true,
         isLog: true,
     },
@@ -128,8 +128,8 @@ exports.fullQiniu = {
     // 通过 app.fullQiniu 直接使用实例
     client: {
         zone: 'Zone_z0', // Zone_z0 华东, Zone_z1 华北, Zone_z2 华南, Zone_na0 北美
-        bucket: 'exe-res',
-        baseUrl: 'http://exe.moyufed.com/', // 用于拼接已上传文件的完整地址
+        bucket: 'bucket-frontend',
+        baseUrl: 'https://eftcdn.exexm.com/', // 用于拼接已上传文件的完整地址
     }
 
     // 多实例

@@ -45,6 +45,7 @@ module.exports = app => {
     // 升级数据库所使用
     router.post('/update/tenant', controller.update.updateTenant);
     router.post('/update/theme', controller.update.updateTheme);
+    router.post('/update/icon', controller.update.changeIcon);
 
     // api
     router.post('/public/logout', controller.login.logout);

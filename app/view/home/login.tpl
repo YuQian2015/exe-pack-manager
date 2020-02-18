@@ -4,7 +4,7 @@
     {% include "../component/import.tpl" %}
       <style type="text/css">
         body > .grid {
-            background-image: url('http://exe.moyufed.com/wall_bg.jpg');
+            background-image: url('https://eftcdn.exexm.com/exe-pack-manager/assets/wall_bg.jpg');
             background-repeat: no-repeat;
             background-size: 100%;
             height: 100%;

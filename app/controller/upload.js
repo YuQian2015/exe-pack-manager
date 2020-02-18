@@ -39,7 +39,7 @@ class UploadController extends Controller {
             // }
 
             // 图片上传七牛
-            result = await ctx.app.fullQiniu.uploadStream('icons/' + name, stream);
+            result = await ctx.app.fullQiniu.uploadStream('exe-pack-manager/icons/' + name, stream);
             if (result.ok) {
                 const newFile = await ctx.service.file.createFile({
                     fileName: stream.filename, // 文件名

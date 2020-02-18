@@ -51,5 +51,19 @@ class UpdateController extends Controller {
             }
         })
     }
+
+    async changeIcon() {
+        // const tenantList = await this.ctx.service.tenant.findTenant();
+        // tenantList.forEach( async (t)=> {
+        //     await this.ctx.service.tenant.updateOneTenant({_id: t._id}, {icon: t.icon.replace('http://exe.moyufed.com/', 'https://eftcdn.exexm.com/exe-pack-manager/icons/')});
+        //     console.log(t.icon);
+        // })
+
+        const iconList = await this.ctx.service.file.findFile({page: 1, pageSize: 1000});
+        iconList.list.forEach( async (f)=> {
+            await this.ctx.service.file.updateOneFile({_id: f._id}, {url: f.url.replace('http://exe.moyufed.com/', 'https://eftcdn.exexm.com/exe-pack-manager/icons/')});
+            console.log(f.url);
+        })
+    }
 }
 module.exports = UpdateController;
