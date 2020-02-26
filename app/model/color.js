@@ -7,7 +7,7 @@ module.exports = app => {
         colors: Object, // 颜色
     }, { timestamps: { createdAt: 'createDate', updatedAt: 'updateDate' } });
     ColorSchema.pre('find', function () {
-        this.populate('tenantInfo', 'valid tenantName actualTenantId');
+        this.populate('tenantInfo', 'valid tenantName actualTenantId appName');
     });
     return mongoose.model('Color', ColorSchema);
 };
