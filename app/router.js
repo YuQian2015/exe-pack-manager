@@ -15,6 +15,7 @@ module.exports = app => {
 
     router.post('/image/upload', controller.upload.uploadImage);
     router.post('/package/upload', controller.upload.uploadPackage);
+    router.post('/excel/upload/hiring', controller.upload.uploadHiring);
     router.del('/image/delete/:id', controller.upload.deleteImage);
 
     // 打包

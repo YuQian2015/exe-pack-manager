@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "egg-bin dev",
+    "debug": "egg-bin debug",
     "start": "egg-scripts start --daemon",
     "stop": "egg-scripts stop"
   },
@@ -25,6 +26,8 @@
     "egg-scripts": "^2.10.0",
     "egg-validate": "^2.0.2",
     "egg-view-nunjucks": "^2.2.0",
+    "excel": "^1.0.1",
+    "json-beautify": "^1.1.1",
     "jsonwebtoken": "^8.4.0",
     "koa-jwt2": "^1.0.3",
     "moment": "^2.22.2",

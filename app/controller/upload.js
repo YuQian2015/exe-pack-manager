@@ -8,6 +8,9 @@ const awaitWriteStream = require('await-stream-ready').write;
 //管道读入一个虫洞。
 const sendToWormhole = require('stream-wormhole');
 
+const parseXlsx = require("excel");
+const jsonBeautify = require('json-beautify');
+
 const unzipper = require('unzipper');
 
 const FolderScanner = require('@moyufed/folder-scanner');
@@ -211,6 +214,54 @@ class UploadController extends Controller {
             await sendToWormhole(stream);
             throw err;
         }
+
+    }
+
+    getFileType(filePath) {
+        let startIndex = filePath.lastIndexOf(".");
+        if (startIndex != -1)
+            return filePath.substring(startIndex + 1, filePath.length).toLowerCase();
+        else return "";
+    }
+
+    async uploadHiring() {
+        let result;
+        const ctx = this.ctx;
+        let stream;
+        try {
+            let stream = await ctx.getFileStream();
+            const name = stream.filename;
+            console.log(stream);
+            const newName = 'upload/' + new Date().getTime() + '.' + this.getFileType(name);
+            const writeStream = fs.createWriteStream(newName);
+            // 以管道方式写入流
+            // 异步把文件流写入
+            await awaitWriteStream(stream.pipe(writeStream));
+
+            const excelData = await parseXlsx.default(newName);
+            const documentCount = excelData.length;
+            let resultJson = [];
+            for (let index in excelData) {
+                // let firstKey = index[0];
+                const rowData = {}
+                for(let i in excelData[index]) {
+                    rowData[excelData[0][i]] = excelData[index][i];
+                }
+                resultJson.push(rowData)
+            }
+            fs.writeFileSync('upload/result.json', jsonBeautify(JSON.stringify(resultJson)))
+            ctx.body = {
+                code: 200,
+                data: {},
+                success: true,
+                msg: `上传成功`
+            }
+        } catch (err) {
+            //如果出现错误，关闭管道
+            stream && await sendToWormhole(stream);
+            throw err;
+        }
+
     }
 }
 module.exports = UploadController;

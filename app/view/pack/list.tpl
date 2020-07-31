@@ -70,7 +70,7 @@
             <div class="pack-count">{{ item.tenants.length }}个租户</div>
             {% for t in item.tenants %}
                 <div class="pack-tenant-name">
-                    <img src="{% if t.icon %}{{t.icon}}{% else %}http://exe.moyufed.com/1545874424004.png{% endif %}?imageView2/5/w/40/h/40" />
+                    <img src="{% if t.icon %}{{t.icon}}{% else %}https://eftcdn.exexm.com/exe-pack-manager/icons/1545874424004.png{% endif %}?imageView2/5/w/40/h/40" />
                     <p>{{ t.appName }}</p>
                 </div>
             {% endfor %}

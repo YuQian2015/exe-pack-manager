@@ -28,6 +28,9 @@ exports.security = {
 //     },
 //     domainWhiteList: '*'
 // };
+exports.multipart =  {
+    fileExtensions: [ '.xls', '.xlsx' ] // 增加对扩展名的文件支持
+};
 
 exports.cors = {
     origin:'*',

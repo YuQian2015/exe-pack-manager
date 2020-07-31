@@ -22,7 +22,7 @@
             <div class="four wide column">
                 <div class="ui card">
                     <div class="image">
-                        <img src="{% if tenant.icon %}{{tenant.icon}}{% else %}http://exe.moyufed.com/1545874424004.png{% endif %}">
+                        <img src="{% if tenant.icon %}{{tenant.icon}}{% else %}https://eftcdn.exexm.com/exe-pack-manager/icons/1545874424004.png{% endif %}">
                     </div>
                     <div class="content">
                         <a class="header">{{ tenant.appName }}（{{ tenant.tenantId }}）</a>

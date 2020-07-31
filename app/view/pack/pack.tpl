@@ -104,7 +104,7 @@
                 {% for item in list %}
                     <tr class="selectable-line">
                         <td class="center aligned" data-label="icon">
-                            <img src="{% if item.icon %}{{item.icon}}{% else %}http://exe.moyufed.com/1545874424004.png{% endif %}?imageView2/5/w/20/h/20" />
+                            <img src="{% if item.icon %}{{item.icon}}{% else %}https://eftcdn.exexm.com/exe-pack-manager/icons/1545874424004.png{% endif %}?imageView2/5/w/20/h/20" />
                         </td>
                         <td data-label="tenantId">{{ item.tenantId }}</td>
                         <td data-label="appName">{{ item.appName }}</td>

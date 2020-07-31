@@ -131,7 +131,7 @@ function getPackList(dom) {
             var html = '';
             var selectedHtml = '';
             $.each(data, function (i, item) {
-                var icon = item.icon?item.icon:"http://exe.moyufed.com/1545874424004.png";
+                var icon = item.icon?item.icon:"https://eftcdn.exexm.com/exe-pack-manager/icons/1545874424004.png";
                 html += '<tr class="selectable-line">' +
                     '<td class="center aligned" data-label="icon">' +
                     '   <img src="'+icon+'?imageView2/5/w/20/h/20" />' +

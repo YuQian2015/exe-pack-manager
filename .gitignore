@@ -8,4 +8,5 @@ package-lock.json
 */.DS_Store
 fileTemp/
 uploadTemp/
+upload/
 
