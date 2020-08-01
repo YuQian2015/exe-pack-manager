@@ -72,4 +72,5 @@ module.exports = app => {
     router.resources('cdn', '/api/v1/cdn', controller.cdn); // cdn
     router.resources('teams', '/api/v1/teams', controller.teams);
     router.resources('rate', '/api/v1/rate', controller.rate);
+    router.resources('hiring', '/api/v1/hiring', controller.hiring); // 招聘
 };

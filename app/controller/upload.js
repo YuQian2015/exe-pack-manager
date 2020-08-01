@@ -225,6 +225,34 @@ class UploadController extends Controller {
     }
 
     async uploadHiring() {
+        const map = [
+            'status', // 状态
+            'area', // 招聘分部
+            'superior', // 直接上级
+            'job', // 应聘岗位
+            'type', // 编制类型
+            'name', // 姓名
+            'tel', // 联系电话
+            'email', // 邮箱地址
+            'sendDate', // 发送简历时间
+            'receiveDate', // 收到反馈时间
+            'feedbackTime', // 简历反馈时长
+            'interviewTime', // 面试时长(小时）
+            'evaluationTime', // 评估反馈时长（天）
+            'timeChangeCount', // 时间修改次数
+            'probationPeriod', // 试用期是否离职
+            'channel', // 渠道
+            'recommender', // 推荐人
+            'channelCost', // 渠道成本
+            'interviewers', // 面试人
+            'hrOpinion', // HR意见
+            'reasonClassification', // 不录用理由分类
+            'reasons', // 不录用具体理由
+            'refusingReasonClassification', // 拒绝offer理由分类
+            'refusingReasons', // 拒绝具体理由
+            'checkInTime', // 报到时间
+            'remark', // 备注
+        ]
         let result;
         const ctx = this.ctx;
         let stream;
@@ -243,13 +271,23 @@ class UploadController extends Controller {
             let resultJson = [];
             for (let index in excelData) {
                 // let firstKey = index[0];
-                const rowData = {}
-                for(let i in excelData[index]) {
-                    rowData[excelData[0][i]] = excelData[index][i];
+                if(index > 0) {
+                    console.log(index);
+                    const rowData = {};
+                    for (let i in excelData[index]) {
+                        // rowData[excelData[0][i]] = excelData[index][i];
+                        const key = map[i]
+                        if(key) {
+                            rowData[key] = excelData[index][i];
+                        }
+                    }
+                    console.log(rowData);
+                    await ctx.service.hiring.createHiring(rowData);
+                    console.log(index);
+                    resultJson.push(rowData);
                 }
-                resultJson.push(rowData)
             }
-            fs.writeFileSync('upload/result.json', jsonBeautify(JSON.stringify(resultJson)))
+            fs.writeFileSync('upload/result.json', JSON.stringify(resultJson))
             ctx.body = {
                 code: 200,
                 data: {},
