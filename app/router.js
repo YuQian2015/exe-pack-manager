@@ -53,6 +53,9 @@ module.exports = app => {
     router.get('/public/tenants', controller.tenants.index);
     router.get('/pack/tenants', controller.pack.findPackTenant);
 
+    
+    router.post('/api/v1/hiring/search', controller.hiring.search); // 招聘搜索
+
 
     // RESTful api
     router.resources('users', '/api/v1/users', controller.users); // 用户接口
