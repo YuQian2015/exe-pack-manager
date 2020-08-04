@@ -27,7 +27,7 @@
     "egg-validate": "^2.0.2",
     "egg-view-nunjucks": "^2.2.0",
     "excel": "^1.0.1",
-    "json-beautify": "^1.1.1",
+    "excel-date-to-js": "^1.0.2",
     "jsonwebtoken": "^8.4.0",
     "koa-jwt2": "^1.0.3",
     "moment": "^2.22.2",

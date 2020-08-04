@@ -9,7 +9,7 @@ const awaitWriteStream = require('await-stream-ready').write;
 const sendToWormhole = require('stream-wormhole');
 
 const parseXlsx = require("excel");
-const jsonBeautify = require('json-beautify');
+const { getJsDateFromExcel } = require("excel-date-to-js");
 
 const unzipper = require('unzipper');
 
@@ -272,18 +272,28 @@ class UploadController extends Controller {
             for (let index in excelData) {
                 // let firstKey = index[0];
                 if(index > 0) {
-                    console.log(index);
+                    // console.log(index);
                     const rowData = {};
                     for (let i in excelData[index]) {
                         // rowData[excelData[0][i]] = excelData[index][i];
                         const key = map[i]
                         if(key) {
-                            rowData[key] = excelData[index][i];
+                            if(key === 'sendDate') {
+                                const date = excelData[index][i];
+                                if(date) {
+                                    rowData[key] = getJsDateFromExcel(date)
+                                }
+                            } else if(key === 'receiveDate') {
+                                const date = excelData[index][i];
+                                if(date) {
+                                    rowData[key] = getJsDateFromExcel(date)
+                                }
+                            } else {
+                                rowData[key] = excelData[index][i];
+                            }
                         }
                     }
-                    console.log(rowData);
                     await ctx.service.hiring.createHiring(rowData);
-                    console.log(index);
                     resultJson.push(rowData);
                 }
             }

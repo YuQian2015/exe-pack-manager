@@ -16,13 +16,22 @@ class HiringService extends Service {
 
     async searchHiring(condition) {
         const { page = 1, pageSize = 10, keyword } = condition;
-        const reg = new RegExp(keyword, 'i')
-        return this.ctx.model.Hiring.find({
-            // name: { $regex: reg }
-        })
-            .or([{ job: { $regex: reg } }, { name: { $regex: reg } }])
+        const reg = new RegExp(keyword, 'i');
+        delete condition.page;
+        delete condition.pageSize;
+        delete condition.keyword;
+        const count = await this.ctx.model.Hiring.find(condition)
+            .or([{ job: { $regex: reg } }, { name: { $regex: reg } }, { tel: { $regex: reg } }])
+            .count();
+        const result = await this.ctx.model.Hiring.find(condition)
+            .or([{ job: { $regex: reg } }, { name: { $regex: reg } }, { tel: { $regex: reg } }])
             .limit(pageSize)
-            .skip((page - 1) * pageSize).sort('-createDate');
+            .skip((page - 1) * pageSize).sort('-createDate')
+            .lean();
+        return {
+            count,
+            result
+        }
     }
 }
 
