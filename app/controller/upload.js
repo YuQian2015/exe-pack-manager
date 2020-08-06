@@ -227,34 +227,30 @@ class UploadController extends Controller {
     async uploadHiring() {
         const map = [
             'status', // 状态
+            'name', // 姓名
+            'job', // 应聘岗位
             'area', // 招聘分部
             'superior', // 直接上级
-            'job', // 应聘岗位
-            'type', // 编制类型
-            'name', // 姓名
             'tel', // 联系电话
             'email', // 邮箱地址
             'sendDate', // 发送简历时间
             'receiveDate', // 收到反馈时间
-            'feedbackTime', // 简历反馈时长
+            'feedbackTime', // 简历反馈时长(天)
             'interviewTime', // 面试时长(小时）
             'evaluationTime', // 评估反馈时长（天）
-            'timeChangeCount', // 时间修改次数
-            'probationPeriod', // 试用期是否离职
             'channel', // 渠道
             'recommender', // 推荐人
             'channelCost', // 渠道成本
-            'interviewers', // 面试人
-            'hrOpinion', // HR意见
+            'opinion', // HR意见/录用意见
+            'refusingInterviewReasons', // 不面试理由
             'reasonClassification', // 不录用理由分类
             'reasons', // 不录用具体理由
             'refusingReasonClassification', // 拒绝offer理由分类
             'refusingReasons', // 拒绝具体理由
-            'checkInTime', // 报到时间
             'remark', // 备注
         ]
         
-        const statusMap = { "不面试": 1, "不面试先储备": 2, "待面试": 3, "已面试待定结论": 4, "已面试并储备": 5, "不录用": 6, "录用": 7 };
+        const statusMap = { "不面试": 1, "不面试先储备": 2, "待面试": 3, "已面试待定结论": 4, "已面试并储备": 5, "不录用": 6, "拒绝offer": 7, "接受offer": 8, "试用期离职": 9 };
         let result;
         const ctx = this.ctx;
         let stream;
