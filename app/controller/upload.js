@@ -253,6 +253,8 @@ class UploadController extends Controller {
             'checkInTime', // 报到时间
             'remark', // 备注
         ]
+        
+        const statusMap = { "不面试": 1, "不面试先储备": 2, "待面试": 3, "已面试待定结论": 4, "已面试并储备": 5, "不录用": 6, "录用": 7 };
         let result;
         const ctx = this.ctx;
         let stream;
@@ -272,7 +274,7 @@ class UploadController extends Controller {
             for (let index in excelData) {
                 // let firstKey = index[0];
                 if(index > 0) {
-                    // console.log(index);
+                    console.log(index);
                     const rowData = {};
                     for (let i in excelData[index]) {
                         // rowData[excelData[0][i]] = excelData[index][i];
@@ -288,6 +290,9 @@ class UploadController extends Controller {
                                 if(date) {
                                     rowData[key] = getJsDateFromExcel(date)
                                 }
+                            } else if(key === 'status') {
+                                const state = excelData[index][i];
+                                rowData[key] = statusMap[state]
                             } else {
                                 rowData[key] = excelData[index][i];
                             }

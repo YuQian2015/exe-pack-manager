@@ -2,7 +2,10 @@ module.exports = app => {
     const mongoose = app.mongoose;
     const Schema = mongoose.Schema;
     const HiringSchema = new Schema({
-        status: String, // 状态
+        status: {
+            type: Number, // 状态
+            default: 0  // 0 未设置 1 不面试 2 不面试先储备 3 待面试 4 已面试待定结论 5 已面试并储备 6 不录用 7 录用
+        },
         area: String, // 招聘分部
         superior: String, // 直接上级
         job: String, // 应聘岗位

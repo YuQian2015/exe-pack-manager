@@ -33,6 +33,15 @@ class HiringService extends Service {
             result
         }
     }
+
+    async updateHiring(condition, data) {
+        const updateData = {
+            status: data.status,
+            reasonClassification: data.reasonClassification,
+            reasons: data.reasons
+        }
+        return this.ctx.model.Hiring.findOneAndUpdate(condition, { ...updateData })
+    }
 }
 
 module.exports = HiringService;
