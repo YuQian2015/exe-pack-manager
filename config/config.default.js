@@ -1,3 +1,6 @@
+const { config } = require('../config.js')
+const { MONGO_DB, QINIU, REDIS, JWT, SERVER } = config;
+
 exports.keys = 'exe-tools'; // Cookie 安全字符串>;
 
 // 添加 view 配置
@@ -8,11 +11,12 @@ exports.view = {
     },
 };
 
-// recommended
 exports.mongoose = {
     client: {
-        url: 'mongodb://admin:exe123@123.56.190.203:3001/exePack?authSource=exePack',
-        options: {},
+        url: `mongodb://${MONGO_DB.DB_USER}:${MONGO_DB.DB_PASSWORD}@${MONGO_DB.DB_IP}:${MONGO_DB.DB_PORT}/${MONGO_DB.DB_NAME}?authSource=${MONGO_DB.DB_NAME}`,
+        options: {
+            useFindAndModify: false // 使用findOneAndUpdate等方法消除警告
+        },
     },
 };
 
@@ -39,8 +43,8 @@ exports.cors = {
 
 exports.cluster = {
     listen: {
-        port: 7001,
-        hostname: '0.0.0.0',
+        port: SERVER.PORT,
+        hostname: SERVER.HOST_NAME,
         // path: '/var/run/egg.sock',
     }
 }
@@ -53,8 +57,8 @@ exports.errorHandler = {
 };
 // jwt配置
 exports.jwt = {
-    secret: 'exe-tools',
-    expiresIn: "8h",
+    secret: JWT.SECRET,
+    expiresIn: JWT.EXPIRES_IN,
     ignore(ctx) {
         // todo 目前先排除正在自动化使用到的接口
         const reg = /\/api\/v1\/colors|\/autopack/g;
@@ -116,11 +120,10 @@ exports.authz = {
 // };
 
 
-
 exports.fullQiniu = {
     default: {
-        ak: 'uD1c_3eaMAsCh8gb7S-MFLgvnhx8FOjW-TeQdUMK', // Access Key
-        sk: '4JO1iw16tKGR7q9IY4wDz76RBUh7KZJ40WmLZaxu', // Secret Key
+        ak: QINIU.AK, // Access Key
+        sk: QINIU.SK, // Secret Key
         useCdnDomain: true,
         isLog: true,
     },
@@ -130,9 +133,9 @@ exports.fullQiniu = {
     // 单实例
     // 通过 app.fullQiniu 直接使用实例
     client: {
-        zone: 'Zone_z0', // Zone_z0 华东, Zone_z1 华北, Zone_z2 华南, Zone_na0 北美
-        bucket: 'bucket-frontend',
-        baseUrl: 'https://eftcdn.exexm.com/', // 用于拼接已上传文件的完整地址
+        zone: QINIU.ZONE, // Zone_z0 华东, Zone_z1 华北, Zone_z2 华南, Zone_na0 北美
+        bucket: QINIU.BUCKET,
+        baseUrl: QINIU.BASE_URL, // 用于拼接已上传文件的完整地址
     }
 
     // 多实例
@@ -149,4 +152,4 @@ exports.fullQiniu = {
     //     baseUrl: null, // 用于拼接已上传文件的完整地址
     //     },
     // },
-};
+}
