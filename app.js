@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 
+const { config } = require('./config.js');
+const { MONGO_DB, EXPORT_ROOT } = config;
 const casbin = require('casbin');
 const path = require('path');
 // https://github.com/elasticio/casbin-mongoose-adapter
@@ -27,7 +29,7 @@ class AppBootHook {
 
 
 
-        const adapter = await MongooseAdapter.newAdapter('mongodb://admin:exe123@39.105.62.145:3001/exePack?authSource=exePack',
+        const adapter = await MongooseAdapter.newAdapter(`mongodb://${MONGO_DB.DB_USER}:${MONGO_DB.DB_PASSWORD}@${MONGO_DB.DB_IP}:${MONGO_DB.DB_PORT}/${MONGO_DB.DB_NAME}?authSource=${MONGO_DB.DB_NAME}`,
             {
                 useNewUrlParser: true
             });
