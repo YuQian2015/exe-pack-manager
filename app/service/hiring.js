@@ -42,6 +42,20 @@ class HiringService extends Service {
         }
         return this.ctx.model.Hiring.findOneAndUpdate(condition, { ...updateData })
     }
+
+    async report(condition) {
+        const { startDate, endDate } = condition;
+        const Hiring = this.ctx.model.Hiring;
+        // $gte (greater-than)
+        // $lt (less-than)
+        const totalCount = await Hiring.find({ 'sendDate': { $gte: startDate, $lt: endDate } }).count();
+        const interviewCount = await Hiring.find({ 'sendDate': { $gte: startDate, $lt: endDate } }).where('status').gte(4).count();
+        const offerCount = await Hiring.find({ 'sendDate': { $gte: startDate, $lt: endDate } }).where('status').gte(7).count();
+        const refuseCount = await Hiring.find({ 'sendDate': { $gte: startDate, $lt: endDate } }).where({'status': 7}).count();
+        const leaveCount = await Hiring.find({ 'sendDate': { $gte: startDate, $lt: endDate } }).where({'status': 9}).count();
+        // const offer = await Hiring.find({ 'sendDate': { $gte: startDate, $lt: endDate } }, 'status').where('status').gte(7);
+        return { totalCount, interviewCount, offerCount, refuseCount, leaveCount }
+    }
 }
 
 module.exports = HiringService;

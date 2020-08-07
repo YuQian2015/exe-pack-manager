@@ -50,5 +50,19 @@ class HiringController extends Controller {
             }
         }
     }
+
+    async report() {
+        const ctx = this.ctx;
+        const { startDate, endDate } = ctx.request.body;
+        const result = await ctx.service.hiring.report({startDate, endDate});
+        if (result) {
+            ctx.body = {
+                code: 200,
+                data: result,
+                success: true,
+                msg: ``
+            }
+        }
+    }
 }
 module.exports = HiringController;

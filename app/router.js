@@ -55,7 +55,7 @@ module.exports = app => {
 
     
     router.post('/api/v1/hiring/search', controller.hiring.search); // 招聘搜索
-
+    router.post('/api/v1/hiring/report', controller.hiring.report); // 招聘报表
 
     // RESTful api
     router.resources('users', '/api/v1/users', controller.users); // 用户接口
