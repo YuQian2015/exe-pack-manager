@@ -46,15 +46,34 @@ class HiringService extends Service {
     async report(condition) {
         const { startDate, endDate } = condition;
         const Hiring = this.ctx.model.Hiring;
+        const filter = { "sendDate": { $gte: new Date(startDate), $lt: new Date(endDate) } };
         // $gte (greater-than)
         // $lt (less-than)
-        const totalCount = await Hiring.find({ 'sendDate': { $gte: startDate, $lt: endDate } }).count();
-        const interviewCount = await Hiring.find({ 'sendDate': { $gte: startDate, $lt: endDate } }).where('status').gte(4).count();
-        const offerCount = await Hiring.find({ 'sendDate': { $gte: startDate, $lt: endDate } }).where('status').gte(7).count();
-        const refuseCount = await Hiring.find({ 'sendDate': { $gte: startDate, $lt: endDate } }).where({'status': 7}).count();
-        const leaveCount = await Hiring.find({ 'sendDate': { $gte: startDate, $lt: endDate } }).where({'status': 9}).count();
+        // const allDocs = await Hiring.find(filter);
+        const totalCount = await Hiring.find(filter).count();
+        const interviewCount = await Hiring.find(filter).where('status').gte(4).count();
+        const offerCount = await Hiring.find(filter).where('status').gte(7).count();
+        const refuseCount = await Hiring.find(filter).where({ 'status': 7 }).count();
+        const leaveCount = await Hiring.find(filter).where({ 'status': 9 }).count();
+        const boss = await Hiring.find(filter, 'channel channelCost').where({ 'channel': 'boss' }).count();
+        const other = await Hiring.find(filter, 'channel channelCost').nor([{ 'channel': 'boss' }]).count();
+        // const aggregate = await this.ctx.model.Hiring.aggregate([
+        //     { $match: { "sendDate": { $gte: 6 } } },
+        //     {
+        //         $group: {
+        //             // Each `_id` must be unique, so if there are multiple
+        //             // documents with the same age, MongoDB will increment `count`.
+        //             _id: '$channel',
+        //             count: { $sum: 1 }
+        //         }
+        //     }
+        // ]);
+        const aggregate = await this.ctx.model.Hiring.aggregate()
+            .match(filter)
+            .group({ _id: '$channel', count: { $sum: 1 } });
+        console.log(aggregate);
         // const offer = await Hiring.find({ 'sendDate': { $gte: startDate, $lt: endDate } }, 'status').where('status').gte(7);
-        return { totalCount, interviewCount, offerCount, refuseCount, leaveCount }
+        return { totalCount, interviewCount, offerCount, refuseCount, leaveCount, boss, other, aggregate }
     }
 }
 
