@@ -255,7 +255,7 @@ class UploadController extends Controller {
         const ctx = this.ctx;
         let stream;
         try {
-            let stream = await ctx.getFileStream();
+            stream = await ctx.getFileStream();
             const name = stream.filename;
             console.log(stream);
             const newName = 'upload/' + new Date().getTime() + '.' + this.getFileType(name);
