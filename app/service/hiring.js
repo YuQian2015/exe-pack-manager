@@ -51,29 +51,38 @@ class HiringService extends Service {
         // $lt (less-than)
         // const allDocs = await Hiring.find(filter);
         const totalCount = await Hiring.find(filter).count();
-        const interviewCount = await Hiring.find(filter).where('status').gte(4).count();
-        const offerCount = await Hiring.find(filter).where('status').gte(7).count();
-        const refuseCount = await Hiring.find(filter).where({ 'status': 7 }).count();
-        const leaveCount = await Hiring.find(filter).where({ 'status': 9 }).count();
-        const boss = await Hiring.find(filter, 'channel channelCost').where({ 'channel': 'boss' }).count();
-        const other = await Hiring.find(filter, 'channel channelCost').nor([{ 'channel': 'boss' }]).count();
-        // const aggregate = await this.ctx.model.Hiring.aggregate([
-        //     { $match: { "sendDate": { $gte: 6 } } },
-        //     {
-        //         $group: {
-        //             // Each `_id` must be unique, so if there are multiple
-        //             // documents with the same age, MongoDB will increment `count`.
-        //             _id: '$channel',
-        //             count: { $sum: 1 }
-        //         }
-        //     }
-        // ]);
-        const aggregate = await this.ctx.model.Hiring.aggregate()
+        const status = await Hiring.aggregate()
             .match(filter)
-            .group({ _id: '$channel', count: { $sum: 1 } });
-        console.log(aggregate);
-        // const offer = await Hiring.find({ 'sendDate': { $gte: startDate, $lt: endDate } }, 'status').where('status').gte(7);
-        return { totalCount, interviewCount, offerCount, refuseCount, leaveCount, boss, other, aggregate }
+            .group({
+                _id: '$status',
+                count: { $sum: 1 }
+            });
+        const channel = await Hiring.aggregate()
+            .match(filter)
+            // 针对渠道字段做统计，渠道字段唯一，如果不唯一则数量加一 并且统计总支出
+            .group({
+                _id: '$channel',
+                count: { $sum: 1 },
+                cost: { $sum: "$channelCost" },
+                maxCost: { $max: "$channelCost" }
+            })
+        // .lookup({ from: 'hiring', localField: '_id', foreignField: '_id', as: 'hiring' });
+        // .project({
+        //     "doc": {
+        //         "_id": "$_id",
+        //         "total": "$channelCost"
+        //     }
+
+        // });
+        const area = await Hiring.aggregate()
+        .match(filter)
+        // 针对渠道字段做统计，渠道字段唯一，如果不唯一则数量加一 并且统计总支出
+        .group({
+            _id: '$area',
+            count: { $sum: 1 }
+        })
+        console.log(channel);
+        return { totalCount, channel, status, area }
     }
 }
 

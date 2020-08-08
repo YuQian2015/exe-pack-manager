@@ -249,7 +249,7 @@ class UploadController extends Controller {
             'refusingReasons', // 拒绝具体理由
             'remark', // 备注
         ]
-        
+
         const statusMap = { "不面试": 1, "不面试先储备": 2, "待面试": 3, "已面试待定结论": 4, "已面试并储备": 5, "不录用": 6, "拒绝offer": 7, "接受offer": 8, "试用期离职": 9 };
         let result;
         const ctx = this.ctx;
@@ -269,26 +269,29 @@ class UploadController extends Controller {
             let resultJson = [];
             for (let index in excelData) {
                 // let firstKey = index[0];
-                if(index > 0) {
+                if (index > 0) {
                     console.log(index);
                     const rowData = {};
                     for (let i in excelData[index]) {
                         // rowData[excelData[0][i]] = excelData[index][i];
                         const key = map[i]
-                        if(key) {
-                            if(key === 'sendDate') {
+                        if (key) {
+                            if (key === 'sendDate') {
                                 const date = excelData[index][i];
-                                if(date) {
+                                if (date) {
                                     rowData[key] = getJsDateFromExcel(date)
                                 }
-                            } else if(key === 'receiveDate') {
+                            } else if (key === 'receiveDate') {
                                 const date = excelData[index][i];
-                                if(date) {
+                                if (date) {
                                     rowData[key] = getJsDateFromExcel(date)
                                 }
-                            } else if(key === 'status') {
+                            } else if (key === 'status') {
                                 const state = excelData[index][i];
                                 rowData[key] = statusMap[state]
+                            } else if (key === 'channelCost') {
+                                const cost = excelData[index][i] || 0;
+                                rowData[key] = cost
                             } else {
                                 rowData[key] = excelData[index][i];
                             }
