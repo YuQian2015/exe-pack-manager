@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
-    "start": "egg-scripts start --daemon",
-    "stop": "egg-scripts stop"
+    "start": "egg-scripts start --daemon --port=7001 --title=exe-pack",
+    "stop": "egg-scripts stop --title=exe-pack"
   },
   "keywords": [
     "职行力"
