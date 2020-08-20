@@ -35,12 +35,7 @@ class HiringService extends Service {
     }
 
     async updateHiring(condition, data) {
-        const updateData = {
-            status: data.status,
-            reasonClassification: data.reasonClassification,
-            reasons: data.reasons
-        }
-        return this.ctx.model.Hiring.findOneAndUpdate(condition, { ...updateData })
+        return this.ctx.model.Hiring.findOneAndUpdate(condition, { ...data })
     }
 
     async report(condition) {
@@ -57,6 +52,7 @@ class HiringService extends Service {
                 _id: '$status',
                 count: { $sum: 1 }
             });
+            console.log(status);
         const channel = await Hiring.aggregate()
             .match(filter)
             // 针对渠道字段做统计，渠道字段唯一，如果不唯一则数量加一 并且统计总支出
@@ -81,7 +77,8 @@ class HiringService extends Service {
             _id: '$area',
             count: { $sum: 1 }
         })
-        console.log(channel);
+        // console.log(area);
+        // console.log(channel);
         return { totalCount, channel, status, area }
     }
 }
