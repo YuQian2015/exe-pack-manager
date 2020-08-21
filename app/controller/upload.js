@@ -311,6 +311,12 @@ class UploadController extends Controller {
         } catch (err) {
             //如果出现错误，关闭管道
             stream && await sendToWormhole(stream);
+            ctx.body = {
+                code: 200,
+                data: err,
+                success: false,
+                msg: `上传失败`
+            }
             throw err;
         }
 
