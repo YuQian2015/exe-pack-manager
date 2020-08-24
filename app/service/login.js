@@ -76,12 +76,9 @@ class LoginService extends Service {
                 console.log(result.ticket)
                 console.log(data.ticket)
                 console.log('-------------');
-                if (result.ticket && result.ticket
-                    .replace(/%2f/g, "/")
-                    .replace(/%3f/g, "?")
-                    .replace(/%2b/g, "+")
-                    .replace(/%3d/g, "=")
-                    .replace(/%26/g, "&") === data.ticket) {
+                if (result.ticket && this._decodeToken(result.ticket) === this._decodeToken(data.ticket)
+
+                ) {
                     console.log('用户扫码验证成功');
                     return this._createIfNotExist(result);
                 } else {
@@ -94,6 +91,14 @@ class LoginService extends Service {
         catch (err) {
             throw err;
         }
+    }
+
+    _decodeToken(token) {
+        return token.replace(/%2f/g, "/")
+            .replace(/%3f/g, "?")
+            .replace(/%2b/g, "+")
+            .replace(/%3d/g, "=")
+            .replace(/%26/g, "&")
     }
 
 }
