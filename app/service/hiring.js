@@ -9,9 +9,12 @@ class HiringService extends Service {
         const { page = 1, pageSize = 10 } = condition;
         delete condition.page;
         delete condition.pageSize;
-        return this.ctx.model.Hiring.find(condition)
-            .limit(pageSize)
-            .skip((page - 1) * pageSize).sort('-createDate');
+        const count = await this.ctx.model.Hiring.find(condition).count();
+        const result = this.ctx.model.Hiring.find(condition).limit(pageSize).skip((page - 1) * pageSize);
+        return {
+            count,
+            result
+        }
     }
 
     async searchHiring(condition) {
@@ -26,7 +29,7 @@ class HiringService extends Service {
         const result = await this.ctx.model.Hiring.find(condition)
             .or([{ job: { $regex: reg } }, { name: { $regex: reg } }, { tel: { $regex: reg } }])
             .limit(pageSize)
-            .skip((page - 1) * pageSize).sort('-createDate')
+            .skip((page - 1) * pageSize)
             .lean();
         return {
             count,
