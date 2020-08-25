@@ -2,7 +2,16 @@ const Service = require('egg').Service;
 
 class HiringService extends Service {
     async createHiring(data) {
-        return this.ctx.model.Hiring(data).save();
+        const filter = {
+            job: data.job,
+            name: data.name,
+            sendDate: data.sendDate
+        }
+        let doc = await this.ctx.model.Hiring.findOneAndUpdate(filter, data, {
+            new: true,
+            upsert: true // Make this update into an upsert
+        });
+        return doc;
     }
 
     async findHiring(condition) {
@@ -55,7 +64,7 @@ class HiringService extends Service {
                 _id: '$status',
                 count: { $sum: 1 }
             });
-            console.log(status);
+        console.log(status);
         const channel = await Hiring.aggregate()
             .match(filter)
             // 针对渠道字段做统计，渠道字段唯一，如果不唯一则数量加一 并且统计总支出
@@ -74,12 +83,12 @@ class HiringService extends Service {
 
         // });
         const area = await Hiring.aggregate()
-        .match(filter)
-        // 针对渠道字段做统计，渠道字段唯一，如果不唯一则数量加一 并且统计总支出
-        .group({
-            _id: '$area',
-            count: { $sum: 1 }
-        })
+            .match(filter)
+            // 针对渠道字段做统计，渠道字段唯一，如果不唯一则数量加一 并且统计总支出
+            .group({
+                _id: '$area',
+                count: { $sum: 1 }
+            })
         // console.log(area);
         // console.log(channel);
         return { totalCount, channel, status, area }
