@@ -23,6 +23,10 @@ module.exports = app => {
             type: Number,
             default: 0
         },
+        interviewChangeCount: {  // 面试修改次数
+            type: Number,
+            default: 0
+        },
         opinion: String, // 录用意见
         refusingInterviewReasons: String, // 不面试理由
         reasonClassification: String, // 不录用理由分类
