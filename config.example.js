@@ -30,5 +30,9 @@ exports.config = {
     JWT: {
         SECRET: 'egg-start', // token的密钥（默认egg-start）
         EXPIRES_IN: '8h' // token过期时间 (默认8h)
+    },
+    WX: {
+        APP_ID: '', // 微信小程序的ID
+        APP_SECRET: '' // 微信小程序的secret
     }
 }
