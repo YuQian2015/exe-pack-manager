@@ -24,7 +24,8 @@ exports.config = {
     REDIS: {
         PASSWORD: '', // 密码
         IP: '', // IP
-        PORT: 6379 // 端口（默认端口6379）
+        PORT: 6379, // 端口（默认端口6379）
+        DB: '' // 使用的DB
     },
     // jsonwebtoken配置，请自行修改
     JWT: {

@@ -1,5 +1,5 @@
 const { config } = require('../config.js')
-const { MONGO_DB, QINIU, REDIS, JWT, SERVER } = config;
+const { MONGO_DB, QINIU, REDIS, JWT, SERVER, WX } = config;
 
 exports.keys = 'exe-tools'; // Cookie 安全字符串>;
 
@@ -83,7 +83,7 @@ exports.jwt = {
             return null;
         }
     },
-    unless: { path: ["/login","/api/v1/login", "/api/v1/teams", "/api/v1/rate", "/public/tenants"] }
+    unless: { path: ["/login","/api/v1/login", "/api/v1/teams", "/api/v1/rate", "/public/tenants", "/api/v1/wx/auth"] }
 };
 
 
@@ -94,7 +94,7 @@ exports.jwtHandler = {
 exports.authz = {
     enable: true,
     ignore(ctx) {
-        const reg = /\/login|\/public|\/api\/v1\/colors|\/teams|\/rate/g;
+        const reg = /\/login|\/public|\/api\/v1\/colors|\/teams|\/rate|api\/v1\/wx/g;
         // console.log(ctx.request.url);
         // console.log(reg.test(ctx.request.url));
         if(ctx.request.url === '/') {
@@ -119,6 +119,11 @@ exports.authz = {
 //     mode: 'file',
 // };
 
+
+exports.wx = {
+    appId: WX.APP_ID,
+    appSecret: WX.APP_SECRET,
+}
 
 exports.fullQiniu = {
     default: {
@@ -152,4 +157,13 @@ exports.fullQiniu = {
     //     baseUrl: null, // 用于拼接已上传文件的完整地址
     //     },
     // },
+}
+
+exports.redis = {
+    client: {
+        port: REDIS.PORT, // Redis port 
+        host: REDIS.IP, // Redis host 
+        password: REDIS.PASSWORD,
+        db: REDIS.DB,
+    },
 }

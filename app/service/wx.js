@@ -4,7 +4,7 @@ const Service = require('egg').Service;
 class WxService extends Service {
 
     // 创建微信临时用户
-    async createVisitor(code, userInfo = {}) {
+    async createVisitor(code) {
         const ctx = this.ctx;
         const { appId, appSecret } = ctx.app.config.wx
         return new Promise(async (resolve, reject) => {
@@ -39,26 +39,16 @@ class WxService extends Service {
             // openid
             // session_key
             // 请求成功
-            ctx.model.WxUser.findOne({ openId: result.data.openid }).lean().exec((err, doc) => {
-                if (err) {
-                    reject(err);
+            try {
+                let user = await ctx.model.WxUser.findOne({ openId: result.data.openid }).lean();
+                if (!user) {
+                    user = await await ctx.model.WxUser({ openId: result.data.openid }).save();
                 } else {
-                    if (doc) {
-                        resolve({ ...doc, ...result.data });
-                    } else {
-                        ctx.model.WxUser({
-                            openId: result.data.openid,
-                            ...userInfo
-                        }).save((error, data) => {
-                            if (error) {
-                                reject(error);
-                                return
-                            }
-                            resolve({ _id: data._id, ...data, ...result.data })
-                        });
-                    }
+                    resolve(user)
                 }
-            });
+            } catch (e) {
+                reject(e);
+            }
         })
     }
 
