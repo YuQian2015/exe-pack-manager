@@ -1,5 +1,7 @@
 
 const Service = require('egg').Service;
+const WXBizDataCrypt = require('../util/wx_decode/WXBizDataCrypt');
+const { USER_SESSION_KEY } = require('../constant/redis');
 
 class WxService extends Service {
 
@@ -43,24 +45,35 @@ class WxService extends Service {
                 let user = await ctx.model.WxUser.findOne({ openId: result.data.openid }).lean();
                 if (!user) {
                     user = await await ctx.model.WxUser({ openId: result.data.openid }).save();
-                } else {
-                    resolve(user)
                 }
+                const token = ctx.app.jwt.sign({ id: user._id, role: 'wx' }, ctx.app.config.jwt.secret, {
+                    expiresIn: ctx.app.config.jwt.expiresIn
+                });
+                await ctx.service.cache.set([USER_SESSION_KEY, user._id], result.data.session_key, 8 * 60 * 60);
+                resolve(token);
             } catch (e) {
                 reject(e);
             }
         })
     }
 
-    async loginWxUser(userInfo = {}) {
+    async loginWxUser() {
         const ctx = this.ctx;
+        const { encryptedData, iv } = ctx.request.body;
+        const { appId } = ctx.app.config.wx;
+        console.log(ctx.state);
+        const sessionKey = await ctx.service.cache.get([USER_SESSION_KEY, path]);
+        const pc = new WXBizDataCrypt(appId, sessionKey);
+        const data = pc.decryptData(encryptedData , iv);
+        return data
+
         // `doc` is the document _after_ `update` was applied because of `new: true`
-        return ctx.model.User.findOneAndUpdate({ _id: ctx.state.user.id }, { ...userInfo, userType: 1 }, { new: true });
+        // return ctx.model.User.findOneAndUpdate({ _id: ctx.state.user.id }, { ...userInfo, userType: 1 }, { new: true });
     }
 
     async getAccessToken() {
         const ctx = this.ctx;
-        const { appId, appSecret } = ctx.app.config.wx
+        const { appId, appSecret } = ctx.app.config.wx;
         return new Promise(async (resolve, reject) => {
             const access_token = await ctx.app.redis.get('access_token') // 获取redis
             if (access_token && access_token.length > 2) {

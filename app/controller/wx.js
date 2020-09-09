@@ -14,14 +14,25 @@ class WxController extends Controller {
     async auth() {
         const ctx = this.ctx;
         const { code } = ctx.request.body;
-        const user = await ctx.service.wx.createVisitor(code);
-        const token = ctx.app.jwt.sign({ id: user._id, role: 'wx' }, ctx.app.config.jwt.secret, {
-            expiresIn: ctx.app.config.jwt.expiresIn
-        });
-        if (user) {
+        const token = await ctx.service.wx.createVisitor(code);
+        if (token) {
             ctx.body = {
                 code: 200,
                 data: { token },
+                success: true,
+                msg: ``
+            };
+        }
+    }
+
+    async login() {
+        const ctx = this.ctx;
+        console.log(123123);
+        const user = await ctx.service.wx.loginWxUser(ctx.request.body);
+        if (user) {
+            ctx.body = {
+                code: 200,
+                data: ``,
                 success: true,
                 msg: ``
             };
