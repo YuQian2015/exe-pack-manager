@@ -27,12 +27,11 @@ class WxController extends Controller {
 
     async login() {
         const ctx = this.ctx;
-        console.log(123123);
         const user = await ctx.service.wx.loginWxUser(ctx.request.body);
         if (user) {
             ctx.body = {
                 code: 200,
-                data: ``,
+                data: user,
                 success: true,
                 msg: ``
             };

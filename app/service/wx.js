@@ -61,14 +61,11 @@ class WxService extends Service {
         const ctx = this.ctx;
         const { encryptedData, iv } = ctx.request.body;
         const { appId } = ctx.app.config.wx;
-        console.log(ctx.state);
-        const sessionKey = await ctx.service.cache.get([USER_SESSION_KEY, path]);
+        const sessionKey = await ctx.service.cache.get([USER_SESSION_KEY, ctx.state.user.id]);
         const pc = new WXBizDataCrypt(appId, sessionKey);
         const data = pc.decryptData(encryptedData , iv);
-        return data
-
         // `doc` is the document _after_ `update` was applied because of `new: true`
-        // return ctx.model.User.findOneAndUpdate({ _id: ctx.state.user.id }, { ...userInfo, userType: 1 }, { new: true });
+        return ctx.model.WxUser.findOneAndUpdate({ _id: ctx.state.user.id }, { ...data, userType: 1 }, { new: true }).lean();
     }
 
     async getAccessToken() {
