@@ -14,11 +14,11 @@ class WxController extends Controller {
     async auth() {
         const ctx = this.ctx;
         const { code } = ctx.request.body;
-        const token = await ctx.service.wx.createVisitor(code);
-        if (token) {
+        const data = await ctx.service.wx.createVisitor(code);
+        if (data.token) {
             ctx.body = {
                 code: 200,
-                data: { token },
+                data,
                 success: true,
                 msg: ``
             };
@@ -28,6 +28,19 @@ class WxController extends Controller {
     async login() {
         const ctx = this.ctx;
         const user = await ctx.service.wx.loginWxUser(ctx.request.body);
+        if (user) {
+            ctx.body = {
+                code: 200,
+                data: user,
+                success: true,
+                msg: ``
+            };
+        }
+    }
+
+    async valid() {
+        const ctx = this.ctx;
+        const user = await ctx.service.wx.validateUser();
         if (user) {
             ctx.body = {
                 code: 200,

@@ -1,9 +1,18 @@
 
 const Service = require('egg').Service;
 const WXBizDataCrypt = require('../util/wx_decode/WXBizDataCrypt');
-const { USER_SESSION_KEY } = require('../constant/redis');
+const { USER_SESSION_KEY, USER_TOKEN } = require('../constant/redis');
 
 class WxService extends Service {
+
+    async validateUser() {
+        const ctx = this.ctx;
+        if (ctx.state.user && ctx.state.user.id) {
+            let user = await ctx.model.WxUser.findOne({ _id: ctx.state.user.id }).lean();
+            const tokenCache = await ctx.service.cache.get([USER_TOKEN, user._id]);
+            return { token: tokenCache, user }
+        }
+    }
 
     // 创建微信临时用户
     async createVisitor(code) {
@@ -46,11 +55,17 @@ class WxService extends Service {
                 if (!user) {
                     user = await await ctx.model.WxUser({ openId: result.data.openid }).save();
                 }
-                const token = ctx.app.jwt.sign({ id: user._id, role: 'wx' }, ctx.app.config.jwt.secret, {
+                const tokenCache = await ctx.service.cache.get([USER_TOKEN, user._id]);
+                if (tokenCache) {
+                    resolve({ token: tokenCache, user });
+                    return
+                }
+                const token = tokenCache || ctx.app.jwt.sign({ id: user._id, role: 'wx' }, ctx.app.config.jwt.secret, {
                     expiresIn: ctx.app.config.jwt.expiresIn
                 });
                 await ctx.service.cache.set([USER_SESSION_KEY, user._id], result.data.session_key, 8 * 60 * 60);
-                resolve(token);
+                await ctx.service.cache.set([USER_TOKEN, user._id], result.data.token, 8 * 60 * 60);
+                resolve({ token, user });
             } catch (e) {
                 reject(e);
             }
@@ -63,7 +78,7 @@ class WxService extends Service {
         const { appId } = ctx.app.config.wx;
         const sessionKey = await ctx.service.cache.get([USER_SESSION_KEY, ctx.state.user.id]);
         const pc = new WXBizDataCrypt(appId, sessionKey);
-        const data = pc.decryptData(encryptedData , iv);
+        const data = pc.decryptData(encryptedData, iv);
         // `doc` is the document _after_ `update` was applied because of `new: true`
         return ctx.model.WxUser.findOneAndUpdate({ _id: ctx.state.user.id }, { ...data, userType: 1 }, { new: true }).lean();
     }

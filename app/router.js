@@ -58,6 +58,8 @@ module.exports = app => {
     router.post('/api/v1/hiring/report', controller.hiring.report); // 招聘报表
     router.post('/api/v1/wx/auth', controller.wx.auth); // 微信访问验证
     router.post('/api/v1/wx/login', controller.wx.login); // 微信授权
+    router.post('/api/v1/wx/valid', controller.wx.valid); // 微信验证TOKEN
+    
 
     // RESTful api
     router.resources('users', '/api/v1/users', controller.users); // 用户接口
